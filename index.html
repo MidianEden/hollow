@@ -1,152 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- This domain is now yours. This is a real, live website. -->
     <title>Hollow</title>
-    
-    <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Load Premium Fonts (from your pitch deck) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@700;900&family=Lato:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
     <style>
-        /* Define custom animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        
-        /* Apply custom animation */
-        .animate-fade-in {
-            /* This animation will run once, start after 0.5s, and keep its final state */
-            animation: fadeIn 1.5s ease-out 0.5s forwards;
+        /* VANTABLACK THEME (Reverted to v1)
+           The font-family 'Inter' is the same one used by premium tech brands. 
+        */
+        body {
+            background-color: #000000;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Prevents scrollbars during animation */
         }
 
-        /* Custom Tailwind configuration */
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'sans': ['Lato', 'sans-serif'],
-                        'display': ['Urbanist', 'sans-serif'],
-                    },
-                    /* Set a very "Apple-like" animation timing */
-                    transitionTimingFunction: {
-                        'apple': 'cubic-bezier(0.25, 0.1, 0.25, 1)',
-                    },
-                }
+        /* NEW ANIMATION 1: "METALLIC SWEEP" (For the logo)
+           This will play first, revealing the logo with a metallic shine.
+        */
+        #brand-logo {
+            /* This section creates the gradient and clips it to the text */
+            background: linear-gradient(90deg, #333, #fff, #333);
+            background-size: 200% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* Start invisible */
+            opacity: 0;
+
+            /* Animation: name, duration, easing, delay, fill-mode */
+            animation: metallic-sweep 2s ease-out 0.5s forwards;
+        }
+
+        @keyframes metallic-sweep {
+            0% {
+                opacity: 0;
+                background-position: 200% center; /* Start sheen from the right */
             }
+            60% {
+                opacity: 1; /* Fade in */
+            }
+            100% {
+                opacity: 1;
+                background-position: -200% center; /* End sheen on the left */
+            }
+        }
+
+        /* NEW ANIMATION 2: "CONTENT FADE IN" (For everything else)
+           This is delayed by 2 seconds to wait for the logo animation to finish.
+        */
+        #content {
+            opacity: 0; /* Start invisible */
+            animation: content-fade-in 1.5s ease-out 2.0s forwards;
+        }
+
+        @keyframes content-fade-in {
+            from { 
+                opacity: 0;
+                transform: translateY(10px); /* Subtle slide-up effect */
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Minor polish for the email form */
+        .form-input:focus {
+            border-color: #ffffff;
+            box-shadow: 0 0 0 2px #000, 0 0 0 4px #555;
+            outline: none;
         }
     </style>
 </head>
-
-<!-- 
-  BODY: 
-  - bg-black: The "Vantablack" feel.
-  - text-gray-400: Default text is muted, not bright white.
-  - min-h-screen: Ensures the black covers the full page, even with little content.
-  - grid place-items-center: The modern way to perfectly center content.
--->
-<body class="bg-black text-gray-400 font-sans min-h-screen grid place-items-center antialiased p-4">
-
+<body class="h-full flex items-center justify-center text-white px-4">
+    
     <!-- 
-      MAIN CONTAINER:
-      - This container will fade in from the black void for that "mysterious" effect.
+      This container holds both animation groups.
     -->
-    <main class="w-full max-w-lg text-center opacity-0 animate-fade-in">
+    <div class="text-center max-w-lg w-full">
 
         <!-- 
-          BRAND LOGO / HEADLINE:
-          - font-display: Uses the premium "Urbanist" font.
-          - text-gray-200: A very light, premium gray. Not pure white.
-          - tracking-[0.5rem]: Wide letter-spacing for an elegant, premium feel.
+          GROUP 1: THE LOGO 
+          This will run the "metallic-sweep" animation first.
         -->
-        <h1 class="font-display text-gray-200 font-bold text-7xl md:text-8xl tracking-[0.5rem] uppercase">
+        <h1 id="brand-logo" class="text-6xl md:text-8xl font-black mb-4 tracking-tighter">
             HOLLOW
         </h1>
 
         <!-- 
-          TAGLINE:
-          - text-gray-500: Muted, secondary text.
-          - text-xl: Large enough to read, small enough to be secondary.
+          GROUP 2: THE REST OF THE CONTENT
+          This will run the "content-fade-in" animation *after* the logo.
         -->
-        <p class="text-gray-500 text-xl mt-2">
-            The new era is soon.
-        </p>
-
-        <!-- 
-          SIGNUP FORM:
-          - This is the entire purpose of the page.
-          - It's hidden by default and will be revealed by the JS.
-        -->
-        <form id="signup-form" class="mt-16 w-full">
-            <div class="flex flex-col sm:flex-row gap-3 justify-center">
-                <!-- 
-                  EMAIL INPUT:
-                  - bg-transparent: Blends into the "void".
-                  - border-b: Minimalist "underline" style.
-                  - focus:border-white: A subtle, premium interaction.
-                -->
+        <div id="content">
+            <p class="text-xl md:text-2xl text-gray-400 mb-10">
+                Instant. Private. Present.
+            </p>
+    
+            <form action="[YOUR_FORM_HANDLER_URL]" method="POST" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                <label for="email" class="sr-only">Email address</label>
                 <input 
                     type="email" 
-                    id="email-input"
+                    name="email" 
+                    id="email"
+                    class="form-input w-full px-5 py-4 bg-gray-900 border border-gray-700 text-white placeholder-gray-500 rounded-lg text-base focus:ring-0"
                     placeholder="Enter your email" 
                     required
-                    class="bg-transparent border-b border-gray-700 text-white text-lg text-center sm:text-left w-full sm:w-auto flex-grow py-3 px-4 focus:border-white transition-colors duration-300 ease-apple focus:outline-none rounded-none"
                 >
-                <!-- 
-                  BUTTON:
-                  - A stark, high-contrast white button.
-                  - This is the single, bold call to action.
-                -->
                 <button 
                     type="submit" 
-                    class="bg-white text-black font-display font-bold uppercase tracking-wider py-3 px-8 hover:scale-105 transition-transform ease-apple rounded-none"
+                    class="bg-white text-black font-bold py-4 px-8 rounded-lg text-base hover:bg-gray-300 transition-colors duration-200"
                 >
-                    Stay Notified
+                    Get Early Access
                 </button>
-            </div>
-        </form>
-
-        <!-- 
-          "THANK YOU" MESSAGE:
-          - This is hidden by default. JS will show it after signup.
-        -->
-        <div id="message" class="hidden mt-16">
-            <h2 class="font-display text-2xl text-white">Thank You.</h2>
-            <p class="text-gray-400 text-lg">You are on the list.</p>
+            </form>
+    
+            <p class="text-xs text-gray-600 mt-4">
+                Be the first to know when we launch. No spam, ever.
+            </p>
         </div>
+    </div>
 
-    </main>
-
-    <script>
-        // Simple script to handle the form submission and show a thank you message.
-        
-        // 1. Get the elements from the page
-        const form = document.getElementById('signup-form');
-        const messageDiv = document.getElementById('message');
-        const emailInput = document.getElementById('email-input');
-
-        // 2. Listen for the "submit" event on the form
-        form.addEventListener('submit', function(event) {
-            // 3. Stop the form from actually trying to submit to a server
-            event.preventDefault();
-
-            // You would normally send the email (emailInput.value) to a service 
-            // like Mailchimp or a database here.
-            // For now, we'll just pretend it worked.
-
-            // 4. Hide the form
-            form.style.display = 'none';
-
-            // 5. Show the "Thank You" message
-            messageDiv.classList.remove('hidden');
-        });
-    </script>
+</body>
+</html>
 
 </body>
 </html>
