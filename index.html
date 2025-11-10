@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-R-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- This domain is now yours. This is a real, live website. -->
     <title>Hollow</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -81,29 +80,18 @@
 </head>
 <body class="h-full flex items-center justify-center text-white px-4">
     
-    <!-- 
-      This container holds both animation groups.
-    -->
     <div class="text-center max-w-lg w-full">
 
-        <!-- 
-          GROUP 1: THE LOGO 
-          This will run the "metallic-sweep" animation first.
-        -->
         <h1 id="brand-logo" class="text-6xl md:text-8xl font-black mb-4 tracking-tighter">
             HOLLOW
         </h1>
 
-        <!-- 
-          GROUP 2: THE REST OF THE CONTENT
-          This will run the "content-fade-in" animation *after* the logo.
-        -->
         <div id="content">
             <p class="text-xl md:text-2xl text-gray-400 mb-10">
                 Instant. Private. Present.
             </p>
     
-            <form action="[YOUR_FORM_HANDLER_URL]" method="POST" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+            <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
                 <label for="email" class="sr-only">Email address</label>
                 <input 
                     type="email" 
@@ -114,6 +102,7 @@
                     required
                 >
                 <button 
+                    id="submit-button"
                     type="submit" 
                     class="bg-white text-black font-bold py-4 px-8 rounded-lg text-base hover:bg-gray-300 transition-colors duration-200"
                 >
@@ -127,8 +116,70 @@
         </div>
     </div>
 
-</body>
-</html>
 
+    <script type="module">
+        // Import the functions you need from the SDKs
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        // We need Firestore (the database) to *store* the emails
+        import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+        // Your web app's Firebase configuration
+        // This is the snippet you provided.
+        const firebaseConfig = {
+          apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+          authDomain: "hollow-7ff49.firebaseapp.com",
+          projectId: "hollow-7ff49",
+          storageBucket: "hollow-7ff49.firebasestorage.app",
+          messagingSenderId: "536360139071",
+          appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a",
+          measurementId: "G-0MYVB4E6RR"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Firestore (the database)
+        const db = getFirestore(app);
+
+        // --- This is the "Action Hub" for your form ---
+        
+        // 1. Get all the elements we need
+        const form = document.getElementById("waitlist-form");
+        const emailInput = document.getElementById("email");
+        const button = document.getElementById("submit-button");
+
+        // 2. Listen for the "submit" event
+        form.addEventListener("submit", async (event) => {
+            // This is the "slingshot" - it stops the page from reloading
+            event.preventDefault(); 
+
+            // Get the email from the form
+            const email = emailInput.value;
+
+            // Give the user "instant" feedback
+            button.disabled = true;
+            button.innerText = "Saving...";
+
+            try {
+                // 3. Save the email to your "Mothership" (Firestore)
+                // This creates a new "collection" (a spreadsheet) called "waitlist"
+                const docRef = await addDoc(collection(db, "waitlist"), {
+                    email: email,
+                    timestamp: serverTimestamp() // Adds the exact time of signup
+                });
+
+                // 4. Give the user "success" feedback
+                console.log("Document written with ID: ", docRef.id);
+                button.innerText = "✅ Success!";
+                
+            } catch (e) {
+                // 5. Handle any errors
+                console.error("Error adding document: ", e);
+                button.innerText = "Error!";
+                button.style.backgroundColor = "#ff0000"; // Make it red
+                button.disabled = false;
+            }
+        });
+
+    </script>
 </body>
 </html>
