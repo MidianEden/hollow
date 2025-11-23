@@ -13,7 +13,7 @@
         body {
             background-color: #000000;
             font-family: 'Inter', sans-serif;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         #brand-logo {
@@ -42,17 +42,14 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* NEW v1.2: 
-          Updated focus ring to be more subtle and match the theme.
-        */
         .form-input:focus {
-            border-color: #888; /* Softer border on focus */
+            border-color: #888;
             box-shadow: none;
             outline: none;
         }
     </style>
 </head>
-<body class="h-full flex items-center justify-center text-white px-4">
+<body class="h-full flex items-center justify-center text-white px-4 py-8">
     
     <div class="text-center max-w-lg w-full">
 
@@ -98,8 +95,16 @@
             <p id="footer-note" class="text-xs text-gray-600 mt-4 transition-opacity duration-300">
                 Be the first to know when we launch. No spam, ever.
             </p>
+
+            <!-- Embedded Tweet -->
+            <div id="tweet-container" class="mt-12 max-w-md mx-auto">
+                <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">I'm 15, building the future of wrist-first AI.<br>Real-time voice → on-device processing → instant assistant on your wrist.<br>Phones feel slow — this is what comes next. <a href="https://twitter.com/hashtag/buildinpublic?src=hash&amp;ref_src=twsrc%5Etfw">#buildinpublic</a> <a href="https://twitter.com/hashtag/hardware?src=hash&amp;ref_src=twsrc%5Etfw">#hardware</a> <a href="https://twitter.com/hashtag/startups?src=hash&amp;ref_src=twsrc%5Etfw">#startups</a> <a href="https://twitter.com/hashtag/ai?src=hash&amp;ref_src=twsrc%5Etfw">#ai</a> <a href="https://twitter.com/hashtag/founder?src=hash&amp;ref_src=twsrc%5Etfw">#founder</a> <a href="https://twitter.com/hashtag/wearables?src=hash&amp;ref_src=twsrc%5Etfw">#wearables</a> <a href="https://t.co/hBTPR3znYI">pic.twitter.com/hBTPR3znYI</a></p>&mdash; Hollow (@gethollowtech) <a href="https://twitter.com/gethollowtech/status/1992379829933711447?ref_src=twsrc%5Etfw">November 22, 2025</a></blockquote>
+            </div>
         </div>
     </div>
+
+    <!-- Twitter Widget Script -->
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
     <script type="module">
         // Import the functions you need from the SDKs
