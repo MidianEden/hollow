@@ -13,28 +13,33 @@
             color: white;
             font-family: "Inter", sans-serif;
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
 
-        /* FIXED: Hollow scaled smaller + perfectly centered */
+        /* PERFECTLY CENTERED HOLLOW */
         #brand-logo {
-            white-space: nowrap;
-            font-size: clamp(3rem, 10vw, 7rem); /* reduced from 10rem */
-            text-align: center;
+            white-space: nowrap; 
+            font-size: clamp(3rem, 10vw, 8rem); 
+            line-height: 1;
             margin: 0 auto;
+            text-align: center;
+
             opacity: 0;
-            transform: translateY(10px) scale(0.97);
-            animation: hollowReveal 0.8s ease-out forwards;
+            transform: translateY(12px) scale(0.97);
+            animation: hollowReveal 0.7s ease-out forwards;
         }
 
         @keyframes hollowReveal {
             0% { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); }
-            50% { opacity: 1; filter: blur(3px); }
+            60% { opacity: 1; filter: blur(2px); }
             100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
+        /* Content fade */
         #content {
             opacity: 0;
-            animation: contentFade 0.7s ease-out 0.4s forwards;
+            animation: contentFade 0.8s ease-out 0.4s forwards;
         }
 
         @keyframes contentFade {
@@ -42,6 +47,17 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* Vertically + horizontally centered hero layout */
+        .hero-wrapper {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Underline email input */
         .underline-input {
             background: transparent;
             border: none;
@@ -54,67 +70,18 @@
             outline: none;
             border-bottom-color: white;
         }
-
-        .spark-letter {
-            position: relative;
-            display: inline-block;
-        }
-
-        /* IMPROVED SPARK: slower, bigger, blue+white, arcing path */
-        .spark-particle {
-            position: fixed;
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-
-            background: radial-gradient(circle, #C8F2FF 0%, #00A8FF 70%);
-            box-shadow:
-                0 0 8px #00A8FF,
-                0 0 14px #00A8FF,
-                0 0 24px #C8F2FF;
-
-            animation: sparkArc 5s cubic-bezier(0.25, 0.1, 0.3, 1) forwards;
-        }
-
-        /* Arcing motion: launches sideways then curves downward */
-        @keyframes sparkArc {
-            0% {
-                opacity: 1;
-                transform: translate(0, 0) scale(1);
-            }
-            20% {
-                transform: translate(var(--drift), -20px) scale(0.95);
-            }
-            60% {
-                transform: translate(calc(var(--drift) * 1.4), 50vh) scale(0.8);
-                opacity: 0.9;
-            }
-            100% {
-                transform: translate(calc(var(--drift) * 1.7), 100vh) scale(0.5);
-                opacity: 0;
-            }
-        }
-
-        .hero-wrapper {
-            padding-top: 3rem; /* reduce space so it's more centered */
-        }
     </style>
 </head>
 
 <body class="text-white px-4">
 
-    <section class="h-screen flex items-center justify-center hero-wrapper">
+    <!-- HERO -->
+    <section class="hero-wrapper">
         <div class="text-center max-w-lg w-full">
 
+            <!-- CLEAN CENTERED HOLLOW -->
             <h1 id="brand-logo" class="font-black tracking-tight">
-                <span class="spark-letter">H</span>
-                <span class="spark-letter">O</span>
-                <span class="spark-letter">L</span>
-                <span class="spark-letter">L</span>
-                <span class="spark-letter">O</span>
-                <span class="spark-letter">W</span>
+                HOLLOW
             </h1>
 
             <div id="content">
@@ -123,6 +90,7 @@
                     Instant. Private. Present.
                 </p>
 
+                <!-- EMAIL SIGNUP -->
                 <form id="waitlist-form" class="max-w-md mx-auto">
                     <div class="flex items-center">
                         <input 
@@ -141,6 +109,7 @@
                     </div>
                 </form>
 
+                <!-- SUCCESS MESSAGE -->
                 <div id="success-message" class="opacity-0 transition-opacity duration-300 mt-8">
                     <p class="text-xl md:text-2xl">Thank You.</p>
                     <p class="text-xs text-gray-600 mt-3">You are on the list.</p>
@@ -149,6 +118,7 @@
                 <p id="footer-note" class="text-xs text-gray-600 mt-5 transition-opacity duration-300">
                     Be the first to know when we launch. No spam, ever.
                 </p>
+
             </div>
         </div>
     </section>
@@ -179,7 +149,9 @@
 
         form.addEventListener("submit", async (event) => {
             event.preventDefault();
+
             button.disabled = true;
+            button.style.opacity = "0.3";
 
             try {
                 await addDoc(collection(db, "waitlist"), {
@@ -189,6 +161,7 @@
 
                 form.style.opacity = "0";
                 footerNote.style.opacity = "0";
+
                 setTimeout(() => {
                     form.style.display = "none";
                     footerNote.style.display = "none";
@@ -196,45 +169,11 @@
                 }, 400);
 
             } catch (e) {
+                console.error(e);
                 button.innerText = "Error";
                 button.style.color = "red";
                 button.disabled = false;
             }
-        });
-    </script>
-
-    <!-- SPARKS -->
-    <script>
-        function launchSpark(letterEl) {
-            const rect = letterEl.getBoundingClientRect();
-
-            const spark = document.createElement("div");
-            spark.classList.add("spark-particle");
-
-            const x = rect.left + rect.width * Math.random();
-            const y = rect.top + rect.height * Math.random();
-
-            spark.style.left = x + "px";
-            spark.style.top = y + "px";
-
-            spark.style.setProperty("--drift", (Math.random() * 140 - 70) + "px");
-
-            document.body.appendChild(spark);
-
-            setTimeout(() => spark.remove(), 5000);
-        }
-
-        function sparkLoop() {
-            const letters = document.querySelectorAll(".spark-letter");
-            if (!letters.length) return;
-
-            launchSpark(letters[Math.floor(Math.random() * letters.length)]);
-
-            setTimeout(sparkLoop, 1500 + Math.random() * 2000);
-        }
-
-        window.addEventListener("load", () => {
-            setTimeout(sparkLoop, 900);
         });
     </script>
 
