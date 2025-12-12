@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow</title>
-    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,49 +13,62 @@
     <style>
         body {
             background-color: #000;
-            font-family: 'Inter', sans-serif;
+            color: #fff;
+            font-family: "Inter", sans-serif;
             overflow-x: hidden;
         }
 
-        /* Cinematic HOLLOW reveal */
+        /* Faster, cleaner cinematic reveal */
         #brand-logo {
-            background: linear-gradient(90deg, #333, #fff, #333);
-            background-size: 200% auto;
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: hollow-reveal 2.4s ease-out forwards;
+            transform: translateY(20px) scale(0.97);
+            animation: hollowReveal 1.2s ease-out forwards;
         }
 
-        @keyframes hollow-reveal {
-            0% { opacity: 0; filter: blur(20px); transform: scale(0.85); background-position: 200% center; }
-            40% { opacity: 1; filter: blur(8px); }
-            100% { opacity: 1; filter: blur(0); transform: scale(1); background-position: -200% center; }
+        @keyframes hollowReveal {
+            0% { opacity: 0; transform: translateY(20px) scale(0.97); filter: blur(8px); }
+            60% { opacity: 1; filter: blur(2px); }
+            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
-        /* Content fade upward */
+        /* Content fade */
         #content {
             opacity: 0;
-            animation: content-rise 1.6s ease-out 1.4s forwards;
+            animation: contentFade 0.9s ease-out 0.6s forwards;
         }
 
-        @keyframes content-rise {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes contentFade {
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .form-input:focus {
+        /* Clean underline input */
+        .underline-input {
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #444;
+            color: white;
+            width: 100%;
+            padding: 6px 0;
+            font-size: 1.1rem;
+        }
+
+        .underline-input:focus {
             outline: none;
-            box-shadow: none;
+            border-bottom-color: #fff;
+        }
+
+        /* Prevent HOLLOW from being cut off */
+        .hero-wrapper {
+            padding-top: 5rem;
         }
     </style>
 </head>
 
 <body class="text-white px-4">
 
-    <!-- HERO — FULLSCREEN CENTERED -->
-    <section class="h-screen flex items-center justify-center">
+    <!-- HERO -->
+    <section class="h-screen flex items-center justify-center hero-wrapper">
         <div class="text-center max-w-lg w-full">
 
             <h1 id="brand-logo" class="text-7xl md:text-9xl font-black mb-10 tracking-tight">
@@ -68,38 +81,33 @@
                     Instant. Private. Present.
                 </p>
 
-                <!-- NEW SIGNUP FIELD -->
+                <!-- SIGNUP (pure black + white, no box) -->
                 <form id="waitlist-form" class="max-w-md mx-auto">
 
-                    <div 
-                        class="w-full py-4 px-3 rounded-xl bg-gradient-to-r 
-                        from-[#3838ff22] to-[#00000077] border border-gray-800/40 
-                        backdrop-blur-md flex items-center justify-between">
+                    <input 
+                        type="email" 
+                        id="email"
+                        name="email"
+                        placeholder="your email"
+                        class="underline-input"
+                        required
+                    >
 
-                        <input 
-                            type="email" 
-                            id="email"
-                            name="email"
-                            placeholder="your email"
-                            class="w-full bg-transparent text-gray-300 placeholder-gray-400 
-                                   focus:outline-none text-lg"
-                            required
-                        >
+                    <div class="flex items-center justify-between mt-3">
+                        <div class="flex-1 h-[2px] bg-gray-600"></div>
 
                         <button 
                             id="submit-button"
                             type="submit"
-                            class="text-gray-300 hover:text-white text-2xl font-light transition-opacity">
+                            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
                             →
                         </button>
                     </div>
-
-                    <div class="w-full h-[2px] bg-gray-600/40 mt-2"></div>
                 </form>
 
                 <!-- SUCCESS MESSAGE -->
                 <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-8">
-                    <p class="text-xl md:text-2xl text-white">Thank You.</p>
+                    <p class="text-xl md:text-2xl">Thank You.</p>
                     <p class="text-xs text-gray-600 mt-3">You are on the list.</p>
                 </div>
 
@@ -110,7 +118,7 @@
         </div>
     </section>
 
-    <!-- FIREBASE SCRIPT -->
+    <!-- FIREBASE -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
@@ -139,7 +147,7 @@
             const email = emailInput.value;
 
             button.disabled = true;
-            button.style.opacity = "0.4";
+            button.style.opacity = "0.3";
 
             try {
                 await addDoc(collection(db, "waitlist"), {
@@ -147,7 +155,6 @@
                     timestamp: serverTimestamp()
                 });
 
-                // Fade out form elements
                 form.style.opacity = "0";
                 footerNote.style.opacity = "0";
 
@@ -155,15 +162,16 @@
                     form.style.display = "none";
                     footerNote.style.display = "none";
                     successMessage.classList.remove("opacity-0");
-                }, 500);
+                }, 400);
 
             } catch (e) {
                 console.error(e);
                 button.innerText = "Error";
-                button.style.color = "#ff4444";
+                button.style.color = "#f00";
                 button.disabled = false;
             }
         });
     </script>
+
 </body>
 </html>
