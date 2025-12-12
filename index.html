@@ -81,29 +81,31 @@
                     Instant. Private. Present.
                 </p>
 
-                <!-- SIGNUP (pure black + white, no box) -->
-                <form id="waitlist-form" class="max-w-md mx-auto">
+               <!-- SIGNUP (single underline only) -->
+<form id="waitlist-form" class="max-w-md mx-auto">
 
-                    <input 
-                        type="email" 
-                        id="email"
-                        name="email"
-                        placeholder="your email"
-                        class="underline-input"
-                        required
-                    >
+    <div class="flex items-center">
+        <input 
+            type="email" 
+            id="email"
+            name="email"
+            placeholder="your email"
+            class="w-full bg-transparent text-gray-300 placeholder-gray-500 
+                   text-lg border-b-2 border-gray-600 focus:border-white 
+                   focus:outline-none pb-1"
+            required
+        >
 
-                    <div class="flex items-center justify-between mt-3">
-                        <div class="flex-1 h-[2px] bg-gray-600"></div>
+        <button 
+            id="submit-button"
+            type="submit"
+            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
+            →
+        </button>
+    </div>
 
-                        <button 
-                            id="submit-button"
-                            type="submit"
-                            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
-                            →
-                        </button>
-                    </div>
-                </form>
+</form>
+
 
                 <!-- SUCCESS MESSAGE -->
                 <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-8">
