@@ -17,6 +17,7 @@
             overflow-x: hidden;
         }
 
+        /* Cinematic HOLLOW reveal */
         #brand-logo {
             background: linear-gradient(90deg, #333, #fff, #333);
             background-size: 200% auto;
@@ -24,27 +25,27 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             opacity: 0;
-            animation: metallic-sweep 2s ease-out 0.5s forwards;
+            animation: hollow-reveal 2.4s ease-out forwards;
         }
 
-        @keyframes metallic-sweep {
-            0% { opacity: 0; background-position: 200% center; }
-            60% { opacity: 1; }
-            100% { opacity: 1; background-position: -200% center; }
+        @keyframes hollow-reveal {
+            0% { opacity: 0; filter: blur(20px); transform: scale(0.85); background-position: 200% center; }
+            40% { opacity: 1; filter: blur(8px); }
+            100% { opacity: 1; filter: blur(0); transform: scale(1); background-position: -200% center; }
         }
 
+        /* Content fade upward */
         #content {
             opacity: 0;
-            animation: content-fade-in 1.5s ease-out 2.0s forwards;
+            animation: content-rise 1.6s ease-out 1.4s forwards;
         }
 
-        @keyframes content-fade-in {
-            from { opacity: 0; transform: translateY(10px); }
+        @keyframes content-rise {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .form-input:focus {
-            border-color: #888;
             outline: none;
             box-shadow: none;
         }
@@ -53,70 +54,63 @@
 
 <body class="text-white px-4">
 
-    <!-- MAIN HERO — CENTERED ON SCREEN -->
-    <!-- UPDATED: Added h-screen flex center to vertically center everything -->
+    <!-- HERO — FULLSCREEN CENTERED -->
     <section class="h-screen flex items-center justify-center">
         <div class="text-center max-w-lg w-full">
 
-            <h1 id="brand-logo" class="text-6xl md:text-8xl font-black mb-6 tracking-tighter">
+            <h1 id="brand-logo" class="text-7xl md:text-9xl font-black mb-10 tracking-tight">
                 HOLLOW
             </h1>
 
             <div id="content">
-                <p class="text-xl md:text-2xl text-gray-400 mb-12">
+
+                <p class="text-xl md:text-2xl text-gray-400 mb-14">
                     Instant. Private. Present.
                 </p>
 
-                <form id="waitlist-form"
-                    class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto transition-all duration-500">
-                    
-                    <input 
-                        type="email" 
-                        name="email" 
-                        id="email"
-                        class="form-input w-full px-5 py-4 bg-transparent border border-gray-800 text-white placeholder-gray-600 rounded-lg text-base"
-                        placeholder="Enter your email" required>
+                <!-- NEW SIGNUP FIELD -->
+                <form id="waitlist-form" class="max-w-md mx-auto">
 
-                    <button 
-                        id="submit-button" 
-                        type="submit"
-                        class="bg-transparent text-white border border-gray-800 font-bold py-4 px-8 rounded-lg text-base hover:bg-white hover:text-black transition-colors duration-200">
-                        Get Early Access
-                    </button>
+                    <div 
+                        class="w-full py-4 px-3 rounded-xl bg-gradient-to-r 
+                        from-[#3838ff22] to-[#00000077] border border-gray-800/40 
+                        backdrop-blur-md flex items-center justify-between">
+
+                        <input 
+                            type="email" 
+                            id="email"
+                            name="email"
+                            placeholder="your email"
+                            class="w-full bg-transparent text-gray-300 placeholder-gray-400 
+                                   focus:outline-none text-lg"
+                            required
+                        >
+
+                        <button 
+                            id="submit-button"
+                            type="submit"
+                            class="text-gray-300 hover:text-white text-2xl font-light transition-opacity">
+                            →
+                        </button>
+                    </div>
+
+                    <div class="w-full h-[2px] bg-gray-600/40 mt-2"></div>
                 </form>
 
-                <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-6">
+                <!-- SUCCESS MESSAGE -->
+                <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-8">
                     <p class="text-xl md:text-2xl text-white">Thank You.</p>
-                    <p class="text-xs text-gray-600 mt-4">You are on the list.</p>
+                    <p class="text-xs text-gray-600 mt-3">You are on the list.</p>
                 </div>
 
-                <p id="footer-note" class="text-xs text-gray-600 mt-4 transition-opacity duration-300">
+                <p id="footer-note" class="text-xs text-gray-600 mt-5 transition-opacity duration-300">
                     Be the first to know when we launch. No spam, ever.
                 </p>
             </div>
         </div>
     </section>
 
-
-    <!-- TWEET SECTION — NOW BELOW THE FOLD -->
-    <!-- UPDATED: Put tweet in its own section far below hero -->
-    <section class="py-24">
-        <div id="tweet-container" class="max-w-md mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300">
-            <blockquote class="twitter-tweet" data-theme="dark">
-                <p lang="en" dir="ltr">
-                    I'm 15, building the future of wrist-first AI.<br>
-                    Real-time voice → on-device processing → instant assistant on your wrist.<br>
-                    Phones feel slow — this is what comes next.
-                </p>
-                — Hollow (@gethollowtech)
-            </blockquote>
-        </div>
-    </section>
-
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-    <!-- FIREBASE SCRIPT (UNCHANGED) -->
+    <!-- FIREBASE SCRIPT -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
@@ -145,8 +139,7 @@
             const email = emailInput.value;
 
             button.disabled = true;
-            button.innerText = "Saving...";
-            button.classList.add("opacity-0");
+            button.style.opacity = "0.4";
 
             try {
                 await addDoc(collection(db, "waitlist"), {
@@ -154,25 +147,23 @@
                     timestamp: serverTimestamp()
                 });
 
-                setTimeout(() => {
-                    form.classList.add("scale-y-0", "opacity-0", "h-0");
-                    footerNote.classList.add("opacity-0");
-                }, 300);
+                // Fade out form elements
+                form.style.opacity = "0";
+                footerNote.style.opacity = "0";
 
                 setTimeout(() => {
                     form.style.display = "none";
                     footerNote.style.display = "none";
                     successMessage.classList.remove("opacity-0");
-                }, 800);
+                }, 500);
 
             } catch (e) {
                 console.error(e);
-                button.innerText = "Error!";
-                button.style.backgroundColor = "#ff0000";
+                button.innerText = "Error";
+                button.style.color = "#ff4444";
                 button.disabled = false;
             }
         });
     </script>
-
 </body>
 </html>
