@@ -6,8 +6,6 @@
     <title>Hollow</title>
     <link rel="icon" type="image/x-icon" href="favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -18,23 +16,23 @@
             overflow-x: hidden;
         }
 
-        /* Faster, cleaner cinematic reveal */
+        /* Faster, cinematic reveal */
         #brand-logo {
             opacity: 0;
             transform: translateY(20px) scale(0.97);
-            animation: hollowReveal 1.2s ease-out forwards;
+            animation: hollowReveal 1s ease-out forwards;
         }
 
         @keyframes hollowReveal {
-            0% { opacity: 0; transform: translateY(20px) scale(0.97); filter: blur(8px); }
-            60% { opacity: 1; filter: blur(2px); }
+            0% { opacity: 0; transform: translateY(20px) scale(0.96); filter: blur(10px); }
+            50% { opacity: 1; filter: blur(3px); }
             100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
         }
 
         /* Content fade */
         #content {
             opacity: 0;
-            animation: contentFade 0.9s ease-out 0.6s forwards;
+            animation: contentFade 0.9s ease-out 0.5s forwards;
         }
 
         @keyframes contentFade {
@@ -42,7 +40,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Clean underline input */
+        /* Single-line underline input */
         .underline-input {
             background: transparent;
             border: none;
@@ -52,13 +50,36 @@
             padding: 6px 0;
             font-size: 1.1rem;
         }
-
         .underline-input:focus {
             outline: none;
             border-bottom-color: #fff;
         }
 
-        /* Prevent HOLLOW from being cut off */
+        /* Spark-ready letters */
+        .spark-letter {
+            position: relative;
+            display: inline-block;
+        }
+
+        /* Main spark effect (light blue + white) */
+        .spark-effect {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: white;
+            border-radius: 50%;
+            filter: blur(0.4px);
+            pointer-events: none;
+            animation: spark-pop 130ms ease-out forwards;
+            box-shadow: 0 0 8px #6ecbff, 0 0 12px white;
+        }
+
+        @keyframes spark-pop {
+            0% { transform: scale(0.4); opacity: 0.9; }
+            50% { transform: scale(1.8); opacity: 1; background: #b7eaff; }
+            100% { transform: scale(0.1); opacity: 0; }
+        }
+
         .hero-wrapper {
             padding-top: 5rem;
         }
@@ -71,8 +92,14 @@
     <section class="h-screen flex items-center justify-center hero-wrapper">
         <div class="text-center max-w-lg w-full">
 
+            <!-- LETTERS SPLIT FOR SPARKS -->
             <h1 id="brand-logo" class="text-7xl md:text-9xl font-black mb-10 tracking-tight">
-                HOLLOW
+                <span class="spark-letter">H</span>
+                <span class="spark-letter">O</span>
+                <span class="spark-letter">L</span>
+                <span class="spark-letter">L</span>
+                <span class="spark-letter">O</span>
+                <span class="spark-letter">W</span>
             </h1>
 
             <div id="content">
@@ -81,31 +108,28 @@
                     Instant. Private. Present.
                 </p>
 
-               <!-- SIGNUP (single underline only) -->
-<form id="waitlist-form" class="max-w-md mx-auto">
+                <!-- EMAIL FIELD (ONE UNDERLINE) -->
+                <form id="waitlist-form" class="max-w-md mx-auto">
 
-    <div class="flex items-center">
-        <input 
-            type="email" 
-            id="email"
-            name="email"
-            placeholder="your email"
-            class="w-full bg-transparent text-gray-300 placeholder-gray-500 
-                   text-lg border-b-2 border-gray-600 focus:border-white 
-                   focus:outline-none pb-1"
-            required
-        >
+                    <div class="flex items-center">
+                        <input 
+                            type="email" 
+                            id="email"
+                            name="email"
+                            placeholder="your email"
+                            class="underline-input"
+                            required
+                        >
 
-        <button 
-            id="submit-button"
-            type="submit"
-            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
-            →
-        </button>
-    </div>
+                        <button 
+                            id="submit-button"
+                            type="submit"
+                            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
+                            →
+                        </button>
+                    </div>
 
-</form>
-
+                </form>
 
                 <!-- SUCCESS MESSAGE -->
                 <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-8">
@@ -172,6 +196,38 @@
                 button.style.color = "#f00";
                 button.disabled = false;
             }
+        });
+    </script>
+
+    <!-- SPARK SYSTEM -->
+    <script>
+        function createSpark(letterEl) {
+            const spark = document.createElement("div");
+            spark.classList.add("spark-effect");
+
+            // Random location inside the letter
+            spark.style.left = Math.random() * 80 + "%";
+            spark.style.top = Math.random() * 80 + "%";
+
+            letterEl.appendChild(spark);
+
+            setTimeout(() => spark.remove(), 140);
+        }
+
+        function startRandomSparks() {
+            const letters = document.querySelectorAll(".spark-letter");
+            if (!letters.length) return;
+
+            const randomLetter = letters[Math.floor(Math.random() * letters.length)];
+            createSpark(randomLetter);
+
+            // Random interval 1.5s–4s
+            const next = 1500 + Math.random() * 2500;
+            setTimeout(startRandomSparks, next);
+        }
+
+        window.addEventListener("load", () => {
+            setTimeout(startRandomSparks, 800);
         });
     </script>
 
