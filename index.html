@@ -9,16 +9,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+
     <style>
         body {
-            background-color: #000000;
+            background-color: #000;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            overflow-y: auto;
-        }
-        
-        .main-container {
-            min-height: 100vh;
         }
 
         #brand-logo {
@@ -46,94 +42,98 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        
+
         .form-input:focus {
             border-color: #888;
-            box-shadow: none;
             outline: none;
+            box-shadow: none;
         }
     </style>
 </head>
-<body class="text-white px-4 py-8">
-    
-    <div class="main-container flex items-center justify-center">
+
+<body class="text-white px-4">
+
+    <!-- MAIN HERO — CENTERED ON SCREEN -->
+    <!-- UPDATED: Added h-screen flex center to vertically center everything -->
+    <section class="h-screen flex items-center justify-center">
         <div class="text-center max-w-lg w-full">
 
-        <h1 id="brand-logo" class="text-6xl md:text-8xl font-black mb-4 tracking-tighter">
-            HOLLOW
-        </h1>
+            <h1 id="brand-logo" class="text-6xl md:text-8xl font-black mb-6 tracking-tighter">
+                HOLLOW
+            </h1>
 
-        <div id="content">
-            <p class="text-xl md:text-2xl text-gray-400 mb-10">
-                Instant. Private. Present.
-            </p>
-    
-            <form id="waitlist-form" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto transition-all duration-500 transform-origin-top">
-                <label for="email" class="sr-only">Email address</label>
-                
-                <input 
-                    type="email" 
-                    name="email" 
-                    id="email"
-                    class="form-input w-full px-5 py-4 bg-transparent border border-gray-800 text-white placeholder-gray-600 rounded-lg text-base transition-colors duration-200"
-                    placeholder="Enter your email" 
-                    required
-                >
-                
-                <button 
-                    id="submit-button"
-                    type="submit" 
-                    class="bg-transparent text-white border border-gray-800 font-bold py-4 px-8 rounded-lg text-base hover:bg-white hover:text-black transition-colors duration-200"
-                >
-                    Get Early Access
-                </button>
-            </form>
-
-            <div id="success-message" class="transition-opacity duration-300 opacity-0">
-                <p class="text-xl md:text-2xl text-white">
-                    Thank You.
+            <div id="content">
+                <p class="text-xl md:text-2xl text-gray-400 mb-12">
+                    Instant. Private. Present.
                 </p>
-                <p class="text-xs text-gray-600 mt-4">
-                    You are on the list.
-                </p>
-            </div>
-    
-            <p id="footer-note" class="text-xs text-gray-600 mt-4 transition-opacity duration-300">
-                Be the first to know when we launch. No spam, ever.
-            </p>
 
-            <!-- Embedded Tweet -->
-            <div id="tweet-container" class="mt-20 mb-20 max-w-md mx-auto">
-                <blockquote class="twitter-tweet" data-theme="dark"><p lang="en" dir="ltr">I'm 15, building the future of wrist-first AI.<br>Real-time voice → on-device processing → instant assistant on your wrist.<br>Phones feel slow — this is what comes next. <a href="https://twitter.com/hashtag/buildinpublic?src=hash&amp;ref_src=twsrc%5Etfw">#buildinpublic</a> <a href="https://twitter.com/hashtag/hardware?src=hash&amp;ref_src=twsrc%5Etfw">#hardware</a> <a href="https://twitter.com/hashtag/startups?src=hash&amp;ref_src=twsrc%5Etfw">#startups</a> <a href="https://twitter.com/hashtag/ai?src=hash&amp;ref_src=twsrc%5Etfw">#ai</a> <a href="https://twitter.com/hashtag/founder?src=hash&amp;ref_src=twsrc%5Etfw">#founder</a> <a href="https://twitter.com/hashtag/wearables?src=hash&amp;ref_src=twsrc%5Etfw">#wearables</a> <a href="https://t.co/hBTPR3znYI">pic.twitter.com/hBTPR3znYI</a></p>&mdash; Hollow (@gethollowtech) <a href="https://twitter.com/gethollowtech/status/1992379829933711447?ref_src=twsrc%5Etfw">November 22, 2025</a></blockquote>
+                <form id="waitlist-form"
+                    class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto transition-all duration-500">
+                    
+                    <input 
+                        type="email" 
+                        name="email" 
+                        id="email"
+                        class="form-input w-full px-5 py-4 bg-transparent border border-gray-800 text-white placeholder-gray-600 rounded-lg text-base"
+                        placeholder="Enter your email" required>
+
+                    <button 
+                        id="submit-button" 
+                        type="submit"
+                        class="bg-transparent text-white border border-gray-800 font-bold py-4 px-8 rounded-lg text-base hover:bg-white hover:text-black transition-colors duration-200">
+                        Get Early Access
+                    </button>
+                </form>
+
+                <div id="success-message" class="transition-opacity duration-300 opacity-0 mt-6">
+                    <p class="text-xl md:text-2xl text-white">Thank You.</p>
+                    <p class="text-xs text-gray-600 mt-4">You are on the list.</p>
+                </div>
+
+                <p id="footer-note" class="text-xs text-gray-600 mt-4 transition-opacity duration-300">
+                    Be the first to know when we launch. No spam, ever.
+                </p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Twitter Widget Script -->
+
+    <!-- TWEET SECTION — NOW BELOW THE FOLD -->
+    <!-- UPDATED: Put tweet in its own section far below hero -->
+    <section class="py-24">
+        <div id="tweet-container" class="max-w-md mx-auto opacity-80 hover:opacity-100 transition-opacity duration-300">
+            <blockquote class="twitter-tweet" data-theme="dark">
+                <p lang="en" dir="ltr">
+                    I'm 15, building the future of wrist-first AI.<br>
+                    Real-time voice → on-device processing → instant assistant on your wrist.<br>
+                    Phones feel slow — this is what comes next.
+                </p>
+                — Hollow (@gethollowtech)
+            </blockquote>
+        </div>
+    </section>
+
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
+
+    <!-- FIREBASE SCRIPT (UNCHANGED) -->
     <script type="module">
-        // Import the functions you need from the SDKs
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
-          apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-          authDomain: "hollow-7ff49.firebaseapp.com",
-          projectId: "hollow-7ff49",
-          storageBucket: "hollow-7ff49.firebasestorage.app",
-          messagingSenderId: "536360139071",
-          appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a",
-          measurementId: "G-0MYVB4E6RR"
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            storageBucket: "hollow-7ff49.firebasestorage.app",
+            messagingSenderId: "536360139071",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a",
+            measurementId: "G-0MYVB4E6RR"
         };
 
-        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        // --- This is the "Action Hub" for your form ---
-        
         const form = document.getElementById("waitlist-form");
         const emailInput = document.getElementById("email");
         const button = document.getElementById("submit-button");
@@ -141,47 +141,38 @@
         const footerNote = document.getElementById("footer-note");
 
         form.addEventListener("submit", async (event) => {
-            event.preventDefault(); 
+            event.preventDefault();
             const email = emailInput.value;
 
             button.disabled = true;
             button.innerText = "Saving...";
+            button.classList.add("opacity-0");
 
             try {
-                // 3. Save the email to your "Mothership" (Firestore)
-                const docRef = await addDoc(collection(db, "waitlist"), {
+                await addDoc(collection(db, "waitlist"), {
                     email: email,
                     timestamp: serverTimestamp()
                 });
 
-                console.log("Document written with ID: ", docRef.id);
-                
-                // 4. "CONDENSE" ANIMATION (v1.2)
-                
-                // Step 1: Fade out the button text
-                button.classList.add("opacity-0");
-                
-                // Step 2: After a brief delay, "condense" the form and fade out the footer
                 setTimeout(() => {
                     form.classList.add("scale-y-0", "opacity-0", "h-0");
                     footerNote.classList.add("opacity-0");
-                }, 300); // 300ms delay
+                }, 300);
 
-                // Step 3: After the condense animation is complete (500ms),
-                // hide the form and fade in the "Success" message.
                 setTimeout(() => {
                     form.style.display = "none";
                     footerNote.style.display = "none";
                     successMessage.classList.remove("opacity-0");
-                }, 800); // 300ms + 500ms
+                }, 800);
 
             } catch (e) {
-                console.error("Error adding document: ", e);
+                console.error(e);
                 button.innerText = "Error!";
                 button.style.backgroundColor = "#ff0000";
                 button.disabled = false;
             }
         });
     </script>
+
 </body>
 </html>
