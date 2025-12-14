@@ -22,66 +22,16 @@
             font-family: "Inter", sans-serif;
             overflow-x: hidden;
             margin: 0;
-            padding: 0;
+            padding: 0; /* IMPORTANT: no padding */
         }
 
-        /* VEIL + SPOTLIGHT */
-        body::before {
-            content: "";
-            position: fixed;
-            inset: 0;
-            background:
-                radial-gradient(
-                    circle at center,
-                    rgba(255,255,255,0.08) 0%,
-                    rgba(255,255,255,0.03) 18%,
-                    rgba(0,0,0,0.85) 45%,
-                    #000 70%
-                ),
-                linear-gradient(
-                    180deg,
-                    rgba(255,255,255,0.03),
-                    rgba(0,0,0,0.4)
-                );
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        body::after {
-            content: "";
-            position: fixed;
-            inset: -50%;
-            background: radial-gradient(
-                circle,
-                rgba(255,255,255,0.04),
-                transparent 60%
-            );
-            animation: veilFloat 18s ease-in-out infinite alternate;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        @keyframes veilFloat {
-            from { transform: translate(-5%, -5%); }
-            to   { transform: translate(5%, 5%); }
-        }
-
-        /* HERO LAYOUT */
-        .hero-wrapper {
-            position: relative;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        /* PERFECT CENTER LOGO */
+        /* PERFECTLY CENTERED HOLLOW */
         #brand-logo {
             white-space: nowrap;
             font-size: clamp(3rem, 10vw, 8rem);
             line-height: 1;
             text-align: center;
+            margin: 0 auto;
 
             opacity: 0;
             transform: translateY(12px) scale(0.97);
@@ -89,23 +39,50 @@
         }
 
         @keyframes hollowReveal {
-            0%   { opacity: 0; transform: translateY(20px) scale(0.95); filter: blur(10px); }
-            60%  { opacity: 1; filter: blur(2px); }
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+                filter: blur(10px);
+            }
+            60% {
+                opacity: 1;
+                filter: blur(2px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
         }
 
-        /* CONTENT FADE */
+        /* Content fade */
         #content {
             opacity: 0;
-            animation: contentFade 0.8s ease-out 0.5s forwards;
+            animation: contentFade 0.8s ease-out 0.4s forwards;
         }
 
         @keyframes contentFade {
-            from { opacity: 0; transform: translateY(10px); }
-            to   { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        /* INPUT */
+        /* Vertically + horizontally centered hero layout */
+        .hero-wrapper {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Underline email input */
         .underline-input {
             background: transparent;
             border: none;
@@ -119,61 +96,57 @@
             outline: none;
             border-bottom-color: white;
         }
-
-        /* LAYERING */
-        .center-logo,
-        #content {
-            position: relative;
-            z-index: 1;
-        }
     </style>
 </head>
 
-<body class="text-white px-4">
+<body class="text-white">
 
+    <!-- HERO -->
     <section class="hero-wrapper">
+        <div class="text-center max-w-lg w-full">
 
-        <!-- CENTERED LOGO -->
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none center-logo">
+            <!-- CLEAN CENTERED HOLLOW -->
             <h1 id="brand-logo" class="font-black tracking-tight">
                 HOLLOW
             </h1>
-        </div>
 
-        <!-- CONTENT -->
-        <div id="content" class="text-center max-w-lg w-full relative z-10">
-            <p class="text-xl md:text-2xl text-gray-400 mb-14">
-                Instant. Private. Present.
-            </p>
+            <div id="content">
 
-            <form id="waitlist-form" class="max-w-md mx-auto">
-                <div class="flex items-center">
-                    <input
-                        type="email"
-                        id="email"
-                        placeholder="your email"
-                        class="underline-input"
-                        required
-                    >
-                    <button
-                        id="submit-button"
-                        type="submit"
-                        class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
-                        →
-                    </button>
+                <p class="text-xl md:text-2xl text-gray-400 mb-14">
+                    Instant. Private. Present.
+                </p>
+
+                <!-- EMAIL SIGNUP -->
+                <form id="waitlist-form" class="max-w-md mx-auto">
+                    <div class="flex items-center">
+                        <input 
+                            type="email"
+                            id="email"
+                            placeholder="your email"
+                            class="underline-input"
+                            required
+                        >
+                        <button 
+                            id="submit-button"
+                            type="submit"
+                            class="text-white text-2xl font-light ml-3 hover:opacity-70 transition-opacity">
+                            →
+                        </button>
+                    </div>
+                </form>
+
+                <!-- SUCCESS MESSAGE -->
+                <div id="success-message" class="opacity-0 transition-opacity duration-300 mt-8">
+                    <p class="text-xl md:text-2xl">Thank You.</p>
+                    <p class="text-xs text-gray-600 mt-3">You are on the list.</p>
                 </div>
-            </form>
 
-            <div id="success-message" class="opacity-0 transition-opacity duration-300 mt-8">
-                <p class="text-xl md:text-2xl">Thank You.</p>
-                <p class="text-xs text-gray-600 mt-3">You are on the list.</p>
+                <p id="footer-note" class="text-xs text-gray-600 mt-5 transition-opacity duration-300">
+                    Be the first to know when we launch. No spam, ever.
+                </p>
+
             </div>
-
-            <p id="footer-note" class="text-xs text-gray-600 mt-5 transition-opacity duration-300">
-                Be the first to know when we launch. No spam, ever.
-            </p>
         </div>
-
     </section>
 
     <!-- FIREBASE -->
