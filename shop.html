@@ -37,59 +37,51 @@
 <body>
 
 <header class="sticky top-0 z-10 bg-black/90 backdrop-blur-sm border-b border-gray-800">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center items-center h-16">
         <a href="/" class="text-2xl font-black tracking-widest text-white hover:text-gray-300 transition-colors">
             HOLLOW
         </a>
-
-        <nav class="space-x-8 text-sm font-medium">
-            <a href="#" class="text-white hover:text-gray-400 transition-colors">Shop</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">About</a>
-            <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a>
-        </nav>
-
-        <button class="text-gray-400 hover:text-white transition-colors text-lg">
-            Cart (0)
-        </button>
     </div>
 </header>
 
 <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 
-    <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-10 border-b border-gray-800 pb-4">
+    <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-10 border-b border-gray-800 pb-4 text-center">
         The Collection
     </h2>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 justify-items-center">
 
         <!-- Product Card -->
-        <div class="group">
-            <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden relative mb-4">
+        <div class="w-full max-w-sm">
+            <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-4">
                 <img 
                     src="0wproto.png" 
                     alt="Hollow 0W Prototype Edition"
                     class="w-full h-full object-cover"
                 />
-
-                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4">
-                    <button class="bg-white text-black text-sm px-6 py-2 rounded-full font-medium hover:bg-gray-200">
-                        Quick View
-                    </button>
-                </div>
             </div>
 
-            <h3 class="text-lg font-medium tracking-tight text-white">
+            <h3 class="text-lg font-medium tracking-tight text-white text-center">
                 Hollow 0W Prototype Edition
             </h3>
-            <p class="mt-1 text-sm text-gray-400">
+
+            <p class="mt-1 text-sm text-gray-400 text-center">
                 The Early Edition of the 0W
             </p>
 
-            <div class="mt-2 flex justify-between items-center">
-                <p class="text-xl font-bold text-white">$75.00</p>
-                <button class="text-gray-400 hover:text-white transition-colors text-3xl font-light">
-                    +
-                </button>
+            <div class="mt-6 flex flex-col items-center gap-4">
+                <p class="text-xl font-bold text-white">
+                    $75.00
+                </p>
+
+                <!-- Stripe Payment Link -->
+                <a
+                    href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00"
+                    class="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200 transition-colors"
+                >
+                    Buy Now
+                </a>
             </div>
         </div>
         <!-- End Product Card -->
@@ -97,7 +89,7 @@
     </div>
 </main>
 
-<footer class="mt-20 border-t border-gray-900 py-10">
+<footer class="mt-24 border-t border-gray-900 py-10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-gray-600">
         <p>&copy; 2025 Hollow. All rights reserved.</p>
     </div>
