@@ -129,7 +129,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
@@ -268,11 +268,14 @@
                 // Create checkout session document in Firestore (modular SDK)
                 const checkoutRef = collection(db, 'customers', auth.currentUser.uid, 'checkout_sessions');
                 const docRef = await addDoc(checkoutRef, {
-                    mode: 'payment', // ONE-TIME PAYMENT
+                    mode: 'payment',
                     price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
                     success_url: window.location.origin + '?success=true',
                     cancel_url: window.location.origin + '?canceled=true',
-                    collect_shipping_address: true, // Collect shipping address
+                    // US shipping only
+                    shipping_address_collection: {
+                        allowed_countries: ['US']
+                    }
                 });
                 
                 console.log('Checkout session document created:', docRef.id);
