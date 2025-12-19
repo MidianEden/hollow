@@ -4,28 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow</title>
-
     <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
-        
-        /* SCROLL LOCK LOGIC */
-        body.locked { overflow: hidden; height: 100vh; }
-        body.unlocked { overflow-y: auto; min-height: 200vh; }
+        /* Lock scroll by default */
+        html, body { 
+            background: #000; 
+            color: white; 
+            font-family: "Inter", sans-serif; 
+            margin: 0; 
+            overflow: hidden; /* Locked until login */
+            height: 100%;
+        }
 
+        /* Hero stays fixed to create parallax depth */
         .hero-container { 
             height: 100vh; 
             width: 100%; 
-            position: sticky; 
+            position: fixed; 
             top: 0; 
+            left: 0;
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            z-index: 20; 
+            z-index: 10; 
             background: black; 
         }
 
@@ -33,21 +37,19 @@
             font-size: clamp(3rem, 15vw, 12rem); 
             font-weight: 900; 
             letter-spacing: -0.05em; 
-            transform-origin: center; 
-            transition: transform 0.1s ease-out; 
+            will-change: transform;
         }
 
-        /* SHOP CONTENT REVEAL */
+        /* Shop content scrolls over the fixed hero */
         #shop-content { 
             position: relative; 
-            z-index: 10; 
-            opacity: 0; 
-            transform: translateY(50px); 
-            transition: all 0.6s ease; 
+            z-index: 20; 
+            margin-top: 100vh; /* Start below the hero */
             background: black; 
-            display: none; /* Stay hidden until login */
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            display: none;
         }
-        .reveal-active { opacity: 1 !important; transform: translateY(0) !important; display: block !important; }
 
         .underline-input { 
             background: transparent; border: none; border-bottom: 2px solid #444; 
@@ -56,62 +58,46 @@
         .underline-input:focus { outline: none; border-bottom-color: white; }
     </style>
 </head>
-<body id="main-body" class="locked">
+<body id="main-body">
 
     <section class="hero-container" id="hero">
         <h1 id="brand-logo">HOLLOW</h1>
         
-        <div id="auth-box" class="text-center transition-opacity duration-300">
+        <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
             <div class="max-w-xs mx-auto">
                 <input type="email" id="email" placeholder="email" class="underline-input">
                 <input type="password" id="password" placeholder="password" class="underline-input">
-                
                 <div class="flex flex-col gap-3 mt-4">
-                    <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200 transition-colors">
-                        Continue
-                    </button>
-                    <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-900 transition-colors">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
-                        Continue with Google
+                    <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200">Continue</button>
+                    <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-900">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
                     </button>
                 </div>
             </div>
         </div>
 
-        <div id="scroll-prompt" class="hidden mt-10 animate-bounce text-gray-500">
-            Scroll to Explore ↓
-        </div>
+        <div id="scroll-prompt" class="hidden mt-10 animate-bounce text-gray-500">Scroll to Enter ↓</div>
     </section>
 
-    <main id="shop-content" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 class="text-4xl sm:text-5xl font-extrabold tracking-tight mb-10 border-b border-gray-800 pb-4 text-center">
-            The Collection
-        </h2>
-
-        <div class="grid grid-cols-1 gap-8 justify-items-center">
-            <div class="w-full max-w-sm">
-                <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-4">
-                    <img src="0wproto.png" alt="Hollow 0W" class="w-full h-full object-cover" />
-                </div>
-                <h3 class="text-lg font-medium text-white text-center">Hollow 0W Prototype Edition</h3>
-                <p class="mt-1 text-sm text-gray-400 text-center">
-                    The Early Edition of the 0W<br>
-                    Monthly subscription charged upon activation
-                </p>
-                <div class="mt-6 flex flex-col items-center gap-4">
-                    <p class="text-xl font-bold text-white">$75.00 + $5/monthly</p>
-                    <button id="checkout-btn" class="bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200">
-                        Buy Now
-                    </button>
+    <main id="shop-content" class="px-4 py-20 min-height-[100vh]">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
+            <div class="grid grid-cols-1 gap-12 justify-items-center">
+                <div class="w-full max-w-sm text-center">
+                    <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-6">
+                        <img src="0wproto.png" alt="Hollow 0W" class="w-full h-full object-cover" />
+                    </div>
+                    <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
+                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly</p>
+                    <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:scale-105 transition-transform">Buy Now</button>
                 </div>
             </div>
         </div>
+        <footer class="mt-40 py-10 text-center text-xs text-gray-600 border-t border-gray-900">
+            &copy; 2025 Hollow. All rights reserved.
+        </footer>
     </main>
-
-    <footer class="mt-24 border-t border-gray-900 py-10 text-center text-xs text-gray-600">
-        <p>&copy; 2025 Hollow. All rights reserved.</p>
-    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
@@ -130,64 +116,51 @@
         const functions = getFunctions(app);
         const googleProvider = new GoogleAuthProvider();
 
-        const body = document.getElementById('main-body');
-        const shop = document.getElementById('shop-content');
-        const authBox = document.getElementById('auth-box');
-        const scrollPrompt = document.getElementById('scroll-prompt');
-
-        // UNLOCK UI ON SUCCESSFUL LOGIN
-        function unlockSite(user) {
-            body.classList.replace('locked', 'unlocked');
-            authBox.style.display = 'none';
-            scrollPrompt.classList.remove('hidden');
+        function unlockSite() {
+            document.body.style.overflow = "auto";
+            document.body.style.height = "auto";
+            document.getElementById('auth-box').classList.add('hidden');
+            document.getElementById('scroll-prompt').classList.remove('hidden');
+            const shop = document.getElementById('shop-content');
             shop.style.display = 'block';
+            setTimeout(() => shop.style.opacity = '1', 50);
         }
 
-        onAuthStateChanged(auth, (user) => {
-            if (user) unlockSite(user);
-        });
+        onAuthStateChanged(auth, (user) => { if (user) unlockSite(); });
 
-        // SCROLL EFFECTS
         window.addEventListener('scroll', () => {
-            if (body.classList.contains('locked')) return;
-
-            const scrollPercent = window.scrollY / (window.innerHeight * 0.7);
-            const scale = Math.max(1 - (scrollPercent * 0.8), 0.15);
-            const moveUp = Math.min(scrollPercent * 40, 42); 
+            const scrolled = window.scrollY;
+            const logo = document.getElementById('brand-logo');
+            const prompt = document.getElementById('scroll-prompt');
             
-            document.getElementById('brand-logo').style.transform = `scale(${scale}) translateY(-${moveUp}vh)`;
-            scrollPrompt.style.opacity = Math.max(1 - (scrollPercent * 5), 0);
-
-            if (scrollPercent > 0.4) shop.classList.add('reveal-active');
+            // PARALLAX EFFECT: Move logo slower than the scroll speed
+            // Logo scales and moves up as you scroll down
+            const scale = Math.max(1 - (scrolled / 1000), 0.2);
+            const translateY = scrolled * 0.4; // 0.4 speed creates depth
+            logo.style.transform = `scale(${scale}) translateY(-${translateY}px)`;
+            
+            // Fade out the prompt quickly
+            prompt.style.opacity = Math.max(1 - (scrolled / 200), 0);
         });
 
-        // AUTH ACTIONS
         document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider).catch(e => alert(e.message));
-
         document.getElementById('email-auth-btn').onclick = async () => {
             const email = document.getElementById('email').value;
             const pass = document.getElementById('password').value;
-            try { 
-                await signInWithEmailAndPassword(auth, email, pass); 
-            } catch (err) {
-                try { await createUserWithEmailAndPassword(auth, email, pass); } catch (e) { alert(e.message); }
-            }
+            try { await signInWithEmailAndPassword(auth, email, pass); } 
+            catch { try { await createUserWithEmailAndPassword(auth, email, pass); } catch (e) { alert(e.message); } }
         };
 
-        // STRIPE BACKEND CALL
         document.getElementById('checkout-btn').onclick = async () => {
             try {
                 const createSession = httpsCallable(functions, 'ext-firestore-stripe-payments-createCheckoutSession'); 
                 const { data } = await createSession({
-                    price: 'prod_TcjJGsXflvsQ7n', // Your Product ID
+                    price: 'prod_TcjJGsXflvsQ7n', 
                     success_url: window.location.origin,
                     cancel_url: window.location.origin,
                 });
                 window.location.assign(data.url);
-            } catch (e) {
-                console.error(e);
-                alert("Checkout error. Please try again.");
-            }
+            } catch (e) { alert("Please ensure the Stripe extension is configured in Firebase."); }
         };
     </script>
 </body>
