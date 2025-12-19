@@ -29,7 +29,7 @@
             z-index: 50;
             background: black;
             pointer-events: none;
-            transition: height 0.3s ease;
+            transition: height 0.6s ease;
         }
 
         .header-hero.shrunk {
@@ -42,7 +42,7 @@
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
             letter-spacing: -0.05em;
-            transition: font-size 0.3s ease, transform 0.1s linear;
+            transition: font-size 0.6s ease, transform 0.1s linear;
             pointer-events: auto;
         }
 
@@ -116,7 +116,8 @@
                         <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
                     </div>
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly(Upon activation)</p>
+                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly</p>
+                    <p class="text-sm text-gray-500">(Upon activation)</p>
                     <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                 </div>
             </div>
@@ -172,8 +173,8 @@
                     const hero = document.getElementById('hero');
                     const prompt = document.getElementById('scroll-prompt');
                     
-                    // Shrink header after scrolling past initial viewport
-                    if (scrolled > 50) {
+                    // Shrink header after scrolling past 300px (slower transition)
+                    if (scrolled > 300) {
                         hero.classList.add('shrunk');
                     } else {
                         hero.classList.remove('shrunk');
@@ -181,7 +182,7 @@
                     
                     // Fade out scroll prompt
                     if (prompt) {
-                        const fadeProgress = Math.min(scrolled / 200, 1);
+                        const fadeProgress = Math.min(scrolled / 400, 1);
                         prompt.style.opacity = 1 - fadeProgress;
                     }
                     
@@ -285,7 +286,7 @@
                     .collection('checkout_sessions')
                     .add({
                         mode: 'payment', // ONE-TIME PAYMENT
-                        price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn', // Replace with your one-time price ID
+                        price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
                         success_url: window.location.origin + '?success=true',
                         cancel_url: window.location.origin + '?canceled=true',
                     });
