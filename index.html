@@ -11,6 +11,7 @@
     <style>
         body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
         
+        /* Layout locking for Auth */
         body.auth-locked { overflow: hidden; height: 100vh; }
         body.auth-unlocked { overflow-y: auto; height: auto; }
 
@@ -32,7 +33,7 @@
             padding: 1rem 0;
         }
 
-        /* Fixed overlapping circle issue */
+        /* Profile icon styling */
         #profile-icon {
             position: absolute;
             top: 1.5rem;
@@ -48,6 +49,7 @@
             font-weight: bold;
             font-size: 1rem;
             transition: background 0.2s;
+            border: 1px solid #333;
         }
 
         body.auth-unlocked #profile-icon {
@@ -104,7 +106,7 @@
             border-bottom-color: #888;
         }
 
-        /* Tooltip Styles Restored */
+        /* Tooltip Styles */
         .tooltip-wrapper {
             position: relative;
             display: inline-block;
@@ -114,7 +116,7 @@
             visibility: hidden;
             opacity: 0;
             position: absolute;
-            bottom: 110%;
+            bottom: 120%;
             left: 50%;
             transform: translateX(-50%);
             background: #1a1a1a;
@@ -187,17 +189,19 @@
                     <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
                     
                     <div class="tooltip-wrapper">
-                        <stripe-buy-button
-                            buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
-                            publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
-                        >
-                        </stripe-buy-button>
+                        <div class="inline-block p-1 border border-white rounded-full hover:border-gray-400 transition-colors">
+                            <stripe-buy-button
+                                buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
+                                publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
+                            >
+                            </stripe-buy-button>
+                        </div>
 
                         <div class="tooltip">
                             <strong>⚠️ Prototype Warning</strong>
-                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more. If you want a polished consumer product, wait for the next release.
+                            You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. If you want a polished consumer product, wait for the next release.
                             <br><br>
-                            <strong>PS:</strong> Every purchase will receive $50 in credits for the next release.
+                            <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
                         </div>
                     </div>
                 </div>
@@ -258,7 +262,7 @@
         document.getElementById('email-auth-btn').onclick = async () => {
             const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
-            if (!email || !pass) return alert("Enter credentials");
+            if (!email || !pass) return alert("Please enter credentials");
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
