@@ -1,46 +1,45 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; min-height: 200vh; }
+        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
+        /* Lock scroll until auth */
+        .locked { overflow: hidden; height: 100vh; }
+        .unlocked { overflow-y: auto; min-height: 200vh; }
+
         .hero-container { height: 100vh; width: 100%; position: sticky; top: 0; display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 20; background: black; }
         #brand-logo { font-size: clamp(3rem, 15vw, 12rem); font-weight: 900; letter-spacing: -0.05em; transform-origin: center; transition: transform 0.1s ease-out; }
-        #shop-content { position: relative; z-index: 10; opacity: 0; transform: translateY(50px); transition: all 0.6s ease; background: black; }
-        .content-visible { opacity: 1 !important; transform: translateY(0) !important; }
+        
+        #shop-content { position: relative; z-index: 10; opacity: 0; transform: translateY(50px); transition: all 0.6s ease; background: black; display: none; }
+        .content-visible { opacity: 1 !important; transform: translateY(0) !important; display: block !important; }
+        
         .underline-input { background: transparent; border: none; border-bottom: 2px solid #444; padding: 6px 0; width: 100%; color: white; margin-bottom: 1rem; }
         .underline-input:focus { outline: none; border-bottom-color: white; }
     </style>
 </head>
-<body>
+<body id="main-body" class="locked">
 
 <section class="hero-container" id="hero">
     <h1 id="brand-logo">HOLLOW</h1>
     <div id="auth-box" class="text-center transition-opacity duration-300">
         <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
-
         <div class="max-w-xs mx-auto">
             <input type="email" id="email" placeholder="email" class="underline-input">
             <input type="password" id="password" placeholder="password" class="underline-input">
-            
             <div class="flex flex-col gap-3 mt-4">
-                <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200">
-                    Sign Up / Log In
-                </button>
+                <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200">Continue</button>
                 <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:bg-gray-900">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18">
-                    Continue with Google
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
                 </button>
             </div>
         </div>
-        
-        <div id="success-msg" class="hidden mt-6 text-green-500">Welcome back.</div>
     </div>
+    <div id="scroll-prompt" class="hidden mt-10 animate-bounce text-gray-500">Scroll to Explore ↓</div>
 </section>
 
 <main id="shop-content" class="max-w-7xl mx-auto px-4 py-12">
@@ -52,83 +51,66 @@
             </div>
             <h3 class="text-lg font-medium">Hollow 0W Prototype Edition</h3>
             <p class="text-xl font-bold mt-4">$75.00+$5/monthly</p>
-            <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00" class="inline-block mt-4 bg-white text-black px-8 py-3 rounded-full font-medium">Buy Now</a>
+            <button id="checkout-button" class="mt-4 bg-white text-black px-8 py-3 rounded-full font-medium hover:bg-gray-200">Buy Now</button>
         </div>
     </div>
 </main>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-    import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
     import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-functions.js";
 
     const firebaseConfig = {
         apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
         authDomain: "hollow-7ff49.firebaseapp.com",
         projectId: "hollow-7ff49",
-        storageBucket: "hollow-7ff49.firebasestorage.app",
-        messagingSenderId: "536360139071",
         appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
+    const functions = getFunctions(app);
     const googleProvider = new GoogleAuthProvider();
 
-    // SCROLL EFFECT LOGIC
+    function unlockSite() {
+        document.getElementById('main-body').classList.replace('locked', 'unlocked');
+        document.getElementById('auth-box').classList.add('hidden');
+        document.getElementById('scroll-prompt').classList.remove('hidden');
+        document.getElementById('shop-content').style.display = 'block';
+    }
+
+    // AUTH STATE OBSERVER
+    onAuthStateChanged(auth, (user) => { if (user) unlockSite(); });
+
+    // SCROLL LOGIC
     window.addEventListener('scroll', () => {
+        if (document.getElementById('main-body').classList.contains('locked')) return;
         const scrollPercent = window.scrollY / (window.innerHeight * 0.7);
         const scale = Math.max(1 - (scrollPercent * 0.8), 0.15);
         const moveUp = Math.min(scrollPercent * 40, 42); 
         document.getElementById('brand-logo').style.transform = `scale(${scale}) translateY(-${moveUp}vh)`;
-        document.getElementById('auth-box').style.opacity = Math.max(1 - (scrollPercent * 2), 0);
-        
-        if (scrollPercent > 0.5) document.getElementById('shop-content').classList.add('content-visible');
+        document.getElementById('scroll-prompt').style.opacity = Math.max(1 - (scrollPercent * 5), 0);
+        if (scrollPercent > 0.4) document.getElementById('shop-content').classList.add('content-visible');
     });
 
-    // SAVE USER TO FIRESTORE
-    async function saveUser(user) {
-        await setDoc(doc(db, "users", user.uid), {
-            email: user.email,
-            lastSeen: serverTimestamp()
-        }, { merge: true });
-    }
+    // GOOGLE AUTH
+    document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider).catch(e => alert(e.message));
 
-    // GOOGLE SIGN IN
-    document.getElementById('google-auth-btn').onclick = async () => {
-        try {
-            const result = await signInWithPopup(auth, googleProvider);
-            await saveUser(result.user);
-        } catch (e) { alert(e.message); }
-    };
-
-    // EMAIL AUTH (Simplified: Tries login, if fails with 'user-not-found', tries signup)
+    // EMAIL AUTH
     document.getElementById('email-auth-btn').onclick = async () => {
         const email = document.getElementById('email').value;
         const pass = document.getElementById('password').value;
-        if (!email || !pass) return alert("Fill all fields");
-
-        try {
-            const res = await signInWithEmailAndPassword(auth, email, pass);
-            await saveUser(res.user);
-        } catch (err) {
-            if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
-                try {
-                    const res = await createUserWithEmailAndPassword(auth, email, pass);
-                    await saveUser(res.user);
-                } catch (e) { alert(e.message); }
-            } else { alert(err.message); }
-        }
+        try { await signInWithEmailAndPassword(auth, email, pass); } 
+        catch { try { await createUserWithEmailAndPassword(auth, email, pass); } catch (e) { alert(e.message); } }
     };
 
-    // TRACK AUTH STATE
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-            document.getElementById('success-msg').classList.remove('hidden');
-            document.getElementById('success-msg').innerText = `Logged in as ${user.email}`;
-        }
-    });
+    // STRIPE CHECKOUT (Backend Integration)
+    document.getElementById('checkout-button').onclick = async () => {
+        const createCheckoutSession = httpsCallable(functions, 'createCheckoutSession');
+        const { data } = await createCheckoutSession({ priceId: 'prod_TcjJGsXflvsQ7n' });
+        window.location.href = data.url;
+    };
 </script>
 </body>
 </html>
