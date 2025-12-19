@@ -45,7 +45,16 @@
             font-size: 2rem;
         }
 
-        #auth-box { pointer-events: auto; }
+        /* Auth box hidden by default if user might be logged in */
+        #auth-box, #tagline {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        body.auth-locked.show-auth #auth-box,
+        body.auth-locked.show-auth #tagline {
+            opacity: 1;
+        }
 
         /* Shop content */
         #shop-content {
@@ -146,11 +155,18 @@
             setTimeout(() => shop.style.opacity = '1', 50);
         }
 
+        function showAuth() {
+            document.body.classList.add('show-auth');
+        }
+
         // Check auth state immediately and hide login if already signed in
         onAuthStateChanged(auth, (user) => { 
             if (user) {
                 unlockSite();
                 isAuthenticating = false;
+            } else {
+                // User not logged in, show auth form
+                showAuth();
             }
         });
 
@@ -256,6 +272,7 @@
                     price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
                     success_url: window.location.origin + '?success=true',
                     cancel_url: window.location.origin + '?canceled=true',
+                    collect_shipping_address: true, // Collect shipping address
                 });
                 
                 console.log('Checkout session document created:', docRef.id);
