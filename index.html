@@ -96,8 +96,6 @@
                 </div>
             </div>
         </div>
-
-        <div id="scroll-prompt" class="hidden mt-10 text-gray-500">↓</div>
     </section>
 
     <main id="shop-content" class="px-4 py-20">
@@ -122,7 +120,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
@@ -143,12 +141,12 @@
             document.body.classList.add('auth-unlocked');
             document.getElementById('auth-box').style.display = 'none';
             document.getElementById('tagline').style.display = 'none';
-            document.getElementById('scroll-prompt').classList.remove('hidden');
             const shop = document.getElementById('shop-content');
             shop.style.display = 'block';
             setTimeout(() => shop.style.opacity = '1', 50);
         }
 
+        // Check auth state immediately and hide login if already signed in
         onAuthStateChanged(auth, (user) => { 
             if (user) {
                 unlockSite();
@@ -269,7 +267,7 @@
                     alert('Checkout is taking too long. Please check:\n\n1. Stripe extension is installed\n2. Webhook is configured\n3. Check Firebase console for errors');
                 }, 10000); // 10 second timeout
                 
-                const unsubscribe = docRef.onSnapshot((snap) => {
+                const unsubscribe = onSnapshot(docRef, (snap) => {
                     const data = snap.data();
                     console.log('Checkout session update:', data);
                     
