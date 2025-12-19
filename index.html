@@ -33,6 +33,49 @@
             padding: 1rem 0;
         }
 
+        body.auth-unlocked .header-hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        body.auth-unlocked .header-hero::after:hover {
+            background: #333;
+        }
+
+        /* Profile icon (simple circle with initial) */
+        #profile-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 2rem;
+            width: 40px;
+            height: 40px;
+            background: #222;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: background 0.2s;
+        }
+
+        body.auth-unlocked #profile-icon {
+            display: flex;
+        }
+
+        #profile-icon:hover {
+            background: #333;
+        }
+
         #brand-logo {
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
@@ -85,12 +128,61 @@
             opacity: 0.6;
             cursor: not-allowed;
         }
+
+        /* Tooltip for buy button */
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #ddd;
+            padding: 1rem;
+            border-radius: 8px;
+            width: 320px;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            text-align: left;
+            z-index: 100;
+            transition: opacity 0.3s, visibility 0.3s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+        }
+
+        .tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 8px solid transparent;
+            border-top-color: #333;
+        }
+
+        .tooltip-wrapper:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .tooltip strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
     </style>
 </head>
 <body id="main-body" class="auth-locked">
 
     <section class="header-hero" id="hero">
         <h1 id="brand-logo">HOLLOW</h1>
+        <div id="profile-icon" title="Profile">?</div>
         
         <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
@@ -117,7 +209,15 @@
                     </div>
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
                     <p class="mt-2 text-gray-400">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
-                    <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
+                    <div class="tooltip-wrapper">
+                        <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
+                        <div class="tooltip">
+                            <strong>⚠️ Prototype Warning</strong>
+                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more. If you want a polished consumer product, wait for the next release.
+                            <br><br>
+                            <strong>PS:</strong> Every purchase will receive $50 in credits for the next release.
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -153,6 +253,12 @@
             const shop = document.getElementById('shop-content');
             shop.style.display = 'block';
             setTimeout(() => shop.style.opacity = '1', 50);
+            
+            // Set profile icon initial
+            const profileIcon = document.getElementById('profile-icon');
+            if (auth.currentUser?.email) {
+                profileIcon.textContent = auth.currentUser.email[0].toUpperCase();
+            }
         }
 
         function showAuth() {
@@ -169,6 +275,14 @@
                 showAuth();
             }
         });
+
+        // Profile icon click - sign out
+        document.getElementById('profile-icon').onclick = async () => {
+            if (confirm('Sign out?')) {
+                await auth.signOut();
+                location.reload();
+            }
+        };
 
         // Google auth
         document.getElementById('google-auth-btn').onclick = async () => {
