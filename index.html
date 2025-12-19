@@ -31,7 +31,7 @@
             padding: 1rem 0;
         }
 
-        /* Fixed: Removed the ::after pseudo-element that was causing the second circle */
+        /* REMOVED .header-hero::after rule here to fix overlapping circles */
 
         #profile-icon {
             position: absolute;
@@ -48,7 +48,6 @@
             font-weight: bold;
             font-size: 1rem;
             transition: background 0.2s;
-            border: 1px solid #333;
         }
 
         body.auth-unlocked #profile-icon {
@@ -162,7 +161,7 @@
 
     <section class="header-hero" id="hero">
         <h1 id="brand-logo">HOLLOW</h1>
-        <div id="profile-icon" title="Sign Out">?</div>
+        <div id="profile-icon" title="Profile">?</div>
         
         <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
@@ -193,7 +192,7 @@
                         <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                         <div class="tooltip">
                             <strong>⚠️ Prototype Warning</strong>
-                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more.
+                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more. If you want a polished consumer product, wait for the next release.
                             <br><br>
                             <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
                         </div>
@@ -256,7 +255,7 @@
             }
         };
 
-        // Google Auth Logic
+        // ... [Auth logic for Google and Email remains same] ...
         document.getElementById('google-auth-btn').onclick = async () => {
             if (isAuthenticating) return;
             isAuthenticating = true;
@@ -271,36 +270,35 @@
             }
         };
 
-        // Email Auth Logic
         document.getElementById('email-auth-btn').onclick = async () => {
+            if (isAuthenticating) return;
             const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
-            if (!email || !pass) return alert("Enter credentials");
-            
+            if (!email || !pass) return alert("Please enter credentials");
             isAuthenticating = true;
             const btn = document.getElementById('email-auth-btn');
             btn.classList.add('btn-loading');
-            
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) {
+            } catch (signInErr) {
                 try {
                     await createUserWithEmailAndPassword(auth, email, pass);
-                } catch (e2) {
-                    alert(e2.message);
+                } catch (signUpErr) {
                     isAuthenticating = false;
                     btn.classList.remove('btn-loading');
+                    alert(signUpErr.message);
                 }
             }
         };
 
-        // FIXED CHECKOUT LOGIC
+        // Checkout logic with address collection
         document.getElementById('checkout-btn').onclick = async () => {
             const btn = document.getElementById('checkout-btn');
-            if (btn.classList.contains('btn-loading') || !auth.currentUser) return;
+            if (btn.classList.contains('btn-loading')) return;
+            if (!auth.currentUser) return alert('Please sign in first');
             
             btn.classList.add('btn-loading');
-            btn.textContent = 'Opening Checkout...';
+            btn.textContent = 'Processing...';
             
             try {
                 const checkoutRef = collection(db, 'customers', auth.currentUser.uid, 'checkout_sessions');
@@ -309,11 +307,11 @@
                     price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
                     success_url: window.location.origin + '?success=true',
                     cancel_url: window.location.origin + '?canceled=true',
-                    // This forces Stripe to collect a shipping address
+                    // This collects the shipping address in Stripe Checkout
                     shipping_address_collection: {
-                        allowed_countries: ['US'] 
+                        allowed_countries: ['US']
                     },
-                    // Optional: collect phone numbers for shipping updates
+                    // Optional: Collect phone number if needed for shipping
                     phone_number_collection: {
                         enabled: true
                     }
@@ -327,15 +325,15 @@
                     }
                     if (data?.error) {
                         unsubscribe();
-                        alert(data.error.message);
+                        alert(`Checkout error: ${data.error.message}`);
                         btn.classList.remove('btn-loading');
                         btn.textContent = 'Buy Now';
                     }
                 });
             } catch (e) {
-                alert(e.message);
                 btn.classList.remove('btn-loading');
                 btn.textContent = 'Buy Now';
+                alert(e.message);
             }
         };
     </script>
