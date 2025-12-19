@@ -18,8 +18,10 @@
         .header-hero {
             height: 100vh;
             width: 100%;
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -27,14 +29,25 @@
             z-index: 50;
             background: black;
             pointer-events: none;
+            transition: height 0.3s ease;
+        }
+
+        .header-hero.shrunk {
+            height: 80px;
+            justify-content: flex-start;
+            padding-top: 20px;
         }
 
         #brand-logo {
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
             letter-spacing: -0.05em;
-            transition: transform 0.1s linear;
+            transition: font-size 0.3s ease, transform 0.1s linear;
             pointer-events: auto;
+        }
+
+        .header-hero.shrunk #brand-logo {
+            font-size: 2rem;
         }
 
         #auth-box { pointer-events: auto; }
@@ -43,12 +56,12 @@
         #shop-content {
             position: relative;
             z-index: 10;
-            margin-top: -20vh;
-            padding-top: 20vh;
+            margin-top: 100vh;
             background: black;
             display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
+            min-height: 100vh;
         }
 
         .underline-input {
@@ -103,7 +116,7 @@
                         <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
                     </div>
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly</p>
+                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly(Upon activation)</p>
                     <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                 </div>
             </div>
@@ -116,7 +129,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-        import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-functions.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
@@ -127,7 +140,7 @@
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
-        const functions = getFunctions(app);
+        const db = getFirestore(app);
         const googleProvider = new GoogleAuthProvider();
 
         let isAuthenticating = false;
@@ -150,23 +163,27 @@
             }
         });
 
-        // Scroll animation
+        // Scroll animation - shrink logo and move to top
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.scrollY;
-                    const logo = document.getElementById('brand-logo');
                     const hero = document.getElementById('hero');
                     const prompt = document.getElementById('scroll-prompt');
                     
-                    const progress = Math.min(scrolled / 400, 1);
-                    const scale = 1 - (progress * 0.75);
-                    const translateY = progress * -40;
+                    // Shrink header after scrolling past initial viewport
+                    if (scrolled > 50) {
+                        hero.classList.add('shrunk');
+                    } else {
+                        hero.classList.remove('shrunk');
+                    }
                     
-                    logo.style.transform = `scale(${scale}) translateY(${translateY}vh)`;
-                    hero.style.backgroundColor = `rgba(0, 0, 0, ${1 - progress})`;
-                    if (prompt) prompt.style.opacity = 1 - (progress * 2);
+                    // Fade out scroll prompt
+                    if (prompt) {
+                        const fadeProgress = Math.min(scrolled / 200, 1);
+                        prompt.style.opacity = 1 - fadeProgress;
+                    }
                     
                     ticking = false;
                 });
@@ -252,7 +269,7 @@
             }
         };
 
-        // Checkout
+        // Checkout - ONE-TIME PAYMENT ONLY
         document.getElementById('checkout-btn').onclick = async () => {
             const btn = document.getElementById('checkout-btn');
             if (btn.classList.contains('btn-loading')) return;
@@ -261,21 +278,31 @@
             btn.textContent = 'Processing...';
             
             try {
-                const createSession = httpsCallable(functions, 'ext-firestore-stripe-payments-createCheckoutSession');
+                // Create checkout session document in Firestore
+                const docRef = await db
+                    .collection('customers')
+                    .doc(auth.currentUser.uid)
+                    .collection('checkout_sessions')
+                    .add({
+                        mode: 'payment', // ONE-TIME PAYMENT
+                        price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn', // Replace with your one-time price ID
+                        success_url: window.location.origin + '?success=true',
+                        cancel_url: window.location.origin + '?canceled=true',
+                    });
                 
-                // FIXED: Use price_... instead of prod_...
-                // You need to get your actual Stripe Price ID from Stripe Dashboard
-                const { data } = await createSession({
-                    price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn', // Replace with actual price ID
-                    success_url: window.location.origin + '?success=true',
-                    cancel_url: window.location.origin + '?canceled=true',
+                // Listen for the checkout URL
+                docRef.onSnapshot((snap) => {
+                    const { error, url } = snap.data();
+                    if (error) {
+                        console.error('Checkout error:', error);
+                        btn.classList.remove('btn-loading');
+                        btn.textContent = 'Buy Now';
+                        alert(`An error occurred: ${error.message}`);
+                    }
+                    if (url) {
+                        window.location.assign(url);
+                    }
                 });
-                
-                if (data.url) {
-                    window.location.assign(data.url);
-                } else {
-                    throw new Error('No checkout URL returned');
-                }
             } catch (e) {
                 console.error('Checkout error:', e);
                 btn.classList.remove('btn-loading');
