@@ -26,7 +26,7 @@
             align-items: center;
             z-index: 50;
             background: black;
-            pointer-events: none; /* Allows clicking things behind it when shrunk */
+            pointer-events: none;
         }
 
         #brand-logo {
@@ -43,17 +43,32 @@
         #shop-content {
             position: relative;
             z-index: 10;
-            margin-top: -20vh; /* Adjust based on logo shrink */
+            margin-top: -20vh;
             padding-top: 20vh;
             background: black;
-            display: none; /* Hidden until login */
+            display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
         }
 
         .underline-input {
-            background: transparent; border: none; border-bottom: 2px solid #444;
-            padding: 6px 0; width: 100%; color: white; margin-bottom: 1rem;
+            background: transparent; 
+            border: none; 
+            border-bottom: 2px solid #444;
+            padding: 6px 0; 
+            width: 100%; 
+            color: white; 
+            margin-bottom: 1rem;
+            outline: none;
+        }
+        
+        .underline-input:focus {
+            border-bottom-color: #888;
+        }
+
+        .btn-loading {
+            opacity: 0.6;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -65,12 +80,12 @@
         <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
             <div class="max-w-xs mx-auto">
-                <input type="email" id="email" placeholder="email" class="underline-input">
-                <input type="password" id="password" placeholder="password" class="underline-input">
+                <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
+                <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
                 <div class="flex flex-col gap-3 mt-4">
-                    <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold">Continue</button>
-                    <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Continue with Google
+                    <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
+                    <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
                     </button>
                 </div>
             </div>
@@ -89,7 +104,7 @@
                     </div>
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
                     <p class="mt-2 text-gray-400">$75.00 + $5/monthly</p>
-                    <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold">Buy Now</button>
+                    <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                 </div>
             </div>
         </div>
@@ -104,7 +119,7 @@
         import { getFunctions, httpsCallable } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-functions.js";
 
         const firebaseConfig = {
-            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo", // From your index.html
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
             authDomain: "hollow-7ff49.firebaseapp.com",
             projectId: "hollow-7ff49",
             appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
@@ -115,60 +130,168 @@
         const functions = getFunctions(app);
         const googleProvider = new GoogleAuthProvider();
 
+        let isAuthenticating = false;
+
         function unlockSite() {
             document.body.classList.remove('auth-locked');
             document.body.classList.add('auth-unlocked');
             document.getElementById('auth-box').style.display = 'none';
+            document.getElementById('tagline').style.display = 'none';
             document.getElementById('scroll-prompt').classList.remove('hidden');
             const shop = document.getElementById('shop-content');
             shop.style.display = 'block';
             setTimeout(() => shop.style.opacity = '1', 50);
         }
 
-        onAuthStateChanged(auth, (user) => { if (user) unlockSite(); });
-
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const logo = document.getElementById('brand-logo');
-            const hero = document.getElementById('hero');
-            const prompt = document.getElementById('scroll-prompt');
-            
-            // Shrink and move logo to top center
-            const progress = Math.min(scrolled / 400, 1);
-            const scale = 1 - (progress * 0.75); // Shrinks to 25% of original size
-            const translateY = progress * -40; // Moves up into the "header" area
-            
-            logo.style.transform = `scale(${scale}) translateY(${translateY}vh)`;
-            
-            // Fade out hero background to show shop through
-            hero.style.backgroundColor = `rgba(0, 0, 0, ${1 - progress})`;
-            prompt.style.opacity = 1 - (progress * 2);
+        onAuthStateChanged(auth, (user) => { 
+            if (user) {
+                unlockSite();
+                isAuthenticating = false;
+            }
         });
 
-        document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider).catch(err => {
-            if(err.code === 'auth/unauthorized-domain') {
-                alert("Domain not authorized. Please add gethollow.com to Firebase Console.");
-            } else { alert(err.message); }
+        // Scroll animation
+        let ticking = false;
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                window.requestAnimationFrame(() => {
+                    const scrolled = window.scrollY;
+                    const logo = document.getElementById('brand-logo');
+                    const hero = document.getElementById('hero');
+                    const prompt = document.getElementById('scroll-prompt');
+                    
+                    const progress = Math.min(scrolled / 400, 1);
+                    const scale = 1 - (progress * 0.75);
+                    const translateY = progress * -40;
+                    
+                    logo.style.transform = `scale(${scale}) translateY(${translateY}vh)`;
+                    hero.style.backgroundColor = `rgba(0, 0, 0, ${1 - progress})`;
+                    if (prompt) prompt.style.opacity = 1 - (progress * 2);
+                    
+                    ticking = false;
+                });
+                ticking = true;
+            }
+        });
+
+        // Google auth
+        document.getElementById('google-auth-btn').onclick = async () => {
+            if (isAuthenticating) return;
+            isAuthenticating = true;
+            
+            const btn = document.getElementById('google-auth-btn');
+            btn.classList.add('btn-loading');
+            
+            try {
+                await signInWithPopup(auth, googleProvider);
+            } catch (err) {
+                isAuthenticating = false;
+                btn.classList.remove('btn-loading');
+                
+                if (err.code === 'auth/popup-closed-by-user') {
+                    // User closed popup, no need to alert
+                    return;
+                } else if (err.code === 'auth/unauthorized-domain') {
+                    alert("Domain not authorized. Please add this domain to Firebase Console.");
+                } else {
+                    alert("Authentication failed: " + err.message);
+                }
+            }
+        };
+
+        // Email auth with enter key support
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                document.getElementById('email-auth-btn').click();
+            }
         });
 
         document.getElementById('email-auth-btn').onclick = async () => {
-            const email = document.getElementById('email').value;
-            const pass = document.getElementById('password').value;
-            try { await signInWithEmailAndPassword(auth, email, pass); } 
-            catch { try { await createUserWithEmailAndPassword(auth, email, pass); } catch (e) { alert(e.message); } }
+            if (isAuthenticating) return;
+            
+            const email = emailInput.value.trim();
+            const pass = passwordInput.value;
+            
+            if (!email || !pass) {
+                alert("Please enter both email and password");
+                return;
+            }
+            
+            isAuthenticating = true;
+            const btn = document.getElementById('email-auth-btn');
+            btn.classList.add('btn-loading');
+            
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (signInErr) {
+                if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/wrong-password') {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, pass);
+                    } catch (signUpErr) {
+                        isAuthenticating = false;
+                        btn.classList.remove('btn-loading');
+                        
+                        if (signUpErr.code === 'auth/email-already-in-use') {
+                            alert("Invalid password");
+                        } else if (signUpErr.code === 'auth/weak-password') {
+                            alert("Password should be at least 6 characters");
+                        } else if (signUpErr.code === 'auth/invalid-email') {
+                            alert("Invalid email address");
+                        } else {
+                            alert("Authentication failed: " + signUpErr.message);
+                        }
+                    }
+                } else {
+                    isAuthenticating = false;
+                    btn.classList.remove('btn-loading');
+                    alert("Authentication failed: " + signInErr.message);
+                }
+            }
         };
 
+        // Checkout
         document.getElementById('checkout-btn').onclick = async () => {
+            const btn = document.getElementById('checkout-btn');
+            if (btn.classList.contains('btn-loading')) return;
+            
+            btn.classList.add('btn-loading');
+            btn.textContent = 'Processing...';
+            
             try {
-                const createSession = httpsCallable(functions, 'ext-firestore-stripe-payments-createCheckoutSession'); 
+                const createSession = httpsCallable(functions, 'ext-firestore-stripe-payments-createCheckoutSession');
+                
+                // FIXED: Use price_... instead of prod_...
+                // You need to get your actual Stripe Price ID from Stripe Dashboard
                 const { data } = await createSession({
-                    price: 'prod_TcjJGsXflvsQ7n', // Your Product ID
-                    success_url: window.location.origin,
-                    cancel_url: window.location.origin,
+                    price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn', // Replace with actual price ID
+                    success_url: window.location.origin + '?success=true',
+                    cancel_url: window.location.origin + '?canceled=true',
                 });
-                window.location.assign(data.url);
-            } catch (e) { alert("Checkout service unavailable. Ensure Stripe Extension is active."); }
+                
+                if (data.url) {
+                    window.location.assign(data.url);
+                } else {
+                    throw new Error('No checkout URL returned');
+                }
+            } catch (e) {
+                console.error('Checkout error:', e);
+                btn.classList.remove('btn-loading');
+                btn.textContent = 'Buy Now';
+                alert("Checkout unavailable. Please try again or contact support.");
+            }
         };
+        
+        // Handle success/cancel redirects
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('success') === 'true') {
+            alert('Order placed successfully!');
+            window.history.replaceState({}, '', window.location.pathname);
+        } else if (urlParams.get('canceled') === 'true') {
+            window.history.replaceState({}, '', window.location.pathname);
+        }
     </script>
 </body>
 </html>
