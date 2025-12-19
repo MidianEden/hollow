@@ -29,25 +29,15 @@
             z-index: 50;
             background: black;
             pointer-events: none;
-            transition: height 0.6s ease;
-        }
-
-        .header-hero.shrunk {
-            height: 80px;
-            justify-content: flex-start;
-            padding-top: 20px;
         }
 
         #brand-logo {
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
             letter-spacing: -0.05em;
-            transition: font-size 0.6s ease, transform 0.1s linear;
             pointer-events: auto;
-        }
-
-        .header-hero.shrunk #brand-logo {
-            font-size: 2rem;
+            transition: transform 0.3s ease, font-size 0.3s ease;
+            transform-origin: center;
         }
 
         #auth-box { pointer-events: auto; }
@@ -116,8 +106,7 @@
                         <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
                     </div>
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly</p>
-                    <p class="text-sm text-gray-500">(Upon activation)</p>
+                    <p class="mt-2 text-gray-400">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
                     <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                 </div>
             </div>
@@ -164,26 +153,46 @@
             }
         });
 
-        // Scroll animation - shrink logo and move to top
+        // Scroll animation - smooth progressive shrinking
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
                 window.requestAnimationFrame(() => {
                     const scrolled = window.scrollY;
+                    const logo = document.getElementById('brand-logo');
                     const hero = document.getElementById('hero');
                     const prompt = document.getElementById('scroll-prompt');
                     
-                    // Shrink header after scrolling past 300px (slower transition)
-                    if (scrolled > 300) {
-                        hero.classList.add('shrunk');
+                    // Progressive shrink from 100% to 20% over 500px of scroll
+                    const maxScroll = 500;
+                    const progress = Math.min(scrolled / maxScroll, 1);
+                    
+                    // Scale from 1 to 0.2 (80% shrink)
+                    const scale = 1 - (progress * 0.8);
+                    
+                    // Move up gradually
+                    const translateY = -(progress * 40);
+                    
+                    logo.style.transform = `translateY(${translateY}vh) scale(${scale})`;
+                    
+                    // Adjust hero height
+                    const minHeight = 80;
+                    const maxHeight = window.innerHeight;
+                    const currentHeight = maxHeight - (progress * (maxHeight - minHeight));
+                    hero.style.height = `${currentHeight}px`;
+                    
+                    // Move hero content to top as it shrinks
+                    if (progress > 0.7) {
+                        hero.style.justifyContent = 'flex-start';
+                        hero.style.paddingTop = '20px';
                     } else {
-                        hero.classList.remove('shrunk');
+                        hero.style.justifyContent = 'center';
+                        hero.style.paddingTop = '0';
                     }
                     
                     // Fade out scroll prompt
                     if (prompt) {
-                        const fadeProgress = Math.min(scrolled / 400, 1);
-                        prompt.style.opacity = 1 - fadeProgress;
+                        prompt.style.opacity = 1 - (progress * 2);
                     }
                     
                     ticking = false;
@@ -275,10 +284,18 @@
             const btn = document.getElementById('checkout-btn');
             if (btn.classList.contains('btn-loading')) return;
             
+            // Check if user is logged in
+            if (!auth.currentUser) {
+                alert('Please sign in first to make a purchase');
+                return;
+            }
+            
             btn.classList.add('btn-loading');
             btn.textContent = 'Processing...';
             
             try {
+                console.log('Creating checkout session for user:', auth.currentUser.uid);
+                
                 // Create checkout session document in Firestore
                 const docRef = await db
                     .collection('customers')
@@ -291,24 +308,45 @@
                         cancel_url: window.location.origin + '?canceled=true',
                     });
                 
-                // Listen for the checkout URL
-                docRef.onSnapshot((snap) => {
-                    const { error, url } = snap.data();
-                    if (error) {
-                        console.error('Checkout error:', error);
+                console.log('Checkout session document created:', docRef.id);
+                
+                // Listen for the checkout URL (with timeout)
+                const timeout = setTimeout(() => {
+                    btn.classList.remove('btn-loading');
+                    btn.textContent = 'Buy Now';
+                    alert('Checkout is taking too long. Please check:\n\n1. Stripe extension is installed\n2. Webhook is configured\n3. Check Firebase console for errors');
+                }, 10000); // 10 second timeout
+                
+                const unsubscribe = docRef.onSnapshot((snap) => {
+                    const data = snap.data();
+                    console.log('Checkout session update:', data);
+                    
+                    if (data?.error) {
+                        clearTimeout(timeout);
+                        unsubscribe();
+                        console.error('Checkout error:', data.error);
                         btn.classList.remove('btn-loading');
                         btn.textContent = 'Buy Now';
-                        alert(`An error occurred: ${error.message}`);
+                        alert(`Checkout error: ${data.error.message}\n\nPlease check Firebase console for details.`);
                     }
-                    if (url) {
-                        window.location.assign(url);
+                    if (data?.url) {
+                        clearTimeout(timeout);
+                        unsubscribe();
+                        console.log('Redirecting to checkout:', data.url);
+                        window.location.assign(data.url);
                     }
                 });
             } catch (e) {
                 console.error('Checkout error:', e);
                 btn.classList.remove('btn-loading');
                 btn.textContent = 'Buy Now';
-                alert("Checkout unavailable. Please try again or contact support.");
+                
+                // More specific error messages
+                if (e.code === 'permission-denied') {
+                    alert("Permission denied. Please check:\n\n1. You're signed in\n2. Firestore security rules are set correctly");
+                } else {
+                    alert(`Checkout error: ${e.message}\n\nCheck browser console for details.`);
+                }
             }
         };
         
