@@ -10,11 +10,9 @@
     <style>
         body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
         
-        /* Initial state is locked */
         body.auth-locked { overflow: hidden; height: 100vh; }
         body.auth-unlocked { overflow-y: auto; height: auto; }
 
-        /* Simple header that shrinks on scroll */
         .header-hero {
             width: 100%;
             padding: 2rem 0;
@@ -33,24 +31,8 @@
             padding: 1rem 0;
         }
 
-        body.auth-unlocked .header-hero::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 2rem;
-            width: 40px;
-            height: 40px;
-            background: #222;
-            border-radius: 50%;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
+        /* Fixed: Removed the ::after pseudo-element that was causing the second circle */
 
-        body.auth-unlocked .header-hero::after:hover {
-            background: #333;
-        }
-
-        /* Profile icon (simple circle with initial) */
         #profile-icon {
             position: absolute;
             top: 1.5rem;
@@ -66,6 +48,7 @@
             font-weight: bold;
             font-size: 1rem;
             transition: background 0.2s;
+            border: 1px solid #333;
         }
 
         body.auth-unlocked #profile-icon {
@@ -88,7 +71,6 @@
             font-size: 2rem;
         }
 
-        /* Auth box hidden by default if user might be logged in */
         #auth-box, #tagline {
             opacity: 0;
             transition: opacity 0.3s ease;
@@ -99,7 +81,6 @@
             opacity: 1;
         }
 
-        /* Shop content */
         #shop-content {
             background: black;
             display: none;
@@ -129,7 +110,6 @@
             cursor: not-allowed;
         }
 
-        /* Tooltip for buy button */
         .tooltip-wrapper {
             position: relative;
             display: inline-block;
@@ -182,7 +162,7 @@
 
     <section class="header-hero" id="hero">
         <h1 id="brand-logo">HOLLOW</h1>
-        <div id="profile-icon" title="Profile">?</div>
+        <div id="profile-icon" title="Sign Out">?</div>
         
         <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
@@ -213,9 +193,9 @@
                         <button id="checkout-btn" class="mt-8 bg-white text-black px-10 py-4 rounded-full font-bold hover:bg-gray-200 transition">Buy Now</button>
                         <div class="tooltip">
                             <strong>⚠️ Prototype Warning</strong>
-                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more. If you want a polished consumer product, wait for the next release.
+                            You're buying a prototype meant for testers. It may have glitches, inconsistent battery reading, occasional connection issues, and more.
                             <br><br>
-                            <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
+                            <strong>PS:</strong> Every purchase will receive $50 in credits for the next release.
                         </div>
                     </div>
                 </div>
@@ -229,7 +209,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-        import { getFirestore, collection, addDoc, doc, onSnapshot, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
@@ -254,29 +234,21 @@
             shop.style.display = 'block';
             setTimeout(() => shop.style.opacity = '1', 50);
             
-            // Set profile icon initial
             const profileIcon = document.getElementById('profile-icon');
             if (auth.currentUser?.email) {
                 profileIcon.textContent = auth.currentUser.email[0].toUpperCase();
             }
         }
 
-        function showAuth() {
-            document.body.classList.add('show-auth');
-        }
-
-        // Check auth state immediately and hide login if already signed in
         onAuthStateChanged(auth, (user) => { 
             if (user) {
                 unlockSite();
                 isAuthenticating = false;
             } else {
-                // User not logged in, show auth form
-                showAuth();
+                document.body.classList.add('show-auth');
             }
         });
 
-        // Profile icon click - sign out
         document.getElementById('profile-icon').onclick = async () => {
             if (confirm('Sign out?')) {
                 await auth.signOut();
@@ -284,51 +256,26 @@
             }
         };
 
-        // Google auth
+        // Google Auth Logic
         document.getElementById('google-auth-btn').onclick = async () => {
             if (isAuthenticating) return;
             isAuthenticating = true;
-            
             const btn = document.getElementById('google-auth-btn');
             btn.classList.add('btn-loading');
-            
             try {
                 await signInWithPopup(auth, googleProvider);
             } catch (err) {
                 isAuthenticating = false;
                 btn.classList.remove('btn-loading');
-                
-                if (err.code === 'auth/popup-closed-by-user') {
-                    // User closed popup, no need to alert
-                    return;
-                } else if (err.code === 'auth/unauthorized-domain') {
-                    alert("Domain not authorized. Please add this domain to Firebase Console.");
-                } else {
-                    alert("Authentication failed: " + err.message);
-                }
+                if (err.code !== 'auth/popup-closed-by-user') alert(err.message);
             }
         };
 
-        // Email auth with enter key support
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-        
-        passwordInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                document.getElementById('email-auth-btn').click();
-            }
-        });
-
+        // Email Auth Logic
         document.getElementById('email-auth-btn').onclick = async () => {
-            if (isAuthenticating) return;
-            
-            const email = emailInput.value.trim();
-            const pass = passwordInput.value;
-            
-            if (!email || !pass) {
-                alert("Please enter both email and password");
-                return;
-            }
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('password').value;
+            if (!email || !pass) return alert("Enter credentials");
             
             isAuthenticating = true;
             const btn = document.getElementById('email-auth-btn');
@@ -336,112 +283,61 @@
             
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
-            } catch (signInErr) {
-                if (signInErr.code === 'auth/user-not-found' || signInErr.code === 'auth/wrong-password') {
-                    try {
-                        await createUserWithEmailAndPassword(auth, email, pass);
-                    } catch (signUpErr) {
-                        isAuthenticating = false;
-                        btn.classList.remove('btn-loading');
-                        
-                        if (signUpErr.code === 'auth/email-already-in-use') {
-                            alert("Invalid password");
-                        } else if (signUpErr.code === 'auth/weak-password') {
-                            alert("Password should be at least 6 characters");
-                        } else if (signUpErr.code === 'auth/invalid-email') {
-                            alert("Invalid email address");
-                        } else {
-                            alert("Authentication failed: " + signUpErr.message);
-                        }
-                    }
-                } else {
+            } catch (e) {
+                try {
+                    await createUserWithEmailAndPassword(auth, email, pass);
+                } catch (e2) {
+                    alert(e2.message);
                     isAuthenticating = false;
                     btn.classList.remove('btn-loading');
-                    alert("Authentication failed: " + signInErr.message);
                 }
             }
         };
 
-        // Checkout - ONE-TIME PAYMENT ONLY
+        // FIXED CHECKOUT LOGIC
         document.getElementById('checkout-btn').onclick = async () => {
             const btn = document.getElementById('checkout-btn');
-            if (btn.classList.contains('btn-loading')) return;
-            
-            // Check if user is logged in
-            if (!auth.currentUser) {
-                alert('Please sign in first to make a purchase');
-                return;
-            }
+            if (btn.classList.contains('btn-loading') || !auth.currentUser) return;
             
             btn.classList.add('btn-loading');
-            btn.textContent = 'Processing...';
+            btn.textContent = 'Opening Checkout...';
             
             try {
-                console.log('Creating checkout session for user:', auth.currentUser.uid);
-                
-                // Create checkout session document in Firestore (modular SDK)
                 const checkoutRef = collection(db, 'customers', auth.currentUser.uid, 'checkout_sessions');
                 const docRef = await addDoc(checkoutRef, {
                     mode: 'payment',
                     price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
                     success_url: window.location.origin + '?success=true',
                     cancel_url: window.location.origin + '?canceled=true',
-                    // US shipping only
+                    // This forces Stripe to collect a shipping address
                     shipping_address_collection: {
-                        allowed_countries: ['US']
+                        allowed_countries: ['US'] 
+                    },
+                    // Optional: collect phone numbers for shipping updates
+                    phone_number_collection: {
+                        enabled: true
                     }
                 });
-                
-                console.log('Checkout session document created:', docRef.id);
-                
-                // Listen for the checkout URL (with timeout)
-                const timeout = setTimeout(() => {
-                    btn.classList.remove('btn-loading');
-                    btn.textContent = 'Buy Now';
-                    alert('Checkout is taking too long. Please check:\n\n1. Stripe extension is installed\n2. Webhook is configured\n3. Check Firebase console for errors');
-                }, 10000); // 10 second timeout
                 
                 const unsubscribe = onSnapshot(docRef, (snap) => {
                     const data = snap.data();
-                    console.log('Checkout session update:', data);
-                    
-                    if (data?.error) {
-                        clearTimeout(timeout);
+                    if (data?.url) {
                         unsubscribe();
-                        console.error('Checkout error:', data.error);
+                        window.location.assign(data.url);
+                    }
+                    if (data?.error) {
+                        unsubscribe();
+                        alert(data.error.message);
                         btn.classList.remove('btn-loading');
                         btn.textContent = 'Buy Now';
-                        alert(`Checkout error: ${data.error.message}\n\nPlease check Firebase console for details.`);
-                    }
-                    if (data?.url) {
-                        clearTimeout(timeout);
-                        unsubscribe();
-                        console.log('Redirecting to checkout:', data.url);
-                        window.location.assign(data.url);
                     }
                 });
             } catch (e) {
-                console.error('Checkout error:', e);
+                alert(e.message);
                 btn.classList.remove('btn-loading');
                 btn.textContent = 'Buy Now';
-                
-                // More specific error messages
-                if (e.code === 'permission-denied') {
-                    alert("Permission denied. Please check:\n\n1. You're signed in\n2. Firestore security rules are set correctly");
-                } else {
-                    alert(`Checkout error: ${e.message}\n\nCheck browser console for details.`);
-                }
             }
         };
-        
-        // Handle success/cancel redirects
-        const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.get('success') === 'true') {
-            alert('Order placed successfully!');
-            window.history.replaceState({}, '', window.location.pathname);
-        } else if (urlParams.get('canceled') === 'true') {
-            window.history.replaceState({}, '', window.location.pathname);
-        }
     </script>
 </body>
 </html>
