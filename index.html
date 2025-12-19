@@ -14,44 +14,47 @@
         body.auth-locked { overflow: hidden; height: 100vh; }
         body.auth-unlocked { overflow-y: auto; height: auto; }
 
-        /* The Hero/Logo container stays at the top */
+        /* Simple header that shrinks on scroll */
         .header-hero {
-            height: 100vh;
             width: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            padding: 2rem 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 50;
             background: black;
-            pointer-events: none;
+            transition: padding 0.3s ease;
+        }
+
+        body.auth-unlocked .header-hero {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 1rem 0;
         }
 
         #brand-logo {
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
             letter-spacing: -0.05em;
+            transition: font-size 0.3s ease;
             pointer-events: auto;
-            transition: transform 0.3s ease, font-size 0.3s ease;
-            transform-origin: center;
+        }
+
+        body.auth-unlocked .header-hero #brand-logo {
+            font-size: 2rem;
         }
 
         #auth-box { pointer-events: auto; }
 
-        /* Shop content starts below the initial viewport */
+        /* Shop content */
         #shop-content {
-            position: relative;
-            z-index: 10;
-            margin-top: 100vh;
             background: black;
             display: none;
             opacity: 0;
             transition: opacity 0.5s ease;
             min-height: 100vh;
+            padding-top: 2rem;
         }
 
         .underline-input {
@@ -94,7 +97,7 @@
             </div>
         </div>
 
-        <div id="scroll-prompt" class="hidden mt-10 animate-bounce text-gray-500">Scroll ↓</div>
+        <div id="scroll-prompt" class="hidden mt-10 text-gray-500">↓</div>
     </section>
 
     <main id="shop-content" class="px-4 py-20">
@@ -119,7 +122,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
@@ -150,54 +153,6 @@
             if (user) {
                 unlockSite();
                 isAuthenticating = false;
-            }
-        });
-
-        // Scroll animation - smooth progressive shrinking
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    const scrolled = window.scrollY;
-                    const logo = document.getElementById('brand-logo');
-                    const hero = document.getElementById('hero');
-                    const prompt = document.getElementById('scroll-prompt');
-                    
-                    // Progressive shrink from 100% to 20% over 500px of scroll
-                    const maxScroll = 500;
-                    const progress = Math.min(scrolled / maxScroll, 1);
-                    
-                    // Scale from 1 to 0.2 (80% shrink)
-                    const scale = 1 - (progress * 0.8);
-                    
-                    // Move up gradually
-                    const translateY = -(progress * 40);
-                    
-                    logo.style.transform = `translateY(${translateY}vh) scale(${scale})`;
-                    
-                    // Adjust hero height
-                    const minHeight = 80;
-                    const maxHeight = window.innerHeight;
-                    const currentHeight = maxHeight - (progress * (maxHeight - minHeight));
-                    hero.style.height = `${currentHeight}px`;
-                    
-                    // Move hero content to top as it shrinks
-                    if (progress > 0.7) {
-                        hero.style.justifyContent = 'flex-start';
-                        hero.style.paddingTop = '20px';
-                    } else {
-                        hero.style.justifyContent = 'center';
-                        hero.style.paddingTop = '0';
-                    }
-                    
-                    // Fade out scroll prompt
-                    if (prompt) {
-                        prompt.style.opacity = 1 - (progress * 2);
-                    }
-                    
-                    ticking = false;
-                });
-                ticking = true;
             }
         });
 
@@ -296,17 +251,14 @@
             try {
                 console.log('Creating checkout session for user:', auth.currentUser.uid);
                 
-                // Create checkout session document in Firestore
-                const docRef = await db
-                    .collection('customers')
-                    .doc(auth.currentUser.uid)
-                    .collection('checkout_sessions')
-                    .add({
-                        mode: 'payment', // ONE-TIME PAYMENT
-                        price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
-                        success_url: window.location.origin + '?success=true',
-                        cancel_url: window.location.origin + '?canceled=true',
-                    });
+                // Create checkout session document in Firestore (modular SDK)
+                const checkoutRef = collection(db, 'customers', auth.currentUser.uid, 'checkout_sessions');
+                const docRef = await addDoc(checkoutRef, {
+                    mode: 'payment', // ONE-TIME PAYMENT
+                    price: 'price_1SfTrKIgrOC6v5CQx8FvyXvn',
+                    success_url: window.location.origin + '?success=true',
+                    cancel_url: window.location.origin + '?canceled=true',
+                });
                 
                 console.log('Checkout session document created:', docRef.id);
                 
