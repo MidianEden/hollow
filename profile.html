@@ -1,1 +1,127 @@
-https://buy.stripe.com/4gM00j4dQfuE31DdMH2oE01
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Account | Hollow</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+    <style>
+        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
+        .card { background: #111; border: 1px solid #222; border-radius: 24px; padding: 2rem; }
+        .btn-danger { color: #ff4444; border: 1px solid #441111; transition: all 0.2s; }
+        .btn-danger:hover { background: #441111; }
+    </style>
+</head>
+<body class="min-h-screen py-20 px-4">
+
+    <div class="max-w-2xl mx-auto">
+        <header class="flex justify-between items-center mb-12">
+            <a href="index.html" class="text-gray-500 hover:text-white transition">← Collection</a>
+            <h1 class="text-2xl font-black tracking-tighter">HOLLOW ID</h1>
+        </header>
+
+        <div class="space-y-6">
+            <div class="card flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">Authenticated As</p>
+                    <p id="user-email" class="text-xl font-medium">loading...</p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">Available Credits</p>
+                    <p id="user-credits" class="text-2xl font-black text-white">$0.00</p>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 class="text-xl font-bold mb-2">Hollow Connectivity</h2>
+                <p class="text-gray-400 text-sm mb-6">Required for real-time presence and instant updates. $5.00 per month.</p>
+                
+                <div class="inline-block p-1 border border-white rounded-full">
+                    <stripe-buy-button
+                        buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
+                        publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
+                    >
+                    </stripe-buy-button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <button id="sign-out-btn" class="py-4 rounded-full bg-white text-black font-bold hover:bg-gray-200 transition">
+                    Sign Out
+                </button>
+                <button id="delete-account-btn" class="py-4 rounded-full btn-danger font-bold">
+                    Delete Account
+                </button>
+            </div>
+        </div>
+        
+        <p class="text-center mt-12 text-gray-600 text-xs">
+            Device UID: <span id="user-uid" class="font-mono">...</span>
+        </p>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                document.getElementById('user-email').textContent = user.email;
+                document.getElementById('user-uid').textContent = user.uid;
+
+                // Fetch Credits from Firestore
+                const userRef = doc(db, "users", user.uid);
+                const userSnap = await getDoc(userRef);
+                
+                if (userSnap.exists()) {
+                    const data = userSnap.data();
+                    if (data.credits) {
+                        document.getElementById('user-credits').textContent = `$${data.credits}.00`;
+                    }
+                }
+            } else {
+                // If not logged in, boot back to home
+                window.location.href = 'index.html';
+            }
+        });
+
+        // Sign Out
+        document.getElementById('sign-out-btn').onclick = async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        };
+
+        // Delete Account
+        document.getElementById('delete-account-btn').onclick = async () => {
+            const confirmed = confirm("WARNING: This will permanently delete your Hollow ID and all associated data. This cannot be undone. Proceed?");
+            if (confirmed) {
+                try {
+                    await deleteUser(auth.currentUser);
+                    alert("Account deleted.");
+                    window.location.href = 'index.html';
+                } catch (error) {
+                    if (error.code === 'auth/requires-recent-login') {
+                        alert("For security, please sign out and sign back in before deleting your account.");
+                    } else {
+                        alert(error.message);
+                    }
+                }
+            }
+        };
+    </script>
+</body>
+</html>
