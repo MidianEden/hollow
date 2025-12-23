@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Account | Hollow</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <script async src="https://js.stripe.com/v3/buy-button.js"></script>
@@ -12,6 +13,18 @@
         .card { background: #111; border: 1px solid #222; border-radius: 24px; padding: 2rem; }
         .btn-danger { color: #ff4444; border: 1px solid #441111; transition: all 0.2s; }
         .btn-danger:hover { background: #441111; }
+        
+        /* Matching the outline style from index.html */
+        .outline-container {
+            display: inline-block;
+            padding: 4px; /* Matches the p-1 in index */
+            border: 1px solid white;
+            border-radius: 9999px;
+            transition: border-color 0.3s;
+        }
+        .outline-container:hover {
+            border-color: #9ca3af; /* Matches border-gray-400 */
+        }
     </style>
 </head>
 <body class="min-h-screen py-20 px-4">
@@ -19,7 +32,7 @@
     <div class="max-w-2xl mx-auto">
         <header class="flex justify-between items-center mb-12">
             <a href="index.html" class="text-gray-500 hover:text-white transition">← Collection</a>
-            <h1 class="text-2xl font-black tracking-tighter">HOLLOW ID</h1>
+            <h1 class="text-2xl font-black tracking-tighter uppercase">Hollow ID</h1>
         </header>
 
         <div class="space-y-6">
@@ -38,9 +51,9 @@
                 <h2 class="text-xl font-bold mb-2">Hollow Connectivity</h2>
                 <p class="text-gray-400 text-sm mb-6">Required for real-time presence and instant updates. $5.00 per month.</p>
                 
-                <div class="inline-block p-1 border border-white rounded-full">
+                <div class="outline-container">
                     <stripe-buy-button
-                        buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
+                        buy-button-id="buy_btn_1ShKlFIgrOC6v5CQLd6qnnZs"
                         publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
                     >
                     </stripe-buy-button>
@@ -85,16 +98,18 @@
 
                 // Fetch Credits from Firestore
                 const userRef = doc(db, "users", user.uid);
-                const userSnap = await getDoc(userRef);
-                
-                if (userSnap.exists()) {
-                    const data = userSnap.data();
-                    if (data.credits) {
-                        document.getElementById('user-credits').textContent = `$${data.credits}.00`;
+                try {
+                    const userSnap = await getDoc(userRef);
+                    if (userSnap.exists()) {
+                        const data = userSnap.data();
+                        if (data.credits !== undefined) {
+                            document.getElementById('user-credits').textContent = `$${data.credits}.00`;
+                        }
                     }
+                } catch (e) {
+                    console.log("No credits found yet.");
                 }
             } else {
-                // If not logged in, boot back to home
                 window.location.href = 'index.html';
             }
         });
@@ -107,15 +122,14 @@
 
         // Delete Account
         document.getElementById('delete-account-btn').onclick = async () => {
-            const confirmed = confirm("WARNING: This will permanently delete your Hollow ID and all associated data. This cannot be undone. Proceed?");
+            const confirmed = confirm("WARNING: This will permanently delete your Hollow ID and all data. Proceed?");
             if (confirmed) {
                 try {
                     await deleteUser(auth.currentUser);
-                    alert("Account deleted.");
                     window.location.href = 'index.html';
                 } catch (error) {
                     if (error.code === 'auth/requires-recent-login') {
-                        alert("For security, please sign out and sign back in before deleting your account.");
+                        alert("For security, please sign out and sign back in to delete your account.");
                     } else {
                         alert(error.message);
                     }
