@@ -7,134 +7,133 @@
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
         body {
-            background: radial-gradient(1200px 600px at top, #0b0b0b, #000);
+            background: #000;
             color: white;
             font-family: "Inter", sans-serif;
+            margin: 0;
         }
 
         .card {
-            background: linear-gradient(180deg, #111, #0a0a0a);
-            border: 1px solid #1f1f1f;
-            border-radius: 28px;
+            background: #111;
+            border: 1px solid #222;
+            border-radius: 24px;
             padding: 2rem;
-            box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
-        }
-
-        .label {
-            font-size: 0.65rem;
-            letter-spacing: 0.25em;
-            font-weight: 800;
-            text-transform: uppercase;
-            color: #6b7280;
-        }
-
-        .btn {
-            padding: 1rem 0;
-            border-radius: 9999px;
-            font-weight: 800;
-            transition: all 0.25s ease;
-        }
-
-        .btn-primary {
-            background: white;
-            color: black;
-        }
-
-        .btn-primary:hover {
-            background: #e5e7eb;
         }
 
         .btn-danger {
-            color: #ff6b6b;
-            border: 1px solid #3a1414;
-            background: transparent;
+            color: #ff4444;
+            border: 1px solid #441111;
+            transition: all 0.2s;
         }
 
         .btn-danger:hover {
-            background: #3a1414;
+            background: #441111;
         }
 
+        /* Matching outline style */
         .outline-container {
-            display: inline-flex;
+            display: inline-block;
             padding: 4px;
+            border: 1px solid white;
             border-radius: 9999px;
-            border: 1px solid rgba(255,255,255,0.3);
             transition: border-color 0.3s;
         }
 
         .outline-container:hover {
-            border-color: rgba(255,255,255,0.6);
+            border-color: #9ca3af;
         }
     </style>
 </head>
 
-<body class="min-h-screen px-4 py-24">
+<body class="min-h-screen py-20 px-4">
 
-<div class="max-w-2xl mx-auto space-y-12">
-
-    <!-- Header -->
-    <header class="flex items-center justify-between">
-        <a href="index.html" class="text-sm text-gray-500 hover:text-white transition">
+<div class="max-w-2xl mx-auto">
+    <header class="flex justify-between items-center mb-12">
+        <a href="index.html" class="text-gray-500 hover:text-white transition">
             ← Collection
         </a>
-
-        <h1 class="text-xl font-black tracking-tight uppercase">
+        <h1 class="text-2xl font-black tracking-tighter uppercase">
             Hollow ID
         </h1>
     </header>
 
-    <!-- Identity Card -->
-    <div class="card flex items-center justify-between gap-6">
-        <div>
-            <p class="label mb-2">Authenticated As</p>
-            <p id="user-email" class="text-lg font-medium">loading…</p>
+    <div class="space-y-6">
+
+        <!-- Identity -->
+        <div class="card flex justify-between items-center">
+            <div>
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">
+                    Authenticated As
+                </p>
+                <p id="user-email" class="text-xl font-medium">
+                    loading...
+                </p>
+            </div>
+
+            <div class="text-right">
+                <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">
+                    Available Credits
+                </p>
+                <p id="user-credits" class="text-2xl font-black">
+                    $0.00
+                </p>
+            </div>
         </div>
 
-        <div class="text-right">
-            <p class="label mb-2">Available Credits</p>
-            <p id="user-credits" class="text-3xl font-black">$0.00</p>
-        </div>
-    </div>
+        <!-- Connectivity -->
+        <div class="card">
+            <h2 class="text-xl font-bold mb-2">
+                Hollow Connectivity
+            </h2>
 
-    <!-- Subscription -->
-    <div class="card space-y-6">
-        <div>
-            <h2 class="text-lg font-extrabold mb-1">Hollow Connectivity</h2>
-            <p class="text-sm text-gray-400">
-                Real-time presence & instant updates.<br>
-                <span class="text-white font-semibold">$5.00 / month</span>
+            <p class="text-gray-400 text-sm mb-6">
+                Required for real-time presence and instant updates.
+                <br>
+                <span class="text-white font-semibold">$5.00 per month</span>
             </p>
+
+            <!-- Redirect Button -->
+            <div class="outline-container">
+                <a
+                    href="https://your-site.com/checkout"
+                    class="px-10 py-3 rounded-full text-xs font-extrabold
+                           tracking-[0.25em] uppercase transition
+                           hover:text-gray-300"
+                >
+                    Enable Connectivity
+                </a>
+            </div>
         </div>
 
-        <div class="outline-container">
-            <stripe-buy-button
-                buy-button-id="buy_btn_1ShKlFIgrOC6v5CQLd6qnnZs"
-                publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu">
-            </stripe-buy-button>
+        <!-- Actions -->
+        <div class="grid grid-cols-2 gap-4">
+            <button
+                id="sign-out-btn"
+                class="py-4 rounded-full bg-white text-black font-bold
+                       hover:bg-gray-200 transition"
+            >
+                Sign Out
+            </button>
+
+            <button
+                id="delete-account-btn"
+                class="py-4 rounded-full btn-danger font-bold"
+            >
+                Delete Account
+            </button>
         </div>
-    </div>
-
-    <!-- Actions -->
-    <div class="grid grid-cols-2 gap-4">
-        <button id="sign-out-btn" class="btn btn-primary">
-            Sign Out
-        </button>
-
-        <button id="delete-account-btn" class="btn btn-danger">
-            Delete Account
-        </button>
     </div>
 
     <!-- Footer -->
-    <p class="text-center text-xs text-gray-600 pt-6">
-        Device UID<br>
-        <span id="user-uid" class="font-mono text-gray-400">…</span>
+    <p class="text-center mt-12 text-gray-600 text-xs">
+        Device UID:
+        <span id="user-uid" class="font-mono">
+            ...
+        </span>
     </p>
 </div>
 
@@ -155,18 +154,20 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
-        if (!user) return window.location.href = 'index.html';
+        if (user) {
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-uid').textContent = user.uid;
 
-        document.getElementById('user-email').textContent = user.email;
-        document.getElementById('user-uid').textContent = user.uid;
-
-        try {
-            const snap = await getDoc(doc(db, "users", user.uid));
-            if (snap.exists() && snap.data().credits !== undefined) {
-                document.getElementById('user-credits').textContent =
-                    `$${snap.data().credits}.00`;
-            }
-        } catch {}
+            try {
+                const snap = await getDoc(doc(db, "users", user.uid));
+                if (snap.exists() && snap.data().credits !== undefined) {
+                    document.getElementById('user-credits').textContent =
+                        `$${snap.data().credits}.00`;
+                }
+            } catch {}
+        } else {
+            window.location.href = 'index.html';
+        }
     });
 
     document.getElementById('sign-out-btn').onclick = async () => {
@@ -175,16 +176,19 @@
     };
 
     document.getElementById('delete-account-btn').onclick = async () => {
-        if (!confirm("This will permanently delete your Hollow ID. Continue?")) return;
+        const confirmed = confirm(
+            "WARNING: This will permanently delete your Hollow ID and all data. Proceed?"
+        );
+        if (!confirmed) return;
 
         try {
             await deleteUser(auth.currentUser);
             window.location.href = 'index.html';
-        } catch (e) {
+        } catch (error) {
             alert(
-                e.code === 'auth/requires-recent-login'
-                ? "Please sign out and back in before deleting."
-                : e.message
+                error.code === 'auth/requires-recent-login'
+                    ? "Please sign out and sign back in to delete your account."
+                    : error.message
             );
         }
     };
