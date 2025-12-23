@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Account | Hollow</title>
+    <title>Hollow ID</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
@@ -17,124 +17,120 @@
             margin: 0;
         }
 
-        .card {
-            background: #111;
-            border: 1px solid #222;
-            border-radius: 24px;
-            padding: 2rem;
+        .section {
+            border-bottom: 1px solid #1f1f1f;
+            padding: 3rem 0;
         }
 
-        .btn-danger {
-            color: #ff4444;
-            border: 1px solid #441111;
-            transition: all 0.2s;
+        .label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #6b7280;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
 
-        .btn-danger:hover {
-            background: #441111;
-        }
-
-        /* Matching outline style */
-        .outline-container {
+        .outline-pill {
             display: inline-block;
-            padding: 4px;
+            padding: 0.25rem;
             border: 1px solid white;
             border-radius: 9999px;
             transition: border-color 0.3s;
         }
 
-        .outline-container:hover {
+        .outline-pill:hover {
             border-color: #9ca3af;
+        }
+
+        .danger {
+            color: #ff5a5a;
+            border: 1px solid #3a1414;
+        }
+
+        .danger:hover {
+            background: #3a1414;
         }
     </style>
 </head>
 
-<body class="min-h-screen py-20 px-4">
+<body class="px-4 py-16">
 
-<div class="max-w-2xl mx-auto">
-    <header class="flex justify-between items-center mb-12">
-        <a href="index.html" class="text-gray-500 hover:text-white transition">
+<div class="max-w-3xl mx-auto">
+
+    <!-- Header -->
+    <header class="flex items-center justify-between mb-20">
+        <a href="index.html" class="text-sm text-gray-500 hover:text-white transition">
             ← Collection
         </a>
-        <h1 class="text-2xl font-black tracking-tighter uppercase">
-            Hollow ID
+
+        <h1 class="text-2xl font-black tracking-tight">
+            HOLLOW
         </h1>
     </header>
 
-    <div class="space-y-6">
+    <!-- Identity -->
+    <section class="section">
+        <p class="label">Authenticated As</p>
+        <p id="user-email" class="text-xl font-medium">
+            loading…
+        </p>
+    </section>
 
-        <!-- Identity -->
-        <div class="card flex justify-between items-center">
-            <div>
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">
-                    Authenticated As
-                </p>
-                <p id="user-email" class="text-xl font-medium">
-                    loading...
-                </p>
-            </div>
+    <!-- Credits -->
+    <section class="section">
+        <p class="label">Available Credits</p>
+        <p id="user-credits" class="text-4xl font-black">
+            $0.00
+        </p>
+    </section>
 
-            <div class="text-right">
-                <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mb-1">
-                    Available Credits
-                </p>
-                <p id="user-credits" class="text-2xl font-black">
-                    $0.00
-                </p>
-            </div>
-        </div>
+    <!-- Connectivity / Subscribe -->
+    <section class="section">
+        <p class="label mb-3">Hollow Connectivity</p>
 
-        <!-- Connectivity -->
-        <div class="card">
-            <h2 class="text-xl font-bold mb-2">
-                Hollow Connectivity
-            </h2>
+        <p class="text-gray-400 text-sm max-w-md mb-6">
+            Required for real-time presence and instant updates.
+            $5.00 per month upon activation.
+        </p>
 
-            <p class="text-gray-400 text-sm mb-6">
-                Required for real-time presence and instant updates.
-                <br>
-                <span class="text-white font-semibold">$5.00 per month</span>
-            </p>
-
-            <!-- Redirect Button -->
-            <div class="outline-container">
-                <a
-                    href="https://your-site.com/checkout"
-                    class="px-10 py-3 rounded-full text-xs font-extrabold
-                           tracking-[0.25em] uppercase transition
-                           hover:text-gray-300"
-                >
-                    Enable Connectivity
-                </a>
-            </div>
-        </div>
-
-        <!-- Actions -->
-        <div class="grid grid-cols-2 gap-4">
-            <button
-                id="sign-out-btn"
-                class="py-4 rounded-full bg-white text-black font-bold
-                       hover:bg-gray-200 transition"
+        <!-- SUBSCRIBE BUTTON -->
+        <div class="outline-pill">
+            <a
+                href="https://buy.stripe.com/4gM00j4dQfuE31DdMH2oE01"
+                class="px-10 py-3 text-xs font-extrabold uppercase tracking-[0.25em]
+                       hover:text-gray-300 transition block"
             >
-                Sign Out
-            </button>
-
-            <button
-                id="delete-account-btn"
-                class="py-4 rounded-full btn-danger font-bold"
-            >
-                Delete Account
-            </button>
+                Subscribe
+            </a>
         </div>
-    </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="pt-16 flex flex-col gap-6">
+
+        <button
+            id="sign-out-btn"
+            class="bg-white text-black py-3 rounded-full font-bold
+                   hover:bg-gray-200 transition"
+        >
+            Sign Out
+        </button>
+
+        <button
+            id="delete-account-btn"
+            class="py-3 rounded-full danger font-bold transition"
+        >
+            Delete Account
+        </button>
+    </section>
 
     <!-- Footer -->
-    <p class="text-center mt-12 text-gray-600 text-xs">
-        Device UID:
-        <span id="user-uid" class="font-mono">
-            ...
-        </span>
-    </p>
+    <footer class="mt-24 text-center text-xs text-gray-600">
+        Device UID<br>
+        <span id="user-uid" class="font-mono text-gray-400">…</span>
+    </footer>
+
 </div>
 
 <script type="module">
@@ -154,20 +150,18 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
-        if (user) {
-            document.getElementById('user-email').textContent = user.email;
-            document.getElementById('user-uid').textContent = user.uid;
+        if (!user) return window.location.href = 'index.html';
 
-            try {
-                const snap = await getDoc(doc(db, "users", user.uid));
-                if (snap.exists() && snap.data().credits !== undefined) {
-                    document.getElementById('user-credits').textContent =
-                        `$${snap.data().credits}.00`;
-                }
-            } catch {}
-        } else {
-            window.location.href = 'index.html';
-        }
+        document.getElementById('user-email').textContent = user.email;
+        document.getElementById('user-uid').textContent = user.uid;
+
+        try {
+            const snap = await getDoc(doc(db, "users", user.uid));
+            if (snap.exists() && snap.data().credits !== undefined) {
+                document.getElementById('user-credits').textContent =
+                    `$${snap.data().credits}.00`;
+            }
+        } catch {}
     });
 
     document.getElementById('sign-out-btn').onclick = async () => {
@@ -176,19 +170,16 @@
     };
 
     document.getElementById('delete-account-btn').onclick = async () => {
-        const confirmed = confirm(
-            "WARNING: This will permanently delete your Hollow ID and all data. Proceed?"
-        );
-        if (!confirmed) return;
+        if (!confirm("This will permanently delete your Hollow ID. Continue?")) return;
 
         try {
             await deleteUser(auth.currentUser);
             window.location.href = 'index.html';
-        } catch (error) {
+        } catch (e) {
             alert(
-                error.code === 'auth/requires-recent-login'
-                    ? "Please sign out and sign back in to delete your account."
-                    : error.message
+                e.code === 'auth/requires-recent-login'
+                ? "Please sign out and back in before deleting."
+                : e.message
             );
         }
     };
