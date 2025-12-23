@@ -11,7 +11,6 @@
     <style>
         body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
         
-        /* Layout locking for Auth */
         body.auth-locked { overflow: hidden; height: 100vh; }
         body.auth-unlocked { overflow-y: auto; height: auto; }
 
@@ -33,7 +32,6 @@
             padding: 1rem 0;
         }
 
-        /* Profile icon styling */
         #profile-icon {
             position: absolute;
             top: 1.5rem;
@@ -106,7 +104,6 @@
             border-bottom-color: #888;
         }
 
-        /* Tooltip Styles */
         .tooltip-wrapper {
             position: relative;
             display: inline-block;
@@ -160,7 +157,7 @@
 
     <section class="header-hero" id="hero">
         <h1 id="brand-logo">HOLLOW</h1>
-        <div id="profile-icon" title="Sign Out">?</div>
+        <div id="profile-icon" title="Account">?</div>
         
         <div id="auth-box" class="text-center mt-8">
             <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
@@ -250,11 +247,9 @@
             }
         });
 
-        document.getElementById('profile-icon').onclick = async () => {
-            if (confirm('Sign out?')) {
-                await auth.signOut();
-                location.reload();
-            }
+        // Redirect to profile.html on click
+        document.getElementById('profile-icon').onclick = () => {
+            window.location.href = 'profile.html';
         };
 
         document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
@@ -262,7 +257,7 @@
         document.getElementById('email-auth-btn').onclick = async () => {
             const email = document.getElementById('email').value.trim();
             const pass = document.getElementById('password').value;
-            if (!email || !pass) return alert("Please enter credentials");
+            if (!email || !pass) return alert("Enter credentials");
             try {
                 await signInWithEmailAndPassword(auth, email, pass);
             } catch (e) {
