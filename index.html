@@ -7,10 +7,9 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <script async src="https://js.stripe.com/v3/buy-button.js"></script>
+
     <style>
         body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
-        
         body.auth-locked { overflow: hidden; height: 100vh; }
         body.auth-unlocked { overflow-y: auto; height: auto; }
 
@@ -54,31 +53,20 @@
             display: flex;
         }
 
-        #profile-icon:hover {
-            background: #333;
-        }
+        #profile-icon:hover { background: #333; }
 
         #brand-logo {
             font-size: clamp(3rem, 15vw, 12rem);
             font-weight: 900;
             letter-spacing: -0.05em;
             transition: font-size 0.3s ease;
-            pointer-events: auto;
         }
 
-        body.auth-unlocked .header-hero #brand-logo {
-            font-size: 2rem;
-        }
+        body.auth-unlocked .header-hero #brand-logo { font-size: 2rem; }
 
-        #auth-box, #tagline {
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
+        #auth-box, #tagline { opacity: 0; transition: opacity 0.3s ease; }
         body.auth-locked.show-auth #auth-box,
-        body.auth-locked.show-auth #tagline {
-            opacity: 1;
-        }
+        body.auth-locked.show-auth #tagline { opacity: 1; }
 
         #shop-content {
             background: black;
@@ -99,16 +87,9 @@
             margin-bottom: 1rem;
             outline: none;
         }
-        
-        .underline-input:focus {
-            border-bottom-color: #888;
-        }
+        .underline-input:focus { border-bottom-color: #888; }
 
-        .tooltip-wrapper {
-            position: relative;
-            display: inline-block;
-        }
-
+        .tooltip-wrapper { position: relative; display: inline-block; }
         .tooltip {
             visibility: hidden;
             opacity: 0;
@@ -130,7 +111,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.5);
             pointer-events: none;
         }
-
         .tooltip::after {
             content: '';
             position: absolute;
@@ -140,153 +120,133 @@
             border: 8px solid transparent;
             border-top-color: #333;
         }
+        .tooltip-wrapper:hover .tooltip { visibility: visible; opacity: 1; }
+        .tooltip strong { color: #fff; display: block; margin-bottom: 0.5rem; }
 
-        .tooltip-wrapper:hover .tooltip {
-            visibility: visible;
-            opacity: 1;
-        }
-
-        .tooltip strong {
-            color: #fff;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Hollow-style pill for Stripe buttons */
+        /* Pill-style button */
         .outline-pill {
             display: inline-block;
-            padding: 0.25rem;
+            padding: 0.75rem 2rem;
             border: 1px solid white;
             border-radius: 9999px;
-            transition: border-color 0.3s;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            transition: border-color 0.3s, color 0.3s;
+            color: white;
+            text-decoration: none;
         }
-
-        .outline-pill:hover {
-            border-color: #9ca3af;
-        }
-
-        .outline-pill stripe-buy-button {
-            border: none;
-            padding: 0;
-            width: auto;
-            height: auto;
-        }
+        .outline-pill:hover { border-color: #9ca3af; color: #d1d5db; }
     </style>
 </head>
 <body id="main-body" class="auth-locked">
 
-    <section class="header-hero" id="hero">
-        <h1 id="brand-logo">HOLLOW</h1>
-        <div id="profile-icon" title="Account">?</div>
+<section class="header-hero" id="hero">
+    <h1 id="brand-logo">HOLLOW</h1>
+    <div id="profile-icon" title="Account">?</div>
+    
+    <div id="auth-box" class="text-center mt-8">
+        <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
+        <div class="max-w-xs mx-auto">
+            <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
+            <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
+            <div class="flex flex-col gap-3 mt-4">
+                <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
+                <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<main id="shop-content" class="px-4 py-20">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
+        <div class="grid grid-cols-1 gap-12 justify-items-center">
+            <div class="w-full max-w-sm text-center">
+                <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-6">
+                    <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
+                </div>
+                <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
+                <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
+                
+                <!-- Tooltip + single pill button -->
+                <div class="tooltip-wrapper">
+                    <a href="https://buy.stripe.com/4gM00j4dQfuE31DdMH2oE01" class="outline-pill">
+                        Buy Prototype
+                    </a>
+                    <div class="tooltip">
+                        <strong>⚠️ Prototype Warning</strong>
+                        You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. Shipping will also take 2-3 weeks. If you want a polished consumer product, wait for the next release.
+                        <br><br>
+                        <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="mt-40 py-10 text-center text-xs text-gray-600 border-t border-gray-900">
+        &copy; 2025 Hollow. All rights reserved.
+    </footer>
+</main>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+    import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+        authDomain: "hollow-7ff49.firebaseapp.com",
+        projectId: "hollow-7ff49",
+        appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const googleProvider = new GoogleAuthProvider();
+
+    function unlockSite() {
+        document.body.classList.remove('auth-locked');
+        document.body.classList.add('auth-unlocked');
+        document.getElementById('auth-box').style.display = 'none';
+        document.getElementById('tagline').style.display = 'none';
+        const shop = document.getElementById('shop-content');
+        shop.style.display = 'block';
+        setTimeout(() => shop.style.opacity = '1', 50);
         
-        <div id="auth-box" class="text-center mt-8">
-            <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
-            <div class="max-w-xs mx-auto">
-                <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
-                <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
-                <div class="flex flex-col gap-3 mt-4">
-                    <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
-                    <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <main id="shop-content" class="px-4 py-20">
-        <div class="max-w-7xl mx-auto">
-            <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
-            <div class="grid grid-cols-1 gap-12 justify-items-center">
-                <div class="w-full max-w-sm text-center">
-                    <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-6">
-                        <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
-                    </div>
-                    <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                    <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
-                    
-                    <!-- Tooltip + Pill-style Stripe button -->
-                    <div class="tooltip-wrapper">
-                        <div class="outline-pill inline-block">
-                            <stripe-buy-button
-                                buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
-                                publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
-                                style="border: none; padding: 0; width: auto; height: auto;"
-                            >
-                            </stripe-buy-button>
-                        </div>
-
-                        <div class="tooltip">
-                            <strong>⚠️ Prototype Warning</strong>
-                            You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. Shipping will also take 2-3 weeks. If you want a polished consumer product, wait for the next release.
-                            <br><br>
-                            <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <footer class="mt-40 py-10 text-center text-xs text-gray-600 border-t border-gray-900">
-            &copy; 2025 Hollow. All rights reserved.
-        </footer>
-    </main>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-            authDomain: "hollow-7ff49.firebaseapp.com",
-            projectId: "hollow-7ff49",
-            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        function unlockSite() {
-            document.body.classList.remove('auth-locked');
-            document.body.classList.add('auth-unlocked');
-            document.getElementById('auth-box').style.display = 'none';
-            document.getElementById('tagline').style.display = 'none';
-            const shop = document.getElementById('shop-content');
-            shop.style.display = 'block';
-            setTimeout(() => shop.style.opacity = '1', 50);
-            
-            const profileIcon = document.getElementById('profile-icon');
-            if (auth.currentUser?.email) {
-                profileIcon.textContent = auth.currentUser.email[0].toUpperCase();
-            }
+        const profileIcon = document.getElementById('profile-icon');
+        if (auth.currentUser?.email) {
+            profileIcon.textContent = auth.currentUser.email[0].toUpperCase();
         }
+    }
 
-        onAuthStateChanged(auth, (user) => { 
-            if (user) {
-                unlockSite();
-            } else {
-                document.body.classList.add('show-auth');
-            }
-        });
+    onAuthStateChanged(auth, (user) => { 
+        if (user) unlockSite();
+        else document.body.classList.add('show-auth');
+    });
 
-        document.getElementById('profile-icon').onclick = () => {
-            window.location.href = 'profile.html';
-        };
+    document.getElementById('profile-icon').onclick = () => {
+        window.location.href = 'profile.html';
+    };
 
-        document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
-        
-        document.getElementById('email-auth-btn').onclick = async () => {
-            const email = document.getElementById('email').value.trim();
-            const pass = document.getElementById('password').value;
-            if (!email || !pass) return alert("Enter credentials");
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) {
-                try {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                } catch (err) { alert(err.message); }
-            }
-        };
-    </script>
+    document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
+    
+    document.getElementById('email-auth-btn').onclick = async () => {
+        const email = document.getElementById('email').value.trim();
+        const pass = document.getElementById('password').value;
+        if (!email || !pass) return alert("Enter credentials");
+        try {
+            await signInWithEmailAndPassword(auth, email, pass);
+        } catch (e) {
+            try { await createUserWithEmailAndPassword(auth, email, pass); } 
+            catch (err) { alert(err.message); }
+        }
+    };
+</script>
+
 </body>
 </html>
