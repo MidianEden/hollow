@@ -60,7 +60,7 @@
 
     <!-- Header -->
     <header class="flex items-center justify-between mb-20">
-        <a href="index.html" class="text-sm text-gray-500 hover:text-white transition">
+        <a href="index" class="text-sm text-gray-500 hover:text-white transition">
             ← Collection
         </a>
 
@@ -150,7 +150,7 @@
     const db = getFirestore(app);
 
     onAuthStateChanged(auth, async (user) => {
-        if (!user) return window.location.href = 'index.html';
+        if (!user) return window.location.href = 'index';
 
         document.getElementById('user-email').textContent = user.email;
         document.getElementById('user-uid').textContent = user.uid;
@@ -166,7 +166,7 @@
 
     document.getElementById('sign-out-btn').onclick = async () => {
         await signOut(auth);
-        window.location.href = 'index.html';
+        window.location.href = 'index';
     };
 
     document.getElementById('delete-account-btn').onclick = async () => {
@@ -174,7 +174,7 @@
 
         try {
             await deleteUser(auth.currentUser);
-            window.location.href = 'index.html';
+            window.location.href = 'index';
         } catch (e) {
             alert(
                 e.code === 'auth/requires-recent-login'
