@@ -151,6 +151,26 @@
             display: block;
             margin-bottom: 0.5rem;
         }
+
+        /* Hollow-style pill for Stripe buttons */
+        .outline-pill {
+            display: inline-block;
+            padding: 0.25rem;
+            border: 1px solid white;
+            border-radius: 9999px;
+            transition: border-color 0.3s;
+        }
+
+        .outline-pill:hover {
+            border-color: #9ca3af;
+        }
+
+        .outline-pill stripe-buy-button {
+            border: none;
+            padding: 0;
+            width: auto;
+            height: auto;
+        }
     </style>
 </head>
 <body id="main-body" class="auth-locked">
@@ -185,11 +205,13 @@
                     <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
                     <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
                     
+                    <!-- Tooltip + Pill-style Stripe button -->
                     <div class="tooltip-wrapper">
-                        <div class="inline-block p-1 border border-white rounded-full hover:border-gray-400 transition-colors">
+                        <div class="outline-pill inline-block">
                             <stripe-buy-button
                                 buy-button-id="buy_btn_1SgCpMIgrOC6v5CQh74M51SB"
                                 publishable-key="pk_live_51SHb7QIgrOC6v5CQO85QjkYVnLInG9nEvnXFNpJ5TBoBmfJ3dYO7s1OtF1F16ioGIRDtOFZEQLvnwDXHz4dweSdh00wR260ysu"
+                                style="border: none; padding: 0; width: auto; height: auto;"
                             >
                             </stripe-buy-button>
                         </div>
@@ -247,7 +269,6 @@
             }
         });
 
-        // Redirect to profile.html on click
         document.getElementById('profile-icon').onclick = () => {
             window.location.href = 'profile.html';
         };
