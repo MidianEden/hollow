@@ -263,7 +263,7 @@
         }
     };
     
-    // Updated Newsletter Logic
+    // Updated Newsletter Logic with Specific Error Handling
     document.getElementById('newsletter-form').onsubmit = async (e) => {
         e.preventDefault();
         const emailInput = e.target.querySelector('input[type="email"]');
@@ -286,7 +286,8 @@
             e.target.reset();
         } catch (err) {
             console.error(err);
-            alert("Error joining list. Please try again.");
+            // Show specific error message to help debugging (likely "Missing permissions")
+            alert("Error: " + err.message);
         } finally {
             btn.textContent = originalText;
             btn.disabled = false;
