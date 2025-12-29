@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payment Success | Hollow</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Shared Styles from profile.html/index.html */
+        body {
+            background: #000;
+            color: white;
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label {
+            font-size: 0.7rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: #6b7280; /* text-gray-500 */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Unique styles for the success state */
+        .code-box {
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 12px;
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+        
+        .code-box:hover {
+            border-color: #555;
+        }
+
+        .outline-pill {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            border: 1px solid white;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            font-weight: 900;
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            transition: all 0.3s;
+            color: white;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .outline-pill:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Simple Spinner */
+        .loader {
+            border: 3px solid #333;
+            border-top: 3px solid #fff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Hide elements by default */
+        .hidden { display: none !important; }
+    </style>
+</head>
+
+<body class="px-4 py-16">
+
+<div class="max-w-3xl mx-auto w-full flex-grow flex flex-col">
+
+    <header class="flex items-center justify-between mb-16">
+        <a href="/" class="text-sm text-gray-500 hover:text-white transition">
+            ← Home
+        </a>
+
+        <h1 class="text-2xl font-black tracking-tight">
+            HOLLOW
+        </h1>
+    </header>
+
+    <main class="flex-grow flex flex-col items-center justify-center text-center">
+        
+        <div id="state-loading" class="flex flex-col items-center gap-4">
+            <div class="loader"></div>
+            <p class="text-gray-400 animate-pulse">Verifying transaction...</p>
+        </div>
+
+        <div id="state-error" class="hidden max-w-md">
+            <div class="text-red-500 text-4xl mb-4">
+                <i class="fa-solid fa-circle-exclamation"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Unable to fetch license</h2>
+            <p id="error-message" class="text-gray-400 mb-8">
+                We couldn't verify your session ID. This might happen if the page was refreshed or the link is invalid.
+            </p>
+            <a href="mailto:support@gethollow.com" class="text-sm underline text-gray-500 hover:text-white">Contact Support</a>
+        </div>
+
+        <div id="state-success" class="hidden w-full max-w-lg animate-[fadeIn_0.5s_ease-out]">
+            
+            <div class="mb-8 text-green-400 text-5xl">
+                <i class="fa-regular fa-circle-check"></i>
+            </div>
+
+            <h2 class="text-3xl sm:text-4xl font-black tracking-tight mb-4">Payment Successful</h2>
+            <p class="text-gray-400 mb-10">
+                Welcome to the fold. Your license key is ready below.
+            </p>
+
+            <div class="text-left w-full mb-8">
+                <p class="label ml-2">YOUR LICENSE KEY</p>
+                
+                <div class="code-box p-6 flex flex-col sm:flex-row items-center justify-between gap-4 group">
+                    <code id="license-code" class="font-mono text-2xl sm:text-3xl font-bold tracking-wider text-white break-all">
+                        ...
+                    </code>
+                    
+                    <button id="copy-btn" class="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-gray-500 hover:text-white transition whitespace-nowrap">
+                        <span id="copy-text">Copy</span>
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                </div>
+                
+                <p id="email-confirmation" class="text-xs text-gray-600 mt-3 ml-2">
+                    </p>
+            </div>
+
+            <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-lg p-6 text-left mb-10">
+                <h3 class="font-bold text-sm mb-2 text-white">Next Steps:</h3>
+                <ol class="list-decimal list-inside text-sm text-gray-400 space-y-2">
+                    <li>Copy the code above.</li>
+                    <li>Open the <strong>Hollow</strong> app on your device.</li>
+                    <li>Navigate to Settings > Activate License.</li>
+                    <li>Paste your code to unlock full functionality.</li>
+                </ol>
+            </div>
+
+            <a href="/" class="outline-pill">
+                Back to Collection
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="mt-24 text-center text-xs text-gray-600">
+        &copy; 2025 Hollow
+    </footer>
+
+</div>
+
+<script>
+    // Configuration
+    const BACKEND_URL = "https://hollow-backend.fly.dev/v1/license/by-session";
+
+    // DOM Elements
+    const stateLoading = document.getElementById('state-loading');
+    const stateError = document.getElementById('state-error');
+    const stateSuccess = document.getElementById('state-success');
+    const errorMessage = document.getElementById('error-message');
+    
+    const licenseCodeEl = document.getElementById('license-code');
+    const emailConfEl = document.getElementById('email-confirmation');
+    const copyBtn = document.getElementById('copy-btn');
+    const copyText = document.getElementById('copy-text');
+
+    // Init
+    document.addEventListener('DOMContentLoaded', async () => {
+        // 1. Get Session ID from URL
+        const params = new URLSearchParams(window.location.search);
+        const sessionId = params.get('session_id');
+
+        if (!sessionId) {
+            showError("No session ID found. Please access this page via the Stripe redirect.");
+            return;
+        }
+
+        // 2. Fetch License
+        try {
+            const response = await fetch(`${BACKEND_URL}?session_id=${sessionId}`);
+            
+            if (!response.ok) {
+                const errData = await response.json().catch(() => ({}));
+                throw new Error(errData.message || "Failed to retrieve license.");
+            }
+
+            const data = await response.json();
+            
+            // 3. Display Data
+            if (data.code) {
+                showSuccess(data);
+            } else {
+                throw new Error("Invalid response from server.");
+            }
+
+        } catch (error) {
+            console.error(error);
+            showError(error.message);
+        }
+    });
+
+    // Helper: Show Success State
+    function showSuccess(data) {
+        stateLoading.classList.add('hidden');
+        stateError.classList.add('hidden');
+        stateSuccess.classList.remove('hidden');
+
+        licenseCodeEl.textContent = data.code;
+        if (data.email) {
+            emailConfEl.textContent = `A confirmation has also been sent to ${data.email}`;
+        }
+    }
+
+    // Helper: Show Error State
+    function showError(msg) {
+        stateLoading.classList.add('hidden');
+        stateSuccess.classList.add('hidden');
+        stateError.classList.remove('hidden');
+        if (msg) errorMessage.textContent = msg;
+    }
+
+    // Interaction: Copy to Clipboard
+    copyBtn.addEventListener('click', () => {
+        const code = licenseCodeEl.textContent.trim();
+        navigator.clipboard.writeText(code).then(() => {
+            // Visual feedback
+            const originalText = copyText.textContent;
+            copyText.textContent = "Copied!";
+            copyBtn.classList.add('text-green-400'); // temporary color change
+            
+            setTimeout(() => {
+                copyText.textContent = originalText;
+                copyBtn.classList.remove('text-green-400');
+            }, 2000);
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            alert('Failed to copy code. Please select and copy manually.');
+        });
+    });
+</script>
+
+</body>
+</html>
