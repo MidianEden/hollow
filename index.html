@@ -142,16 +142,13 @@
         .outline-pill:disabled { opacity: 0.5; cursor: not-allowed; }
         .outline-pill:hover:not(:disabled) { border-color: #9ca3af; color: #d1d5db; }
 
-        /* Feature Card Style */
-        .feature-card {
-            border: 1px solid #222;
-            background: #0a0a0a;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            text-align: left;
+        /* Feature List Styling */
+        .feature-row {
+            transition: background 0.3s ease;
         }
-        .feature-title { font-weight: bold; color: white; margin-bottom: 0.25rem; display: block; }
-        .feature-desc { font-size: 0.875rem; color: #6b7280; }
+        .feature-row:hover .feature-desc {
+            color: #d1d5db; /* Lighten gray on hover */
+        }
     </style>
 </head>
 <body id="main-body">
@@ -163,7 +160,7 @@
 
 <main class="px-4 py-20">
 
-    <div class="content-section max-w-4xl mx-auto text-center mb-32 space-y-32">
+    <div class="content-section max-w-4xl mx-auto text-center mb-40 space-y-32">
         
         <section>
             <h2 class="text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-tight">
@@ -184,32 +181,38 @@
             </p>
         </section>
 
-        <section>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                <div class="feature-card">
-                    <span class="feature-title">Instant Response</span>
-                    <span class="feature-desc">1.3s latency</span>
+        <section class="max-w-5xl mx-auto text-left mt-20">
+            <div class="border-t border-gray-800">
+                
+                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
+                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Instant Response</h3>
+                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">1.3s latency</p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-title">Hands-free</span>
-                    <span class="feature-desc">Complete voice operation</span>
+
+                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
+                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Hands-free</h3>
+                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Complete voice operation</p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-title">Multitasking</span>
-                    <span class="feature-desc">Works while driving, cooking, or at the gym</span>
+
+                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
+                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Multitasking</h3>
+                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Works while driving, cooking, or at the gym</p>
                 </div>
-                <div class="feature-card">
-                    <span class="feature-title">Private & Secure</span>
-                    <span class="feature-desc">Your data stays yours</span>
+
+                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
+                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Private & Secure</h3>
+                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Your data stays yours</p>
                 </div>
-                <div class="feature-card sm:col-span-2 lg:col-span-1">
-                    <span class="feature-title">Zero Distraction</span>
-                    <span class="feature-desc">No screen to suck you in</span>
+
+                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
+                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Zero Distraction</h3>
+                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">No screen to suck you in</p>
                 </div>
+
             </div>
         </section>
 
-        <section class="border-y border-gray-900 py-10">
+        <section class="py-10">
             <p class="text-sm text-gray-500 uppercase tracking-[0.2em] font-bold">
                 Trusted by AI Professionals
             </p>
