@@ -9,26 +9,22 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; }
-        body.auth-locked { overflow: hidden; height: 100vh; }
-        body.auth-unlocked { overflow-y: auto; height: auto; }
-
+        body { background: #000; color: white; font-family: "Inter", sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* Sticky Header */
         .header-hero {
             width: 100%;
-            padding: 2rem 0;
+            padding: 1.5rem 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: black;
-            transition: padding 0.3s ease;
-        }
-
-        body.auth-unlocked .header-hero {
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
             z-index: 50;
-            padding: 1rem 0;
+            border-bottom: 1px solid #111;
         }
 
         #profile-icon {
@@ -39,7 +35,7 @@
             height: 40px;
             background: #222;
             border-radius: 50%;
-            display: none;
+            display: none; /* Hidden until auth */
             align-items: center;
             justify-content: center;
             cursor: pointer;
@@ -49,32 +45,35 @@
             border: 1px solid #333;
         }
 
-        body.auth-unlocked #profile-icon {
-            display: flex;
-        }
-
         #profile-icon:hover { background: #333; }
 
         #brand-logo {
-            font-size: clamp(3rem, 15vw, 12rem);
+            font-size: 2rem;
             font-weight: 900;
             letter-spacing: -0.05em;
-            transition: font-size 0.3s ease;
         }
 
-        body.auth-unlocked .header-hero #brand-logo { font-size: 2rem; }
+        /* Content Sections */
+        .content-section {
+            opacity: 0; 
+            animation: fadeIn 1s forwards;
+        }
 
-        #auth-box, #tagline { opacity: 0; transition: opacity 0.3s ease; }
-        body.auth-locked.show-auth #auth-box,
-        body.auth-locked.show-auth #tagline { opacity: 1; }
+        @keyframes fadeIn { to { opacity: 1; } }
 
-        #shop-content {
-            background: black;
-            display: none;
+        #auth-container {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.5s ease;
+        }
+
+        #protected-collection {
+            display: none; /* Hidden by default */
             opacity: 0;
             transition: opacity 0.5s ease;
-            min-height: 100vh;
-            padding-top: 2rem;
         }
 
         .underline-input {
@@ -86,6 +85,7 @@
             color: white; 
             margin-bottom: 1rem;
             outline: none;
+            text-align: center;
         }
         .underline-input:focus { border-bottom-color: #888; }
 
@@ -154,30 +154,16 @@
         .feature-desc { font-size: 0.875rem; color: #6b7280; }
     </style>
 </head>
-<body id="main-body" class="auth-locked">
+<body id="main-body">
 
-<section class="header-hero" id="hero">
+<header class="header-hero">
     <h1 id="brand-logo">HOLLOW</h1>
     <div id="profile-icon" title="Account">?</div>
-    
-    <div id="auth-box" class="text-center mt-8">
-        <p id="tagline" class="text-xl text-gray-400 mb-8">Instant. Private. Present.</p>
-        <div class="max-w-xs mx-auto">
-            <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
-            <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
-            <div class="flex flex-col gap-3 mt-4">
-                <button id="email-auth-btn" class="bg-white text-black py-2 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
-                <button id="google-auth-btn" class="border border-gray-600 py-2 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
-                </button>
-            </div>
-        </div>
-    </div>
-</section>
+</header>
 
-<main id="shop-content" class="px-4 py-20">
+<main class="px-4 py-20">
 
-    <div class="max-w-4xl mx-auto text-center mb-32 space-y-32">
+    <div class="content-section max-w-4xl mx-auto text-center mb-32 space-y-32">
         
         <section>
             <h2 class="text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-tight">
@@ -230,51 +216,73 @@
         </section>
 
     </div>
-    <div class="max-w-7xl mx-auto">
-        <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
-        <div class="grid grid-cols-1 gap-12 justify-items-center">
-            <div class="w-full max-w-sm text-center">
-                <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-6">
-                    <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
-                </div>
-                <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
-                
-                <div class="tooltip-wrapper">
-                    <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00" class="outline-pill">
-                        Buy Prototype
-                    </a>
-                    <div class="tooltip">
-                        <strong>⚠️ Prototype Warning</strong>
-                        You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. Shipping will also take 2-3 weeks. If you want a polished consumer product, wait for the next release.
-                        <br><br>
-                        <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
-                    </div>
-                </div>
 
-                <div class="mt-6">
-                    <a href="0W_Accompanying_App.apk" download class="outline-pill">
-                        Download App (.apk)
-                    </a>
+    <div class="max-w-7xl mx-auto min-h-[500px]">
+        
+        <div id="auth-container" class="text-center py-20">
+            <h3 class="text-2xl font-bold mb-2">Join Hollow</h3>
+            <p id="tagline" class="text-gray-400 mb-8">Sign up to view the collection.</p>
+            
+            <div class="max-w-xs mx-auto w-full">
+                <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
+                <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
+                <div class="flex flex-col gap-3 mt-8">
+                    <button id="email-auth-btn" class="bg-white text-black py-3 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
+                    <button id="google-auth-btn" class="border border-gray-600 py-3 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition font-medium text-sm">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
+                    </button>
                 </div>
-
             </div>
         </div>
+
+        <div id="protected-collection">
+            <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
+            
+            <div class="grid grid-cols-1 gap-12 justify-items-center mb-40">
+                <div class="w-full max-w-sm text-center">
+                    <div class="aspect-square bg-gray-900 rounded-lg overflow-hidden mb-6">
+                        <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
+                    </div>
+                    <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
+                    <p class="mt-2 text-gray-400 mb-8">$75.00 + $5/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
+                    
+                    <div class="tooltip-wrapper">
+                        <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00" class="outline-pill">
+                            Buy Prototype
+                        </a>
+                        <div class="tooltip">
+                            <strong>⚠️ Prototype Warning</strong>
+                            You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. Shipping will also take 2-3 weeks. If you want a polished consumer product, wait for the next release.
+                            <br><br>
+                            <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
+                        </div>
+                    </div>
+
+                    <div class="mt-6">
+                        <a href="0W_Accompanying_App.apk" download class="outline-pill">
+                            Download App (.apk)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="max-w-md mx-auto text-center">
+                <h3 class="text-xl font-bold mb-2 uppercase tracking-widest">Access List</h3>
+                <p class="text-gray-500 text-sm mb-8">Join for updates on the consumer release.</p>
+                
+                <form id="newsletter-form" class="flex flex-col gap-4">
+                    <input type="email" placeholder="email address" class="underline-input text-center" required>
+                    <div>
+                        <button type="submit" class="outline-pill">
+                            Join List
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
 
-    <div class="mt-40 max-w-md mx-auto text-center">
-        <h3 class="text-xl font-bold mb-2 uppercase tracking-widest">Access List</h3>
-        <p class="text-gray-500 text-sm mb-8">Join for updates on the consumer release.</p>
-        
-        <form id="newsletter-form" class="flex flex-col gap-4">
-            <input type="email" placeholder="email address" class="underline-input text-center" required>
-            <div>
-                <button type="submit" class="outline-pill">
-                    Join List
-                </button>
-            </div>
-        </form>
-    </div>
     <footer class="mt-32 py-10 text-center text-xs text-gray-600 border-t border-gray-900">
         &copy; 2025 Hollow. All rights reserved.
     </footer>
@@ -297,24 +305,30 @@
     const db = getFirestore(app);
     const googleProvider = new GoogleAuthProvider();
 
-    function unlockSite() {
-        document.body.classList.remove('auth-locked');
-        document.body.classList.add('auth-unlocked');
-        document.getElementById('auth-box').style.display = 'none';
-        document.getElementById('tagline').style.display = 'none';
-        const shop = document.getElementById('shop-content');
-        shop.style.display = 'block';
-        setTimeout(() => shop.style.opacity = '1', 50);
-        
-        const profileIcon = document.getElementById('profile-icon');
-        if (auth.currentUser?.email) {
-            profileIcon.textContent = auth.currentUser.email[0].toUpperCase();
-        }
-    }
+    // DOM Elements
+    const authContainer = document.getElementById('auth-container');
+    const protectedCollection = document.getElementById('protected-collection');
+    const profileIcon = document.getElementById('profile-icon');
 
     onAuthStateChanged(auth, (user) => { 
-        if (user) unlockSite();
-        else document.body.classList.add('show-auth');
+        if (user) {
+            // User is signed in: Hide auth form, show collection
+            authContainer.style.display = 'none';
+            protectedCollection.style.display = 'block';
+            setTimeout(() => protectedCollection.style.opacity = '1', 50);
+            
+            // Show profile icon
+            profileIcon.style.display = 'flex';
+            if (user.email) {
+                profileIcon.textContent = user.email[0].toUpperCase();
+            }
+        } else {
+            // User is signed out: Show auth form, hide collection
+            authContainer.style.display = 'flex';
+            protectedCollection.style.display = 'none';
+            protectedCollection.style.opacity = '0';
+            profileIcon.style.display = 'none';
+        }
     });
 
     document.getElementById('profile-icon').onclick = () => {
@@ -335,7 +349,6 @@
         }
     };
     
-    // Updated Newsletter Logic with Specific Error Handling
     document.getElementById('newsletter-form').onsubmit = async (e) => {
         e.preventDefault();
         const emailInput = e.target.querySelector('input[type="email"]');
@@ -344,7 +357,6 @@
         
         if (!email) return;
 
-        // Visual Feedback
         const originalText = btn.textContent;
         btn.textContent = "Joining...";
         btn.disabled = true;
@@ -358,7 +370,6 @@
             e.target.reset();
         } catch (err) {
             console.error(err);
-            // Show specific error message to help debugging (likely "Missing permissions")
             alert("Error: " + err.message);
         } finally {
             btn.textContent = originalText;
