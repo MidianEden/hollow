@@ -62,7 +62,7 @@
         @keyframes fadeIn { to { opacity: 1; } }
 
         #auth-container {
-            min-height: 400px;
+            min-height: 600px; /* Increased height */
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -222,17 +222,19 @@
 
     <div class="max-w-7xl mx-auto min-h-[500px]">
         
-        <div id="auth-container" class="text-center py-20">
-            <h3 class="text-2xl font-bold mb-2">Join Hollow</h3>
-            <p id="tagline" class="text-gray-400 mb-8">Sign up to view the collection.</p>
+        <div id="auth-container" class="text-center py-32">
+            <h3 class="text-6xl sm:text-8xl font-black mb-4 tracking-tight">Join Hollow</h3>
             
-            <div class="max-w-xs mx-auto w-full">
-                <input type="email" id="email" placeholder="email" class="underline-input" autocomplete="email">
-                <input type="password" id="password" placeholder="password" class="underline-input" autocomplete="current-password">
-                <div class="flex flex-col gap-3 mt-8">
-                    <button id="email-auth-btn" class="bg-white text-black py-3 rounded-full font-bold hover:bg-gray-200 transition">Continue</button>
-                    <button id="google-auth-btn" class="border border-gray-600 py-3 rounded-full flex items-center justify-center gap-2 hover:border-gray-400 transition font-medium text-sm">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Continue with Google
+            <p id="tagline" class="text-2xl text-gray-400 mb-12">Sign up to view the collection.</p>
+            
+            <div class="max-w-xl mx-auto w-full px-4">
+                <input type="email" id="email" placeholder="email" class="underline-input text-3xl py-4" autocomplete="email">
+                <input type="password" id="password" placeholder="password" class="underline-input text-3xl py-4" autocomplete="current-password">
+                
+                <div class="flex flex-col gap-4 mt-12">
+                    <button id="email-auth-btn" class="bg-white text-black py-4 rounded-full font-bold text-xl hover:bg-gray-200 transition">Continue</button>
+                    <button id="google-auth-btn" class="border border-gray-600 py-4 rounded-full flex items-center justify-center gap-3 hover:border-gray-400 transition font-medium text-lg">
+                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google"> Continue with Google
                     </button>
                 </div>
             </div>
