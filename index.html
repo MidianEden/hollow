@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,7 +10,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
     <style>
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background: #000;
             color: white;
@@ -29,12 +33,15 @@
             width: 100%;
             height: 100%;
             background: radial-gradient(circle at 20% 50%, rgba(30, 30, 30, 0.4) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(40, 40, 40, 0.3) 0%, transparent 50%);
+                radial-gradient(circle at 80% 80%, rgba(40, 40, 40, 0.3) 0%, transparent 50%);
             pointer-events: none;
             z-index: 0;
         }
 
-        main { position: relative; z-index: 1; }
+        main {
+            position: relative;
+            z-index: 1;
+        }
 
         /* Sticky Header */
         .header-hero {
@@ -44,13 +51,13 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.85);
+            background: rgba(0, 0, 0, 0.85);
             backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 50;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         }
 
         #profile-icon {
@@ -68,15 +75,15 @@
             font-weight: bold;
             font-size: 1rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255,255,255,0.1);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
         #profile-icon:hover {
             background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
-            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
         #brand-logo {
@@ -96,8 +103,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         #auth-container {
@@ -128,16 +142,22 @@
             font-size: 1.25rem;
             transition: all 0.3s ease;
         }
+
         .underline-input:focus {
             border-bottom-color: #666;
             transform: translateY(-2px);
         }
+
         .underline-input::placeholder {
             color: #555;
             text-transform: lowercase;
         }
 
-        .tooltip-wrapper { position: relative; display: inline-block; }
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+
         .tooltip {
             visibility: hidden;
             opacity: 0;
@@ -146,7 +166,7 @@
             left: 50%;
             transform: translateX(-50%) translateY(10px);
             background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ddd;
             padding: 1.25rem;
             border-radius: 12px;
@@ -156,10 +176,11 @@
             text-align: left;
             z-index: 100;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
             pointer-events: none;
             backdrop-filter: blur(10px);
         }
+
         .tooltip::after {
             content: '';
             position: absolute;
@@ -169,12 +190,18 @@
             border: 8px solid transparent;
             border-top-color: #1a1a1a;
         }
+
         .tooltip-wrapper:hover .tooltip {
             visibility: visible;
             opacity: 1;
             transform: translateX(-50%) translateY(0);
         }
-        .tooltip strong { color: #fff; display: block; margin-bottom: 0.5rem; }
+
+        .tooltip strong {
+            color: #fff;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
 
         /* Enhanced pill button */
         .outline-pill {
@@ -194,6 +221,7 @@
             position: relative;
             overflow: hidden;
         }
+
         .outline-pill::before {
             content: '';
             position: absolute;
@@ -202,19 +230,25 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
+
         .outline-pill:hover::before {
             width: 300px;
             height: 300px;
         }
-        .outline-pill:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .outline-pill:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
         .outline-pill:hover:not(:disabled) {
             border-color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(255,255,255,0.15);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15);
         }
 
         /* Primary CTA button */
@@ -230,14 +264,16 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(255,255,255,0.2);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
             position: relative;
             overflow: hidden;
         }
+
         .primary-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255,255,255,0.3);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
         }
+
         .primary-btn::after {
             content: '';
             position: absolute;
@@ -246,10 +282,11 @@
             width: 0;
             height: 0;
             border-radius: 50%;
-            background: rgba(0,0,0,0.05);
+            background: rgba(0, 0, 0, 0.05);
             transform: translate(-50%, -50%);
             transition: width 0.6s, height 0.6s;
         }
+
         .primary-btn:hover::after {
             width: 300px;
             height: 300px;
@@ -257,18 +294,19 @@
 
         /* Secondary button */
         .secondary-btn {
-            border: 2px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             border-radius: 9999px;
             transition: all 0.3s ease;
         }
+
         .secondary-btn:hover {
-            border-color: rgba(255,255,255,0.4);
-            background: rgba(255,255,255,0.06);
+            border-color: rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.06);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(255,255,255,0.05);
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
         }
 
         /* Feature List Styling */
@@ -277,6 +315,7 @@
             border-radius: 8px;
             position: relative;
         }
+
         .feature-row::before {
             content: '';
             position: absolute;
@@ -288,19 +327,24 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         .feature-row:hover::before {
             opacity: 1;
         }
+
         .feature-row:hover {
-            background: rgba(255,255,255,0.02);
+            background: rgba(255, 255, 255, 0.02);
             transform: translateX(8px);
         }
+
         .feature-row:hover .feature-desc {
             color: #e0e0e0;
         }
+
         .feature-row h3 {
             transition: all 0.3s ease;
         }
+
         .feature-row:hover h3 {
             letter-spacing: 0.02em;
         }
@@ -310,15 +354,17 @@
             position: relative;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
             transition: all 0.4s ease;
         }
+
         .image-container:hover {
             transform: translateY(-8px);
-            box-shadow: 0 30px 80px rgba(0,0,0,0.7);
-            border-color: rgba(255,255,255,0.1);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+            border-color: rgba(255, 255, 255, 0.1);
         }
+
         .image-container::before {
             content: '';
             position: absolute;
@@ -326,12 +372,13 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 50%);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
             opacity: 0;
             transition: opacity 0.4s ease;
             pointer-events: none;
             z-index: 1;
         }
+
         .image-container:hover::before {
             opacity: 1;
         }
@@ -346,8 +393,15 @@
         }
 
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Smooth scroll */
@@ -359,248 +413,326 @@
         .product-card {
             transition: all 0.4s ease;
         }
+
         .product-card:hover {
             transform: translateY(-8px);
         }
 
         /* Accent glow */
         @keyframes subtleGlow {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 0.8; }
+
+            0%,
+            100% {
+                opacity: 0.5;
+            }
+
+            50% {
+                opacity: 0.8;
+            }
         }
     </style>
 </head>
+
 <body id="main-body">
 
-<header class="header-hero">
-    <h1 id="brand-logo">HOLLOW</h1>
-    <div id="profile-icon" title="Account">?</div>
-</header>
+    <header class="header-hero">
+        <h1 id="brand-logo">HOLLOW</h1>
+        <div id="profile-icon" title="Account">?</div>
+    </header>
 
-<main class="px-4 py-20">
+    <main class="relative z-10 w-full overflow-hidden">
 
-    <div class="content-section max-w-4xl mx-auto text-center mb-40 space-y-32">
-        
-        <section>
-            <h2 class="hero-title text-5xl sm:text-7xl font-black tracking-tighter mb-6 leading-tight">
-                AI that responds<br>in 1.3 seconds
-            </h2>
-            <p class="text-xl text-gray-400 mb-12 max-w-xl mx-auto">
-                No phone needed. Instant answers from your wrist.
-            </p>
-            <div class="aspect-square max-w-sm mx-auto image-container">
-                 <img src="0wproto.png" alt="Hollow Watch" class="w-full h-full object-cover">
-            </div>
-        </section>
+        <!-- Hero & Features Split -->
+        <div class="min-h-screen flex items-center justify-center px-6 py-12 lg:px-12 lg:py-0">
+            <div class="max-w-[1600px] w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 items-center">
 
-        <section class="max-w-2xl mx-auto">
-            <p class="text-2xl sm:text-3xl font-medium leading-relaxed text-gray-300">
-                "Pulling out your phone for AI takes 8-15 seconds and breaks your flow. 
-                <span class="text-white font-bold">Hollow</span> gives you instant answers while you stay focused on what matters."
-            </p>
-        </section>
+                <!-- Left Col: Visuals & Headline (7 cols) -->
+                <div class="lg:col-span-7 flex flex-col space-y-12">
 
-        <section class="max-w-5xl mx-auto text-left mt-20">
-            <div class="border-t border-gray-800">
-                
-                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
-                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Instant Response</h3>
-                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">1.5s latency</p>
-                </div>
-
-                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
-                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Hands-free</h3>
-                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Complete voice operation</p>
-                </div>
-
-                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
-                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Multitasking</h3>
-                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Works while driving, cooking, or at the gym</p>
-                </div>
-
-                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
-                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Private & Secure</h3>
-                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">Your data stays yours</p>
-                </div>
-
-                <div class="feature-row py-12 flex flex-col md:flex-row md:items-baseline justify-between border-b border-gray-800 hover:bg-[#0a0a0a] transition-colors duration-300 px-4">
-                    <h3 class="text-3xl font-bold text-white mb-2 md:mb-0">Maximum Focus</h3>
-                    <p class="feature-desc text-gray-500 text-xl md:text-right max-w-md transition-colors duration-300">No distractions to suck you in</p>
-                </div>
-
-            </div>
-        </section>
-
-        <section class="py-10">
-            <p class="text-sm text-gray-500 uppercase tracking-[0.2em] font-bold">
-                Trusted by AI Professionals
-            </p>
-        </section>
-
-    </div>
-
-    <div class="max-w-7xl mx-auto min-h-[500px]">
-        
-        <div id="auth-container" class="text-center py-32">
-            <h3 class="text-6xl sm:text-8xl font-black mb-4 tracking-tight">Join Hollow</h3>
-            
-            <p id="tagline" class="text-2xl text-gray-400 mb-12">Sign up to purchase</p>
-            
-            <div class="max-w-xl mx-auto w-full px-4">
-                <input type="email" id="email" placeholder="email" class="underline-input text-3xl py-4" autocomplete="email">
-                <input type="password" id="password" placeholder="password" class="underline-input text-3xl py-4" autocomplete="current-password">
-                
-                <div class="flex flex-col gap-4 mt-12">
-                    <button id="email-auth-btn" class="primary-btn w-full">Continue</button>
-                    <button id="google-auth-btn" class="secondary-btn w-full flex items-center justify-center gap-3 font-medium text-lg">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="24" alt="Google"> Continue with Google
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <div id="protected-collection">
-            <h2 class="text-4xl sm:text-5xl font-extrabold mb-16 border-b border-gray-800 pb-4 text-center">The Collection</h2>
-            
-            <div class="grid grid-cols-1 gap-12 justify-items-center mb-40">
-                <div class="w-full max-w-sm text-center product-card">
-                    <div class="aspect-square image-container mb-6">
-                        <img src="0wproto.png" alt="Hollow 0W Prototype Edition" class="w-full h-full object-cover" />
+                    <div class="space-y-8 content-section">
+                        <h2
+                            class="hero-title text-5xl sm:text-7xl lg:text-9xl font-black tracking-tighter leading-[0.9]">
+                            AI that responds<br>in 1.3 seconds
+                        </h2>
+                        <p class="text-xl sm:text-2xl text-gray-400 max-w-xl leading-relaxed">
+                            No phone needed. Instant answers from your wrist. <br>
+                            <span class="text-white font-semibold">Stay in the flow.</span>
+                        </p>
                     </div>
-                    <h3 class="text-xl font-medium">Hollow 0W Prototype Edition</h3>
-                    <p class="mt-2 text-gray-400 mb-8">$49.99 + $5-10/monthly <span class="text-sm text-gray-500">(upon activation)</span></p>
-                    
-                    <div class="tooltip-wrapper">
-                        <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02" class="outline-pill">
-                            Buy Prototype
-                        </a>
-                        <div class="tooltip">
-                            <strong>⚠️ Prototype Warning</strong>
-                            You're buying a prototype meant for testers, and only compatible with Android. It may have glitches, inconsistent battery reading, occasional connection issues, and more. Shipping will also take 2-3 weeks. If you want a polished consumer product, wait for the next release.
-                            <br><br>
-                            <strong>PS:</strong> Every purchaser will receive $50 in credits for the next release.
+
+                    <div class="relative w-full max-w-2xl aspect-[4/3] image-container group">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10">
+                        </div>
+                        <img src="0wproto.png" alt="Hollow Watch"
+                            class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105">
+
+                        <!-- Floating Badge -->
+                        <div
+                            class="absolute bottom-6 left-6 z-20 flex items-center gap-3 backdrop-blur-md bg-white/10 p-3 rounded-full border border-white/10">
+                            <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-bold tracking-widest uppercase text-white">Live Prototype</span>
                         </div>
                     </div>
 
-                    <div class="mt-6">
-                        <a href="0W_Accompanying_App.apk" download class="outline-pill">
-                            Download App (.apk)
-                        </a>
+                </div>
+
+                <!-- Right Col: Context & Features (5 cols) -->
+                <div class="lg:col-span-5 flex flex-col space-y-16 lg:pl-10 lg:border-l border-white/5">
+
+                    <!-- Quote -->
+                    <div class="space-y-6 content-section" style="animation-delay: 0.3s">
+                        <p class="text-2xl font-medium leading-relaxed text-gray-300 italic">
+                            "Pulling out your phone for AI takes 8-15 seconds and breaks your flow."
+                        </p>
+                        <p class="text-lg text-gray-500">
+                            <span class="text-white font-bold">Hollow</span> gives you instant answers while you stay
+                            focused on what matters.
+                        </p>
+                    </div>
+
+                    <!-- Feature Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 content-section" style="animation-delay: 0.5s">
+                        <div
+                            class="feature-card p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-1">Instant Response</h3>
+                            <p class="text-sm text-gray-400">1.5s latency</p>
+                        </div>
+                        <div
+                            class="feature-card p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-1">Hands-free</h3>
+                            <p class="text-sm text-gray-400">Voice operation</p>
+                        </div>
+                        <div
+                            class="feature-card p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-1">Multitasking</h3>
+                            <p class="text-sm text-gray-400">Drive, cook, work</p>
+                        </div>
+                        <div
+                            class="feature-card p-5 rounded-2xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors">
+                            <h3 class="text-lg font-bold text-white mb-1">Private</h3>
+                            <p class="text-sm text-gray-400">Your data is yours</p>
+                        </div>
+                    </div>
+
+                    <!-- Trusted By -->
+                    <div class="pt-10 border-t border-white/5 content-section" style="animation-delay: 0.7s">
+                        <p class="text-xs text-gray-600 uppercase tracking-[0.3em] font-bold mb-4">
+                            Trusted by AI Professionals
+                        </p>
+                        <div class="flex gap-4 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                            <!-- Placeholder for logos if needed, or just keep text -->
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="max-w-md mx-auto text-center">
-                <h3 class="text-xl font-bold mb-2 uppercase tracking-widest">Access List</h3>
-                <p class="text-gray-500 text-sm mb-8">Join for updates on the consumer release.</p>
-                
-                <form id="newsletter-form" class="flex flex-col gap-4">
-                    <input type="email" placeholder="email address" class="underline-input text-center" required>
-                    <div>
-                        <button type="submit" class="outline-pill">
-                            Join List
-                        </button>
-                    </div>
-                </form>
             </div>
         </div>
 
-    </div>
+        <!-- Auth / Collection Section -->
+        <div
+            class="min-h-[90vh] flex flex-col items-center justify-center py-32 bg-gradient-to-t from-[#050505] to-black border-t border-white/10 relative">
 
-    <footer class="mt-32 py-10 text-center text-xs text-gray-600 border-t border-gray-900">
-        &copy; 2025 Hollow. All rights reserved.
-    </footer>
-</main>
+            <!-- Background Element -->
+            <div
+                class="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gradient-to-b from-transparent to-white/20">
+            </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-    import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+            <div class="max-w-7xl mx-auto w-full px-6">
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-        authDomain: "hollow-7ff49.firebaseapp.com",
-        projectId: "hollow-7ff49",
-        appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
-    };
+                <div id="auth-container" class="grid lg:grid-cols-2 gap-20 items-center">
+                    <div class="text-left space-y-8">
+                        <h3 class="text-5xl sm:text-7xl font-black tracking-tighter loading-tight">
+                            Join the<br>Revolution.
+                        </h3>
+                        <p id="tagline" class="text-xl text-gray-400">
+                            Sign up to access the text-to-voice interface and purchase the prototype.
+                        </p>
+                    </div>
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const googleProvider = new GoogleAuthProvider();
+                    <div class="w-full max-w-md bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm">
+                        <div class="space-y-4">
+                            <input type="email" id="email" placeholder="email address"
+                                class="w-full bg-black/50 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:outline-none focus:border-white/30 transition-all"
+                                autocomplete="email">
+                            <input type="password" id="password" placeholder="password"
+                                class="w-full bg-black/50 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:outline-none focus:border-white/30 transition-all"
+                                autocomplete="current-password">
 
-    // DOM Elements
-    const authContainer = document.getElementById('auth-container');
-    const protectedCollection = document.getElementById('protected-collection');
-    const profileIcon = document.getElementById('profile-icon');
+                            <div class="pt-4 flex flex-col gap-3">
+                                <button id="email-auth-btn"
+                                    class="primary-btn w-full !text-base !py-4 hover:scale-[1.02]">
+                                    Continue with Email
+                                </button>
+                                <button id="google-auth-btn"
+                                    class="secondary-btn w-full !text-base !py-4 flex items-center justify-center gap-3 hover:bg-white/10">
+                                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                                        width="20" alt="Google">
+                                    Google
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    onAuthStateChanged(auth, (user) => { 
-        if (user) {
-            // User is signed in: Hide auth form, show collection
-            authContainer.style.display = 'none';
-            protectedCollection.style.display = 'block';
-            setTimeout(() => protectedCollection.style.opacity = '1', 50);
-            
-            // Show profile icon
-            profileIcon.style.display = 'flex';
-            if (user.email) {
-                profileIcon.textContent = user.email[0].toUpperCase();
+                <div id="protected-collection"
+                    class="text-center w-full hidden opacity-0 transition-opacity duration-700">
+                    <h2 class="text-4xl sm:text-6xl font-black mb-20">The Collection</h2>
+
+                    <div class="grid grid-cols-1 gap-12 justify-items-center mb-32">
+                        <!-- Expanded Product View -->
+                        <div
+                            class="w-full max-w-4xl grid md:grid-cols-2 gap-12 items-center text-left product-card bg-white/5 p-8 rounded-[2rem] border border-white/10">
+                            <div class="aspect-square image-container rounded-2xl bg-black">
+                                <img src="0wproto.png" alt="Hollow 0W Prototype Edition"
+                                    class="w-full h-full object-cover" />
+                            </div>
+                            <div class="space-y-8">
+                                <div>
+                                    <h3 class="text-3xl font-bold mb-2">Hollow 0W</h3>
+                                    <div
+                                        class="inline-block bg-white/10 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-4">
+                                        Prototype Edition</div>
+                                    <p class="text-4xl font-light text-white">$49.99 <span
+                                            class="text-lg text-gray-500">/ unit</span></p>
+                                    <p class="text-sm text-gray-400 mt-2">+ $5-10/mo subscription upon activation</p>
+                                </div>
+
+                                <div class="space-y-4">
+                                    <div class="tooltip-wrapper w-full">
+                                        <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02"
+                                            class="primary-btn w-full block text-center !rounded-xl !py-4">
+                                            Acquire Prototype
+                                        </a>
+                                        <div class="tooltip !bottom-full !mb-4">
+                                            <strong>⚠️ Prototype Warning</strong>
+                                            You're buying a tester unit. Compatible with Android only.
+                                            Expect glitches. 2-3 weeks shipping.
+                                            <br><br>
+                                            <strong>Bonus:</strong> Includes $50 credit for the next consumer release.
+                                        </div>
+                                    </div>
+
+                                    <a href="0W_Accompanying_App.apk" download
+                                        class="secondary-btn w-full block text-center !rounded-xl !py-4">
+                                        Download Companion App
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="max-w-md mx-auto text-center border-t border-white/10 pt-12">
+                        <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-gray-500">Waitlist</h3>
+                        <form id="newsletter-form" class="flex gap-2">
+                            <input type="email" placeholder="email for updates"
+                                class="flex-1 bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-white transition-colors"
+                                required>
+                            <button type="submit"
+                                class="text-white font-bold uppercase text-xs tracking-widest hover:text-gray-300">
+                                Join
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="py-12 text-center text-xs text-gray-600 border-t border-gray-900 bg-black">
+            <p>&copy; 2025 Hollow. All rights reserved.</p>
+        </footer>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        // DOM Elements
+        const authContainer = document.getElementById('auth-container');
+        const protectedCollection = document.getElementById('protected-collection');
+        const profileIcon = document.getElementById('profile-icon');
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // User is signed in: Hide auth form, show collection
+                authContainer.style.display = 'none';
+                protectedCollection.style.display = 'block';
+                setTimeout(() => protectedCollection.style.opacity = '1', 50);
+
+                // Show profile icon
+                profileIcon.style.display = 'flex';
+                if (user.email) {
+                    profileIcon.textContent = user.email[0].toUpperCase();
+                }
+            } else {
+                // User is signed out: Show auth form, hide collection
+                authContainer.style.display = 'flex';
+                protectedCollection.style.display = 'none';
+                protectedCollection.style.opacity = '0';
+                profileIcon.style.display = 'none';
             }
-        } else {
-            // User is signed out: Show auth form, hide collection
-            authContainer.style.display = 'flex';
-            protectedCollection.style.display = 'none';
-            protectedCollection.style.opacity = '0';
-            profileIcon.style.display = 'none';
-        }
-    });
+        });
 
-    document.getElementById('profile-icon').onclick = () => {
-        window.location.href = 'profile';
-    };
+        document.getElementById('profile-icon').onclick = () => {
+            window.location.href = 'profile';
+        };
 
-    document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
-    
-    document.getElementById('email-auth-btn').onclick = async () => {
-        const email = document.getElementById('email').value.trim();
-        const pass = document.getElementById('password').value;
-        if (!email || !pass) return alert("Enter credentials");
-        try {
-            await signInWithEmailAndPassword(auth, email, pass);
-        } catch (e) {
-            try { await createUserWithEmailAndPassword(auth, email, pass); } 
-            catch (err) { alert(err.message); }
-        }
-    };
-    
-    document.getElementById('newsletter-form').onsubmit = async (e) => {
-        e.preventDefault();
-        const emailInput = e.target.querySelector('input[type="email"]');
-        const email = emailInput.value.trim();
-        const btn = e.target.querySelector('button');
-        
-        if (!email) return;
+        document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
 
-        const originalText = btn.textContent;
-        btn.textContent = "Joining...";
-        btn.disabled = true;
+        document.getElementById('email-auth-btn').onclick = async () => {
+            const email = document.getElementById('email').value.trim();
+            const pass = document.getElementById('password').value;
+            if (!email || !pass) return alert("Enter credentials");
+            try {
+                await signInWithEmailAndPassword(auth, email, pass);
+            } catch (e) {
+                try { await createUserWithEmailAndPassword(auth, email, pass); }
+                catch (err) { alert(err.message); }
+            }
+        };
 
-        try {
-            await addDoc(collection(db, "newslist"), {
-                email: email,
-                timestamp: new Date()
-            });
-            alert("You have been added to the list.");
-            e.target.reset();
-        } catch (err) {
-            console.error(err);
-            alert("Error: " + err.message);
-        } finally {
-            btn.textContent = originalText;
-            btn.disabled = false;
-        }
-    };
-</script>
+        document.getElementById('newsletter-form').onsubmit = async (e) => {
+            e.preventDefault();
+            const emailInput = e.target.querySelector('input[type="email"]');
+            const email = emailInput.value.trim();
+            const btn = e.target.querySelector('button');
+
+            if (!email) return;
+
+            const originalText = btn.textContent;
+            btn.textContent = "Joining...";
+            btn.disabled = true;
+
+            try {
+                await addDoc(collection(db, "newslist"), {
+                    email: email,
+                    timestamp: new Date()
+                });
+                alert("You have been added to the list.");
+                e.target.reset();
+            } catch (err) {
+                console.error(err);
+                alert("Error: " + err.message);
+            } finally {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }
+        };
+    </script>
 
 </body>
+
 </html>
