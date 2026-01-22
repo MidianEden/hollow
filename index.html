@@ -9,9 +9,9 @@
     <title>Hollow | AI Assistant Watch - Instant Answers From Your Wrist</title>
     <meta name="title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
     <meta name="description"
-        content="Meet Hollow: the AI-powered smartwatch that responds in 1.5 seconds. Send emails, get instant answers, and set alarms—all by voice. No phone needed. Limited prototype available.">
+        content="Hollow: Fast AI watch for voice emails, alarms, and answers—prototype shipping now. The wearable AI assistant that responds in 1.5 seconds. No phone needed.">
     <meta name="keywords"
-        content="AI watch, smart assistant, voice AI, wearable AI, smartwatch, hands-free assistant, AI wearable">
+        content="Wearable AI, voice assistant watch, private AI wearable, AI watch, smart assistant, voice AI, smartwatch, hands-free assistant, AI wearable">
     <meta name="author" content="Hollow">
     <meta name="robots" content="index, follow">
 
@@ -23,7 +23,7 @@
         content="The AI smartwatch that responds in 1.5 seconds. Send emails, get answers, set alarms—all hands-free. Limited prototype run available now.">
     <meta property="og:image" content="https://gethollow.com/0wproto.png">
     <meta property="og:site_name" content="Hollow">
-    <meta property="product:price:amount" content="49.99">
+    <meta property="product:price:amount" content="69.99">
     <meta property="product:price:currency" content="USD">
 
     <!-- Twitter -->
@@ -58,7 +58,7 @@
         },
         "offers": {
             "@type": "Offer",
-            "price": "49.99",
+            "price": "69.99",
             "priceCurrency": "USD",
             "availability": "https://schema.org/LimitedAvailability",
             "url": "https://gethollow.com/"
@@ -503,15 +503,153 @@
                 opacity: 0.8;
             }
         }
+
+        /* Navigation Styles */
+        .nav-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1400px;
+            padding: 0 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: #888;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            letter-spacing: 0.02em;
+        }
+
+        .nav-link:hover {
+            color: white;
+        }
+
+        .nav-link.active {
+            color: white;
+        }
+
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            z-index: 60;
+        }
+
+        .mobile-menu-btn span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.98);
+            z-index: 55;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .mobile-nav.active {
+            display: flex;
+        }
+
+        .mobile-nav a {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .mobile-nav a:hover {
+            color: #888;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+        }
     </style>
 </head>
 
 <body id="main-body">
 
     <header class="header-hero">
-        <h1 id="brand-logo">HOLLOW</h1>
-        <div id="profile-icon" title="Account">?</div>
+        <div class="nav-container">
+            <a href="#" id="brand-logo">HOLLOW</a>
+
+            <nav class="nav-links">
+                <a href="#" class="nav-link active">Home</a>
+                <a href="#features" class="nav-link">Features</a>
+                <a href="signup.html" class="nav-link">Pricing</a>
+                <a href="faq.html" class="nav-link">FAQ</a>
+                <a href="#about" class="nav-link">About Us</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <div id="profile-icon" title="Account">?</div>
+        </div>
     </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav" id="mobile-nav">
+        <a href="#" onclick="closeMobileMenu()">Home</a>
+        <a href="#features" onclick="closeMobileMenu()">Features</a>
+        <a href="signup.html" onclick="closeMobileMenu()">Pricing</a>
+        <a href="faq.html">FAQ</a>
+        <a href="#about" onclick="closeMobileMenu()">About Us</a>
+        <a href="#contact" onclick="closeMobileMenu()">Contact</a>
+    </nav>
 
     <main class="relative z-10 w-full overflow-hidden">
 
@@ -545,7 +683,7 @@
 
                         <!-- Early CTA -->
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                            <a href="#get-prototype"
+                            <a href="signup.html"
                                 class="primary-btn inline-flex items-center justify-center gap-2 text-center">
                                 <span>Get Your Prototype</span>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -553,7 +691,7 @@
                                         d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
                             </a>
-                            <span class="text-sm text-gray-500 self-center">$49.99 + subscription</span>
+                            <span class="text-sm text-gray-500 self-center">$69.99 + subscription</span>
                         </div>
                     </div>
 
@@ -603,7 +741,7 @@
                     </div>
 
                     <!-- What You Can Do (Actual Capabilities) -->
-                    <div class="space-y-4 content-section" style="animation-delay: 0.5s">
+                    <div id="features" class="space-y-4 content-section" style="animation-delay: 0.5s">
                         <h3 class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500 mb-4">What You Can Do</h3>
 
                         <div class="space-y-3">
@@ -733,184 +871,373 @@
             </div>
         </div>
 
-        <!-- Auth / Collection Section -->
-        <div
-            class="min-h-[90vh] flex flex-col items-center justify-center py-32 bg-gradient-to-t from-[#050505] to-black border-t border-white/10 relative">
+        <!-- Why Hollow - Competitive Positioning Section -->
+        <div class="py-24 px-6 bg-gradient-to-b from-black via-[#050505] to-black border-t border-white/5">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl sm:text-6xl font-black tracking-tighter mb-6">
+                        Why <span
+                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Hollow</span>?
+                    </h2>
+                    <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                        The AI assistant on your phone is powerful—but it's buried behind locks, apps, and distractions.
+                        Other smartwatches? Slow, limited, and overpriced. Hollow fixes all of that.
+                    </p>
+                </div>
 
-            <!-- Background Element -->
-            <div
-                class="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-32 bg-gradient-to-b from-transparent to-white/20">
-            </div>
-
-            <div class="max-w-7xl mx-auto w-full px-6">
-
-                <div id="auth-container" class="grid lg:grid-cols-2 gap-20 items-center">
-                    <div class="text-left space-y-8">
-                        <h3 class="text-5xl sm:text-7xl font-black tracking-tighter loading-tight">
-                            Join the<br>Revolution.
-                        </h3>
-                        <p id="tagline" class="text-xl text-gray-400">
-                            Sign up to access the text-to-voice interface and purchase the prototype.
-                        </p>
+                <!-- Comparison Cards -->
+                <div class="grid md:grid-cols-3 gap-6 mb-16">
+                    <!-- Phone + AI -->
+                    <div
+                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-400 group-hover:text-red-400 transition-colors">Phone
+                                + AI</h3>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-500">
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span><strong class="text-red-400">8-15 seconds</strong> to unlock, find app, type
+                                    query</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Breaks focus—notifications pull you in</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Data harvested by big tech</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>$1000+ device cost</span>
+                            </li>
+                        </ul>
                     </div>
 
-                    <div class="w-full max-w-md bg-white/5 p-8 rounded-3xl border border-white/10 backdrop-blur-sm">
-                        <div class="space-y-4">
-                            <input type="email" id="email" placeholder="email address"
-                                class="w-full bg-black/50 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:outline-none focus:border-white/30 transition-all"
-                                autocomplete="email">
-                            <input type="password" id="password" placeholder="password"
-                                class="w-full bg-black/50 border border-white/10 rounded-xl px-5 py-4 text-white text-lg focus:outline-none focus:border-white/30 transition-all"
-                                autocomplete="current-password">
-
-                            <div class="pt-4 flex flex-col gap-3">
-                                <button id="email-auth-btn"
-                                    class="primary-btn w-full !text-base !py-4 hover:scale-[1.02]">
-                                    Continue with Email
-                                </button>
-                                <button id="google-auth-btn"
-                                    class="secondary-btn w-full !text-base !py-4 flex items-center justify-center gap-3 hover:bg-white/10">
-                                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                                        width="20" alt="Google">
-                                    Google
-                                </button>
+                    <!-- Other Smartwatches -->
+                    <div
+                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-orange-500/30 transition-all group">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
                             </div>
+                            <h3 class="text-xl font-bold text-gray-400 group-hover:text-orange-400 transition-colors">
+                                Other Smartwatches</h3>
                         </div>
+                        <ul class="space-y-3 text-sm text-gray-500">
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Slow voice responses, <strong class="text-orange-400">poor
+                                        accuracy</strong></span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Limited AI—can't compose emails or have real conversations</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Locked to ecosystems (Apple/Google)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>$300-500+ price tag</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Hollow -->
+                    <div
+                        class="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/30 hover:border-green-400/50 transition-all group relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-bl-xl">
+                            HOLLOW</div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-green-400">Hollow Watch</h3>
+                        </div>
+                        <ul class="space-y-3 text-sm text-gray-300">
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span><strong class="text-green-400">1.5s response time</strong>—faster than unlocking
+                                    your phone</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>True AI: send emails, get answers, set alarms by voice</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Privacy-first: your data stays yours</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd"
+                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                                        clip-rule="evenodd"></path>
+                                </svg>
+                                <span><strong class="text-green-400">$69.99</strong> + affordable subscription</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
-                <div id="protected-collection" class="w-full hidden opacity-0 transition-opacity duration-700">
-                    <h2 id="get-prototype" class="text-4xl sm:text-6xl font-black mb-8 text-center">Get Your Prototype
-                    </h2>
-                    <p class="text-center text-gray-400 text-lg mb-16 max-w-2xl mx-auto">Be among the first to
-                        experience AI on your wrist. Early adopters shape the future of Hollow.</p>
+                <!-- Key Differentiator -->
+                <div
+                    class="text-center p-8 rounded-3xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 border border-white/10">
+                    <p class="text-2xl font-bold text-white mb-2">
+                        The convenience of a voice assistant. The speed of instant access. The simplicity of a dedicated
+                        device.
+                    </p>
+                    <p class="text-gray-400">No distractions. No ecosystem lock-in. Just pure AI assistance on your
+                        wrist.</p>
+                </div>
+            </div>
+        </div>
 
-                    <div class="grid grid-cols-1 gap-12 justify-items-center mb-32">
-                        <!-- Expanded Product View -->
-                        <div class="w-full max-w-5xl grid md:grid-cols-2 gap-12 items-stretch text-left">
+        <!-- Video Demo Section -->
+        <div class="py-20 px-6 bg-black border-t border-white/5">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl sm:text-5xl font-black tracking-tighter mb-4">See It In Action</h2>
+                <p class="text-lg text-gray-400 mb-10">Watch Hollow respond to real voice commands in real-time.</p>
 
-                            <!-- Product Image Side -->
-                            <div class="relative">
-                                <div
-                                    class="aspect-square image-container rounded-3xl bg-gradient-to-br from-gray-900 to-black overflow-hidden">
-                                    <img src="0wproto.png" alt="Hollow 0W Prototype Edition - AI Smartwatch"
-                                        class="w-full h-full object-cover" />
-                                </div>
-                                <!-- Android Only Badge -->
-                                <div
-                                    class="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
-                                    <span class="text-xs font-medium text-gray-300">📱 Android Only</span>
-                                </div>
-                            </div>
+                <!-- Twitter Video Embed -->
+                <div class="rounded-2xl overflow-hidden border border-white/10">
+                    <blockquote class="twitter-tweet" data-theme="dark" data-align="center">
+                        <a href="https://x.com/gethollowtech/status/1993503226952388990"></a>
+                    </blockquote>
+                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                </div>
+            </div>
+        </div>
 
-                            <!-- Product Details Side -->
-                            <div
-                                class="flex flex-col justify-between space-y-6 p-6 rounded-3xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10">
-                                <div class="space-y-6">
-                                    <!-- Header -->
-                                    <div>
-                                        <div class="flex items-center gap-3 mb-3">
-                                            <span
-                                                class="inline-block bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase text-amber-400">Prototype</span>
-                                            <span
-                                                class="inline-block bg-green-500/20 border border-green-500/30 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase text-green-400">Shipping
-                                                Now</span>
-                                        </div>
-                                        <h3 class="text-4xl font-black mb-2">Hollow 0W</h3>
-                                    </div>
+        <!-- Technical Specs Section (For Techies) -->
+        <div class="py-16 px-6 bg-gradient-to-b from-black to-[#050505] border-t border-white/5">
+            <div class="max-w-5xl mx-auto">
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold text-gray-400 mb-2">Technical Specifications</h2>
+                    <p class="text-sm text-gray-600">For developers and hardware enthusiasts</p>
+                </div>
 
-                                    <!-- Pricing -->
-                                    <div class="p-5 rounded-2xl bg-black/40 border border-white/5">
-                                        <div class="flex items-baseline gap-2 mb-2">
-                                            <span class="text-5xl font-black text-white">$49.99</span>
-                                        </div>
-                                        <p class="text-sm text-gray-400">+ $5-10/month subscription upon activation</p>
-                                    </div>
+                <details class="group rounded-2xl bg-white/[0.02] border border-white/10 overflow-hidden">
+                    <summary
+                        class="p-6 cursor-pointer flex items-center justify-between hover:bg-white/[0.02] transition-colors">
+                        <span class="font-bold text-gray-300">View Full Hardware & Software Specs</span>
+                        <svg class="w-5 h-5 text-gray-500 group-open:rotate-180 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </summary>
+                    <div class="p-6 pt-0 grid md:grid-cols-2 gap-8 text-sm">
+                        <!-- Core Components -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Core Components
+                            </h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><strong class="text-gray-300">MCU:</strong> Espressif ESP32-S3 (Dual-core Xtensa
+                                    LX7, 240MHz)</li>
+                                <li><strong class="text-gray-300">Memory:</strong> 8MB PSRAM, 16MB Flash</li>
+                                <li><strong class="text-gray-300">Display:</strong> 1.54" Color TFT LCD (240×240),
+                                    Capacitive Touch</li>
+                                <li><strong class="text-gray-300">Connectivity:</strong> Wi-Fi 802.11 b/g/n, Bluetooth
+                                    5.0 BLE</li>
+                                <li><strong class="text-gray-300">LoRa Module:</strong> SX1262 (868MHz/433MHz/915MHz)
+                                </li>
+                            </ul>
+                        </div>
 
-                                    <!-- What's Included -->
-                                    <div class="space-y-3">
-                                        <h4 class="text-sm font-bold uppercase tracking-widest text-gray-500">What's
-                                            Included</h4>
-                                        <ul class="space-y-2 text-sm">
-                                            <li class="flex items-center gap-3 text-gray-300">
-                                                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor"
-                                                    viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Hollow 0W Watch Unit
-                                            </li>
-                                            <li class="flex items-center gap-3 text-gray-300">
-                                                <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="currentColor"
-                                                    viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                Android Companion App
-                                            </li>
-                                            <li class="flex items-center gap-3 text-amber-400 font-medium">
-                                                <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor"
-                                                    viewBox="0 0 20 20">
-                                                    <path fill-rule="evenodd"
-                                                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                                                        clip-rule="evenodd"></path>
-                                                </svg>
-                                                <span>$50 Credit for Consumer Release</span>
-                                            </li>
-                                        </ul>
-                                    </div>
+                        <!-- Sensors & Peripherals -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Sensors &
+                                Peripherals</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><strong class="text-gray-300">Accelerometer:</strong> BMA423 3-axis</li>
+                                <li><strong class="text-gray-300">Audio:</strong> PDM Microphone, MAX98357A Amplifier
+                                </li>
+                                <li><strong class="text-gray-300">Haptic:</strong> DRV2605 Haptic Motor</li>
+                                <li><strong class="text-gray-300">RTC:</strong> Real-Time Clock</li>
+                                <li><strong class="text-gray-300">IR:</strong> Infrared Transmitter (S3 Plus variant)
+                                </li>
+                            </ul>
+                        </div>
 
-                                    <!-- Honest Disclaimer -->
-                                    <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                                        <p class="text-sm text-amber-200/80">
-                                            <strong class="text-amber-300">Prototype Notice:</strong> This is a tester
-                                            unit. Expect occasional glitches, inconsistent battery readings, and
-                                            connection quirks. Ships in 2-3 weeks.
-                                        </p>
-                                    </div>
-                                </div>
+                        <!-- Power & Battery -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Power & Battery
+                            </h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><strong class="text-gray-300">Battery:</strong> ~400-500mAh LiPo</li>
+                                <li><strong class="text-gray-300">Charging:</strong> Magnetic Charging</li>
+                                <li><strong class="text-gray-300">Water Resistance:</strong> IP54 (splash-proof)</li>
+                            </ul>
+                        </div>
 
-                                <!-- CTAs -->
-                                <div class="space-y-3 pt-4">
-                                    <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02"
-                                        class="primary-btn w-full block text-center !rounded-xl !py-5 !text-lg hover:scale-[1.02] transition-transform">
-                                        <span class="flex items-center justify-center gap-2">
-                                            <span>Get Your Prototype</span>
-                                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                    d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-                                            </svg>
-                                        </span>
-                                    </a>
-
-                                    <a href="0W_Accompanying_App.apk" download
-                                        class="secondary-btn w-full block text-center !rounded-xl !py-4 hover:bg-white/10 transition-colors">
-                                        Download Companion App (.apk)
-                                    </a>
-                                </div>
-                            </div>
+                        <!-- Development -->
+                        <div>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Development</h4>
+                            <ul class="space-y-2 text-gray-400">
+                                <li><strong class="text-gray-300">Programmable:</strong> Arduino IDE, ESP-IDF,
+                                    MicroPython</li>
+                                <li><strong class="text-gray-300">Firmware:</strong> Compatible with Meshtastic for mesh
+                                    networking</li>
+                                <li><strong class="text-gray-300">Open Platform:</strong> Build your own applications
+                                </li>
+                            </ul>
                         </div>
                     </div>
+                </details>
+            </div>
+        </div>
 
-                    <div class="max-w-md mx-auto text-center border-t border-white/10 pt-12">
-                        <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-gray-500">Waitlist</h3>
-                        <form id="newsletter-form" class="flex gap-2">
-                            <input type="email" placeholder="email for updates"
-                                class="flex-1 bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-white transition-colors"
-                                required>
-                            <button type="submit"
-                                class="text-white font-bold uppercase text-xs tracking-widest hover:text-gray-300">
-                                Join
-                            </button>
-                        </form>
+        <!-- About Us Section -->
+        <div id="about" class="py-24 px-6 bg-gradient-to-b from-[#050505] to-black border-t border-white/5">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl sm:text-5xl font-black tracking-tighter mb-8">About Us</h2>
+                <div class="space-y-6 text-lg text-gray-400 leading-relaxed">
+                    <p>
+                        Hollow was born from a simple frustration: <strong class="text-white">why do we need to pull out
+                            a phone for a 5-second question?</strong>
+                    </p>
+                    <p>
+                        We're a small team of engineers and designers who believe AI assistants should be <em>instant,
+                            unobtrusive, and private</em>.
+                        No giant corporations harvesting your data. No walled gardens. Just a dedicated device that does
+                        one thing exceptionally well:
+                        giving you AI superpowers on your wrist.
+                    </p>
+                    <p>
+                        The 0W Prototype is our first step. We're shipping to early adopters who want to shape the
+                        future of wearable AI.
+                        Your feedback directly influences what Hollow becomes.
+                    </p>
+                </div>
+                <div class="mt-12 flex flex-wrap justify-center gap-4">
+                    <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
+                        <span class="text-sm text-gray-400">🛡️ Privacy-First</span>
+                    </div>
+                    <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
+                        <span class="text-sm text-gray-400">⚡ Ultra-Fast Response</span>
+                    </div>
+                    <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
+                        <span class="text-sm text-gray-400">🔧 Open & Hackable</span>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Final CTA Section -->
+        <div
+            class="min-h-[70vh] flex flex-col items-center justify-center py-32 bg-gradient-to-t from-[#050505] to-black border-t border-white/10 relative">
+            <div class="max-w-4xl mx-auto px-6 text-center space-y-10">
+                <h2 class="text-5xl sm:text-7xl font-black tracking-tighter loading-tight">
+                    Join the<br>Revolution.
+                </h2>
+                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
+                    Secure your 0W Prototype today. Experience the future of wearable AI.
+                </p>
+                <div class="pt-8">
+                    <a href="signup.html" class="primary-btn !text-xl !px-12 !py-6 hover:scale-105">
+                        Get Your Prototype
+                    </a>
+                </div>
+
+                <div id="contact" class="max-w-md mx-auto text-center border-t border-white/10 pt-16 mt-16">
+                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-gray-500">Waitlist</h3>
+                    <form id="newsletter-form" class="flex gap-2">
+                        <input type="email" placeholder="email for updates"
+                            class="flex-1 bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-white transition-colors"
+                            required>
+                        <button type="submit"
+                            class="text-white font-bold uppercase text-xs tracking-widest hover:text-gray-300">
+                            Join
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <footer class="py-12 text-center text-xs text-gray-600 border-t border-gray-900 bg-black">
+            <div class="flex justify-center gap-6 mb-4">
+                <a href="#" class="hover:text-white transition-colors">Home</a>
+                <a href="#features" class="hover:text-white transition-colors">Features</a>
+                <a href="signup.html" class="hover:text-white transition-colors">Pricing</a>
+                <a href="faq.html" class="hover:text-white transition-colors">FAQ</a>
+                <a href="#about" class="hover:text-white transition-colors">About Us</a>
+            </div>
             <p>&copy; 2025 Hollow. All rights reserved.</p>
         </footer>
     </main>
@@ -933,47 +1260,22 @@
         const googleProvider = new GoogleAuthProvider();
 
         // DOM Elements
-        const authContainer = document.getElementById('auth-container');
-        const protectedCollection = document.getElementById('protected-collection');
         const profileIcon = document.getElementById('profile-icon');
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // User is signed in: Hide auth form, show collection
-                authContainer.style.display = 'none';
-                protectedCollection.style.display = 'block';
-                setTimeout(() => protectedCollection.style.opacity = '1', 50);
-
                 // Show profile icon
                 profileIcon.style.display = 'flex';
                 if (user.email) {
                     profileIcon.textContent = user.email[0].toUpperCase();
                 }
             } else {
-                // User is signed out: Show auth form, hide collection
-                authContainer.style.display = 'flex';
-                protectedCollection.style.display = 'none';
-                protectedCollection.style.opacity = '0';
                 profileIcon.style.display = 'none';
             }
         });
 
         document.getElementById('profile-icon').onclick = () => {
-            window.location.href = 'profile';
-        };
-
-        document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
-
-        document.getElementById('email-auth-btn').onclick = async () => {
-            const email = document.getElementById('email').value.trim();
-            const pass = document.getElementById('password').value;
-            if (!email || !pass) return alert("Enter credentials");
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-            } catch (e) {
-                try { await createUserWithEmailAndPassword(auth, email, pass); }
-                catch (err) { alert(err.message); }
-            }
+            window.location.href = 'profile.html';
         };
 
         document.getElementById('newsletter-form').onsubmit = async (e) => {
@@ -1003,6 +1305,45 @@
                 btn.disabled = false;
             }
         };
+    </script>
+
+    <script>
+        // Mobile Menu Logic
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileNav = document.getElementById('mobile-nav');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileBtn.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        });
+
+        function closeMobileMenu() {
+            mobileBtn.classList.remove('active');
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Active links on scroll
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('div[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 150) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
+            });
+        });
     </script>
 
 </body>

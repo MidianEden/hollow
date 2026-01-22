@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -56,134 +57,125 @@
 
 <body class="px-4 py-16">
 
-<div class="max-w-3xl mx-auto">
+    <div class="max-w-3xl mx-auto">
 
-    <!-- Header -->
-    <header class="flex items-center justify-between mb-20">
-        <a href="https://gethollow.com" class="text-sm text-gray-500 hover:text-white transition">
+        <!-- Header -->
+        <a href="dashboard.html" class="text-sm text-gray-500 hover:text-white transition">
             ← Collection
         </a>
 
         <h1 class="text-2xl font-black tracking-tight">
             HOLLOW
         </h1>
-    </header>
+        </header>
 
-    <!-- Identity -->
-    <section class="section">
-        <p class="label">Authenticated As</p>
-        <p id="user-email" class="text-xl font-medium">
-            loading…
-        </p>
-    </section>
+        <!-- Identity -->
+        <section class="section">
+            <p class="label">Authenticated As</p>
+            <p id="user-email" class="text-xl font-medium">
+                loading…
+            </p>
+        </section>
 
-    <!-- Credits -->
-    <section class="section">
-        <p class="label">Available Credits</p>
-        <p id="user-credits" class="text-4xl font-black">
-            $0.00
-        </p>
-    </section>
+        <!-- Credits -->
+        <section class="section">
+            <p class="label">Available Credits</p>
+            <p id="user-credits" class="text-4xl font-black">
+                $0.00
+            </p>
+        </section>
 
-    <!-- Connectivity / Subscribe -->
-    <section class="section">
-        <p class="label mb-3">Hollow Connectivity</p>
+        <!-- Connectivity / Subscribe -->
+        <section class="section">
+            <p class="label mb-3">Hollow Connectivity</p>
 
-        <p class="text-gray-400 text-sm max-w-md mb-6">
-            Required for real-time presence and instant updates.
-            $5.00 per month upon activation.
-        </p>
+            <p class="text-gray-400 text-sm max-w-md mb-6">
+                Required for real-time presence and instant updates.
+                $5.00 per month upon activation.
+            </p>
 
-        <!-- SUBSCRIBE BUTTON -->
-        <div class="outline-pill">
-            <a
-                href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00"
-                class="px-10 py-3 text-xs font-extrabold uppercase tracking-[0.25em]
-                       hover:text-gray-300 transition block"
-            >
-                Subscribe
-            </a>
-        </div>
-    </section>
+            <!-- SUBSCRIBE BUTTON -->
+            <div class="outline-pill">
+                <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00" class="px-10 py-3 text-xs font-extrabold uppercase tracking-[0.25em]
+                       hover:text-gray-300 transition block">
+                    Subscribe
+                </a>
+            </div>
+        </section>
 
-    <!-- Actions -->
-    <section class="pt-16 flex flex-col gap-6">
+        <!-- Actions -->
+        <section class="pt-16 flex flex-col gap-6">
 
-        <button
-            id="sign-out-btn"
-            class="bg-white text-black py-3 rounded-full font-bold
-                   hover:bg-gray-200 transition"
-        >
-            Sign Out
-        </button>
+            <button id="sign-out-btn" class="bg-white text-black py-3 rounded-full font-bold
+                   hover:bg-gray-200 transition">
+                Sign Out
+            </button>
 
-        <button
-            id="delete-account-btn"
-            class="py-3 rounded-full danger font-bold transition"
-        >
-            Delete Account
-        </button>
-    </section>
+            <button id="delete-account-btn" class="py-3 rounded-full danger font-bold transition">
+                Delete Account
+            </button>
+        </section>
 
-    <!-- Footer -->
-    <footer class="mt-24 text-center text-xs text-gray-600">
-        Device UID<br>
-        <span id="user-uid" class="font-mono text-gray-400">…</span>
-    </footer>
+        <!-- Footer -->
+        <footer class="mt-24 text-center text-xs text-gray-600">
+            Device UID<br>
+            <span id="user-uid" class="font-mono text-gray-400">…</span>
+        </footer>
 
-</div>
+    </div>
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-    import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAuth, onAuthStateChanged, signOut, deleteUser } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+        import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-        authDomain: "hollow-7ff49.firebaseapp.com",
-        projectId: "hollow-7ff49",
-        appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
-    };
+        const firebaseConfig = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+        };
 
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
-    onAuthStateChanged(auth, async (user) => {
-        if (!user) return window.location.href = 'https://gethollow.com';
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) return window.location.href = 'signup.html';
 
-        document.getElementById('user-email').textContent = user.email;
-        document.getElementById('user-uid').textContent = user.uid;
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('user-uid').textContent = user.uid;
 
-        try {
-            const snap = await getDoc(doc(db, "users", user.uid));
-            if (snap.exists() && snap.data().credits !== undefined) {
-                document.getElementById('user-credits').textContent =
-                    `$${snap.data().credits}.00`;
+            try {
+                const snap = await getDoc(doc(db, "users", user.uid));
+                if (snap.exists() && snap.data().credits !== undefined) {
+                    document.getElementById('user-credits').textContent =
+                        `$${snap.data().credits}.00`;
+                }
+            } catch { }
+        });
+
+        document.getElementById('sign-out-btn').onclick = async () => {
+            await signOut(auth);
+            window.location.href = 'index.html';
+        };
+
+        document.getElementById('delete-account-btn').onclick = async () => {
+            if (!confirm("This will permanently delete your Hollow ID. Continue?")) return;
+
+            try {
+                await deleteUser(auth.currentUser);
+                window.location.href = 'index.html';
+            } catch (e) {
+                alert(
+                    e.code === 'auth/requires-recent-login'
+                        ? "Please sign out and back in before deleting."
+                        : e.message
+                );
             }
-        } catch {}
-    });
-
-    document.getElementById('sign-out-btn').onclick = async () => {
-        await signOut(auth);
-        window.location.href = 'https://gethollow.com';
-    };
-
-    document.getElementById('delete-account-btn').onclick = async () => {
-        if (!confirm("This will permanently delete your Hollow ID. Continue?")) return;
-
-        try {
-            await deleteUser(auth.currentUser);
-            window.location.href = 'https://gethollow.com';
-        } catch (e) {
-            alert(
-                e.code === 'auth/requires-recent-login'
-                ? "Please sign out and back in before deleting."
-                : e.message
-            );
-        }
-    };
-</script>
+        };
+    </script>
 
 </body>
+
 </html>

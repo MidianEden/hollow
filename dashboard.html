@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hollow | Dashboard</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background: #000;
+            color: white;
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: backgroundPulse 20s ease-in-out infinite;
+        }
+
+        .header-hero {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .outline-pill,
+        .primary-btn,
+        .secondary-btn,
+        .image-container {
+            /* Copied from index.html for consistency */
+            transition: all 0.3s ease;
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+        }
+
+        .secondary-btn {
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+    <header class="header-hero py-4 px-6 flex justify-between items-center">
+        <a href="index.html" class="text-2xl font-black tracking-tighter text-white no-underline">HOLLOW</a>
+        <div id="profile-icon"
+            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer border border-white/10 hover:border-white/30 transition">
+            ?
+        </div>
+    </header>
+
+    <main class="flex-grow flex items-center justify-center relative z-10 py-20 px-4">
+        <div id="loading" class="text-center text-xl text-gray-500">Authenticating...</div>
+
+        <div id="dashboard-content" class="w-full max-w-5xl hidden opacity-0 transition-opacity duration-700">
+            <h2 class="text-4xl sm:text-6xl font-black mb-8 text-center">Get Your Prototype</h2>
+            <p class="text-center text-gray-400 text-lg mb-16 max-w-2xl mx-auto">Be among the first to experience AI on
+                your wrist.</p>
+
+            <div class="grid md:grid-cols-2 gap-12 items-stretch text-left">
+                <!-- Image -->
+                <div class="relative">
+                    <div
+                        class="aspect-square rounded-3xl bg-gradient-to-br from-gray-900 to-black overflow-hidden border border-white/10">
+                        <img src="0wproto.png" alt="Hollow 0W Prototype" class="w-full h-full object-cover">
+                    </div>
+                    <div
+                        class="absolute top-4 left-4 bg-black/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10">
+                        <span class="text-xs font-medium text-gray-300">📱 Android Only</span>
+                    </div>
+                </div>
+
+                <!-- Details -->
+                <div class="flex flex-col justify-between space-y-6 p-8 rounded-3xl bg-white/5 border border-white/10">
+                    <div>
+                        <div class="flex items-center gap-3 mb-3">
+                            <span
+                                class="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase text-amber-400">Prototype</span>
+                            <span
+                                class="bg-green-500/20 border border-green-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase text-green-400">Shipping
+                                Now</span>
+                        </div>
+                        <h3 class="text-4xl font-black mb-2">Hollow 0W</h3>
+                    </div>
+
+                    <div class="p-5 rounded-2xl bg-black/40 border border-white/5">
+                        <div class="flex items-center gap-2 mb-2">
+                            <span class="text-5xl font-black text-white">$69.99</span>
+                        </div>
+                        <p class="text-sm text-gray-400">+ $5-10/month subscription upon activation</p>
+                    </div>
+
+                    <div class="space-y-3 pt-4">
+                        <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02"
+                            class="primary-btn w-full block text-center !rounded-xl">
+                            Get Your Prototype
+                        </a>
+                        <a href="0W_Accompanying_App.apk" download
+                            class="secondary-btn w-full block text-center !rounded-xl">
+                            Download Companion App (.apk)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="py-12 text-center text-xs text-gray-600 border-t border-gray-900 bg-black">
+        <p>&copy; 2025 Hollow. All rights reserved.</p>
+    </footer>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                document.getElementById('loading').style.display = 'none';
+                const content = document.getElementById('dashboard-content');
+                content.style.display = 'block';
+                setTimeout(() => content.style.opacity = '1', 50);
+
+                const profileIcon = document.getElementById('profile-icon');
+                if (user.email) profileIcon.textContent = user.email[0].toUpperCase();
+                profileIcon.onclick = () => window.location.href = 'profile.html';
+            } else {
+                window.location.href = 'signup.html';
+            }
+        });
+    </script>
+</body>
+
+</html>
