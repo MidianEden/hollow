@@ -6,123 +6,183 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow ID</title>
     <link rel="icon" type="image/png" href="/favicon.png">
-
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <style>
         body {
             background: #000;
             color: white;
             font-family: "Inter", sans-serif;
             margin: 0;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
-        .section {
-            border-bottom: 1px solid #1f1f1f;
-            padding: 3rem 0;
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+            animation: backgroundPulse 20s ease-in-out infinite;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
         }
 
         .label {
-            font-size: 0.7rem;
-            letter-spacing: 0.25em;
+            font-size: 0.75rem;
+            letter-spacing: 0.1em;
             text-transform: uppercase;
-            color: #6b7280;
+            color: #9ca3af;
             font-weight: 700;
             margin-bottom: 0.5rem;
         }
 
-        .outline-pill {
-            display: inline-block;
-            padding: 0.25rem;
-            border: 1px solid white;
-            border-radius: 9999px;
-            transition: border-color 0.3s;
+        .primary-btn {
+            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+            color: #000;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.875rem;
+            transition: all 0.2s;
         }
 
-        .outline-pill:hover {
-            border-color: #9ca3af;
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
         }
 
-        .danger {
-            color: #ff5a5a;
-            border: 1px solid #3a1414;
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s;
         }
 
-        .danger:hover {
-            background: #3a1414;
+        .secondary-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .danger-btn {
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: rgba(239, 68, 68, 0.05);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .danger-btn:hover {
+            background: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.4);
+        }
+
+        .header-hero {
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
     </style>
 </head>
 
-<body class="px-4 py-16">
+<body class="relative">
 
-    <div class="max-w-3xl mx-auto">
-
-        <!-- Header -->
-        <a href="dashboard.html" class="text-sm text-gray-500 hover:text-white transition">
-            ← Collection
+    <header class="header-hero py-4 px-6 mb-12 flex justify-between items-center">
+        <a href="dashboard.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
+                </path>
+            </svg>
+            <span class="text-sm font-bold uppercase tracking-widest">Back to Dashboard</span>
         </a>
+        <div class="text-xl font-black tracking-tight select-none">HOLLOW ID</div>
+        <div class="w-24"></div> <!-- Spacer for centering -->
+    </header>
 
-        <h1 class="text-2xl font-black tracking-tight">
-            HOLLOW
-        </h1>
-        </header>
+    <main class="flex-grow w-full max-w-2xl mx-auto px-6 pb-20 relative z-10">
 
         <!-- Identity -->
-        <section class="section">
-            <p class="label">Authenticated As</p>
-            <p id="user-email" class="text-xl font-medium">
-                loading…
-            </p>
-        </section>
+        <div class="glass-card p-8 mb-8">
+            <div class="flex items-center gap-6">
+                <div class="w-16 h-16 rounded-full bg-gradient-to-br from-gray-800 to-black border border-white/10 flex items-center justify-center text-2xl font-bold"
+                    id="avatar">
+                    ?
+                </div>
+                <div>
+                    <p class="label">Authenticated As</p>
+                    <p id="user-email" class="text-2xl font-medium tracking-tight">Loading...</p>
+                    <p id="user-uid" class="text-xs font-mono text-gray-500 mt-1">UID: ...</p>
+                </div>
+            </div>
+        </div>
 
         <!-- Credits -->
-        <section class="section">
-            <p class="label">Available Credits</p>
-            <p id="user-credits" class="text-4xl font-black">
-                $0.00
-            </p>
-        </section>
-
-        <!-- Connectivity / Subscribe -->
-        <section class="section">
-            <p class="label mb-3">Hollow Connectivity</p>
-
-            <p class="text-gray-400 text-sm max-w-md mb-6">
-                Required for real-time presence and instant updates.
-                $5.00 per month upon activation.
-            </p>
-
-            <!-- SUBSCRIBE BUTTON -->
-            <div class="outline-pill">
-                <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00" class="px-10 py-3 text-xs font-extrabold uppercase tracking-[0.25em]
-                       hover:text-gray-300 transition block">
-                    Subscribe
-                </a>
+        <div class="glass-card p-8 mb-8 relative overflow-hidden">
+            <div
+                class="absolute top-0 right-0 p-32 bg-green-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none">
             </div>
-        </section>
+
+            <p class="label text-green-400">Available Credits</p>
+            <div class="flex items-baseline gap-2 mb-6">
+                <p id="user-credits" class="text-5xl font-black text-white">$0.00</p>
+            </div>
+
+            <div class="p-4 rounded-xl bg-white/5 border border-white/5 mb-6">
+                <p class="text-sm text-gray-300 mb-4">
+                    <strong class="text-white block mb-1">Hollow Connectivity</strong>
+                    Required for real-time presence, email sending, and instant updates.
+                </p>
+                <div class="flex items-center justify-between">
+                    <span class="text-xs font-mono text-gray-500">$5.00 / month</span>
+                </div>
+            </div>
+
+            <a href="https://buy.stripe.com/6oU7sL39M96g31D4c72oE00"
+                class="primary-btn inline-block text-center w-full sm:w-auto">
+                Add Subscription
+            </a>
+        </div>
 
         <!-- Actions -->
-        <section class="pt-16 flex flex-col gap-6">
-
-            <button id="sign-out-btn" class="bg-white text-black py-3 rounded-full font-bold
-                   hover:bg-gray-200 transition">
+        <div class="glass-card p-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <button id="sign-out-btn" class="secondary-btn w-full sm:w-auto text-center">
                 Sign Out
             </button>
 
-            <button id="delete-account-btn" class="py-3 rounded-full danger font-bold transition">
+            <button id="delete-account-btn" class="danger-btn w-full sm:w-auto text-center">
                 Delete Account
             </button>
-        </section>
+        </div>
 
-        <!-- Footer -->
-        <footer class="mt-24 text-center text-xs text-gray-600">
-            Device UID<br>
-            <span id="user-uid" class="font-mono text-gray-400">…</span>
-        </footer>
+    </main>
 
-    </div>
+    <footer class="py-12 text-center text-xs text-gray-600 border-t border-gray-900 bg-black mt-auto">
+        <p>&copy; 2025 Hollow. All rights reserved.</p>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
@@ -144,13 +204,13 @@
             if (!user) return window.location.href = 'signup.html';
 
             document.getElementById('user-email').textContent = user.email;
-            document.getElementById('user-uid').textContent = user.uid;
+            document.getElementById('user-uid').textContent = "UID: " + user.uid;
+            if (user.email) document.getElementById('avatar').textContent = user.email[0].toUpperCase();
 
             try {
                 const snap = await getDoc(doc(db, "users", user.uid));
                 if (snap.exists() && snap.data().credits !== undefined) {
-                    document.getElementById('user-credits').textContent =
-                        `$${snap.data().credits}.00`;
+                    document.getElementById('user-credits').textContent = `$${snap.data().credits}.00`;
                 }
             } catch { }
         });
@@ -175,7 +235,6 @@
             }
         };
     </script>
-
 </body>
 
 </html>

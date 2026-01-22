@@ -678,7 +678,8 @@
                         </h1>
                         <p class="text-xl sm:text-2xl text-gray-400 max-w-xl leading-relaxed">
                             Ask questions. Send emails. Set alarms. <br>
-                            <span class="text-white font-semibold">All by voice. In under 2 seconds.</span>
+                            <span class="text-white font-semibold">Tap to activate. Speak. Getting answers has never
+                                been this fast.</span>
                         </p>
 
                         <!-- Early CTA -->
@@ -1074,12 +1075,26 @@
                 <h2 class="text-3xl sm:text-5xl font-black tracking-tighter mb-4">See It In Action</h2>
                 <p class="text-lg text-gray-400 mb-10">Watch Hollow respond to real voice commands in real-time.</p>
 
-                <!-- Twitter Video Embed -->
-                <div class="rounded-2xl overflow-hidden border border-white/10">
-                    <blockquote class="twitter-tweet" data-theme="dark" data-align="center">
-                        <a href="https://x.com/gethollowtech/status/1993503226952388990"></a>
-                    </blockquote>
-                    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                <!-- Video Embed -->
+                <div
+                    class="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
+                    <div
+                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-10">
+                    </div>
+
+                    <div class="relative pb-[56.25%] h-0">
+                        <iframe src="https://www.youtube.com/embed/gxhOIpiqCPk?rel=0&modestbranding=1"
+                            title="Hollow Demo" class="absolute top-0 left-0 w-full h-full" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <!-- Overlay Text -->
+                    <div class="absolute bottom-0 left-0 right-0 p-8 z-20 text-center">
+                        <p class="text-sm font-bold uppercase tracking-widest text-white/80 mb-2">See It In Action</p>
+                        <p class="text-lg text-gray-300">Watch Hollow respond to real voice commands in real-time.</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1146,16 +1161,13 @@
                             </ul>
                         </div>
 
-                        <!-- Development -->
+                        <!-- Platform -->
                         <div>
-                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Development</h4>
+                            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-4">Platform</h4>
                             <ul class="space-y-2 text-gray-400">
-                                <li><strong class="text-gray-300">Programmable:</strong> Arduino IDE, ESP-IDF,
-                                    MicroPython</li>
-                                <li><strong class="text-gray-300">Firmware:</strong> Compatible with Meshtastic for mesh
-                                    networking</li>
-                                <li><strong class="text-gray-300">Open Platform:</strong> Build your own applications
-                                </li>
+                                <li><strong class="text-gray-300">OS:</strong> Custom HollowOS (Closed Source)</li>
+                                <li><strong class="text-gray-300">Updates:</strong> Over-the-air firmware updates</li>
+                                <li><strong class="text-gray-300">Focus:</strong> Speed and Simplicity</li>
                             </ul>
                         </div>
                     </div>
@@ -1173,15 +1185,12 @@
                             a phone for a 5-second question?</strong>
                     </p>
                     <p>
-                        We're a small team of engineers and designers who believe AI assistants should be <em>instant,
-                            unobtrusive, and private</em>.
-                        No giant corporations harvesting your data. No walled gardens. Just a dedicated device that does
-                        one thing exceptionally well:
+                        I'm a 16-year-old solo founder building the future of wearable AI.
+                        No giant corporations. Just a dedicated device that does one thing exceptionally well:
                         giving you AI superpowers on your wrist.
                     </p>
                     <p>
-                        The 0W Prototype is our first step. We're shipping to early adopters who want to shape the
-                        future of wearable AI.
+                        The 0W Prototype is the first step. I'm shipping to early adopters who want to shape the future.
                         Your feedback directly influences what Hollow becomes.
                     </p>
                 </div>
@@ -1193,7 +1202,7 @@
                         <span class="text-sm text-gray-400">⚡ Ultra-Fast Response</span>
                     </div>
                     <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
-                        <span class="text-sm text-gray-400">🔧 Open & Hackable</span>
+                        <span class="text-sm text-gray-400">✨ Curated Experience</span>
                     </div>
                 </div>
             </div>
