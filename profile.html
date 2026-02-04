@@ -112,7 +112,7 @@
 <body class="relative">
 
     <header class="header-hero py-4 px-6 mb-12 flex justify-between items-center">
-        <a href="dashboard.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+        <a href="/dashboard" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
                 </path>
@@ -186,7 +186,7 @@
         const db = getFirestore(app);
 
         onAuthStateChanged(auth, async (user) => {
-            if (!user) return window.location.href = 'signup.html';
+            if (!user) return window.location.href = '/signup';
 
             document.getElementById('user-email').textContent = user.email;
             document.getElementById('user-uid').textContent = "UID: " + user.uid;
@@ -202,7 +202,7 @@
 
         document.getElementById('sign-out-btn').onclick = async () => {
             await signOut(auth);
-            window.location.href = 'index.html';
+            window.location.href = '/';
         };
 
         document.getElementById('delete-account-btn').onclick = async () => {
@@ -210,7 +210,7 @@
 
             try {
                 await deleteUser(auth.currentUser);
-                window.location.href = 'index.html';
+                window.location.href = '/';
             } catch (e) {
                 alert(
                     e.code === 'auth/requires-recent-login'

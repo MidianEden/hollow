@@ -128,7 +128,7 @@
 <body>
 
     <header class="py-6 px-6 absolute top-0 left-0 w-full z-10">
-        <a href="index.html" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
+        <a href="/" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
                 </path>
@@ -200,7 +200,7 @@
         // Redirect if already logged in
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                window.location.replace('dashboard.html');
+                window.location.replace('/dashboard');
             }
         });
 
