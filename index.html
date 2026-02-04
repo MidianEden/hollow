@@ -9,9 +9,9 @@
     <title>Hollow | AI Assistant Watch - Instant Answers From Your Wrist</title>
     <meta name="title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
     <meta name="description"
-        content="Hollow: Fast AI watch for voice emails, alarms, and answers—prototype shipping now. The wearable AI assistant that responds in 1.5 seconds. No phone needed.">
+        content="Hollow 0W: The AI watch for instant voice answers, emails, and alarms. The wearable AI assistant that responds in 1.5 seconds. No phone needed. Get the Hollow 0W today.">
     <meta name="keywords"
-        content="Wearable AI, voice assistant watch, private AI wearable, AI watch, smart assistant, voice AI, smartwatch, hands-free assistant, AI wearable">
+        content="Hollow Watch, Hollow AI Watch, Hollow 0W, Hollow, AI watch, wearable AI, voice assistant watch, private AI wearable, smart assistant, voice AI, smartwatch, hands-free assistant, AI wearable">
     <meta name="author" content="Hollow">
     <meta name="robots" content="index, follow">
 
@@ -20,7 +20,7 @@
     <meta property="og:url" content="https://gethollow.com/">
     <meta property="og:title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
     <meta property="og:description"
-        content="The AI smartwatch that responds in 1.5 seconds. Send emails, get answers, set alarms—all hands-free. Limited prototype run available now.">
+        content="Hollow 0W - The AI smartwatch that responds in 1.5 seconds. Send emails, get answers, set alarms—all hands-free. Get your Hollow 0W now.">
     <meta property="og:image" content="https://gethollow.com/0wproto.png">
     <meta property="og:site_name" content="Hollow">
     <meta property="product:price:amount" content="69.99">
@@ -49,8 +49,8 @@
     {
         "@context": "https://schema.org",
         "@type": "Product",
-        "name": "Hollow 0W Prototype Edition",
-        "description": "AI-powered smartwatch with 1.5 second response time. Voice-controlled email, instant answers, and alarms.",
+        "name": "Hollow 0W",
+        "description": "Hollow 0W - AI-powered smartwatch with 1.5 second response time. Voice-controlled email, instant answers, and alarms.",
         "image": "https://gethollow.com/0wproto.png",
         "brand": {
             "@type": "Brand",
@@ -665,8 +665,8 @@
                         <div
                             class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full">
                             <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold tracking-widest uppercase text-amber-400">Limited Prototype
-                                Run</span>
+                            <span class="text-xs font-bold tracking-widest uppercase text-amber-400">Early Access
+                                Edition</span>
                         </div>
 
                         <h1
@@ -684,15 +684,15 @@
 
                         <!-- Early CTA -->
                         <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                            <a href="signup.html"
+                            <button onclick="showWarningModal()"
                                 class="primary-btn inline-flex items-center justify-center gap-2 text-center">
-                                <span>Get Your Prototype</span>
+                                <span>Buy Now - $69.99</span>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
-                            </a>
-                            <span class="text-sm text-gray-500 self-center">$69.99 + subscription</span>
+                            </button>
+                            <span class="text-sm text-gray-500 self-center">+ $5-10/month subscription</span>
                         </div>
                     </div>
 
@@ -1190,7 +1190,7 @@
                         giving you AI superpowers on your wrist.
                     </p>
                     <p>
-                        The 0W Prototype is the first step. I'm shipping to early adopters who want to shape the future.
+                        The Hollow 0W is the first step. I'm shipping to early adopters who want to shape the future.
                         Your feedback directly influences what Hollow becomes.
                     </p>
                 </div>
@@ -1216,12 +1216,13 @@
                     Join the<br>Revolution.
                 </h2>
                 <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                    Secure your 0W Prototype today. Experience the future of wearable AI.
+                    Get your Hollow 0W today. Experience the future of wearable AI for just <strong
+                        class="text-white">$69.99</strong>.
                 </p>
                 <div class="pt-8">
-                    <a href="signup.html" class="primary-btn !text-xl !px-12 !py-6 hover:scale-105">
-                        Get Your Prototype
-                    </a>
+                    <button onclick="showWarningModal()" class="primary-btn !text-xl !px-12 !py-6 hover:scale-105">
+                        Buy Now - $69.99
+                    </button>
                 </div>
 
                 <div id="contact" class="max-w-md mx-auto text-center border-t border-white/10 pt-16 mt-16">
@@ -1352,6 +1353,109 @@
                     link.classList.add('active');
                 }
             });
+        });
+    </script>
+
+    <!-- Warning Modal -->
+    <div id="warning-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+        style="background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);">
+        <div
+            class="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
+            <button onclick="closeWarningModal()"
+                class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-black text-white mb-2">Important Information</h3>
+                <p class="text-gray-400 text-sm">Please read before purchasing</p>
+            </div>
+
+            <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
+                    <svg class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-bold text-red-400 text-sm">Battery Life</h4>
+                        <p class="text-gray-400 text-sm">Battery lasts approximately 4-6 hours with active use. This is
+                            an early hardware limitation we're actively improving.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                    <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                    <div>
+                        <h4 class="font-bold text-amber-400 text-sm">Known Bugs</h4>
+                        <p class="text-gray-400 text-sm">This is early access hardware. Expect occasional software bugs
+                            and glitches. We push regular OTA updates to fix issues.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                    <svg class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-bold text-blue-400 text-sm">Shipping Time</h4>
+                        <p class="text-gray-400 text-sm">Please allow approximately <strong class="text-white">2
+                                weeks</strong> for shipping and delivery.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <a href="signup.html" class="primary-btn w-full block text-center !rounded-xl">
+                    I Understand - Continue to Purchase
+                </a>
+                <button onclick="closeWarningModal()"
+                    class="w-full py-3 text-gray-500 hover:text-white transition-colors text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showWarningModal() {
+            const modal = document.getElementById('warning-modal');
+            modal.style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeWarningModal() {
+            const modal = document.getElementById('warning-modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeWarningModal();
+        });
+
+        // Close modal on backdrop click
+        document.getElementById('warning-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'warning-modal') closeWarningModal();
         });
     </script>
 
