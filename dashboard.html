@@ -45,7 +45,6 @@
         .primary-btn,
         .secondary-btn,
         .image-container {
-            /* Copied from index.html for consistency */
             transition: all 0.3s ease;
         }
 
@@ -91,7 +90,6 @@
                 your wrist. <strong class="text-white">$69.99</strong> + subscription.</p>
 
             <div class="grid md:grid-cols-2 gap-12 items-stretch text-left">
-                <!-- Image -->
                 <div class="relative">
                     <div
                         class="aspect-square rounded-3xl bg-gradient-to-br from-gray-900 to-black overflow-hidden border border-white/10">
@@ -103,7 +101,6 @@
                     </div>
                 </div>
 
-                <!-- Details -->
                 <div class="flex flex-col justify-between space-y-6 p-8 rounded-3xl bg-white/5 border border-white/10">
                     <div>
                         <div class="flex items-center gap-3 mb-3">
@@ -142,6 +139,70 @@
         <p>&copy; 2025 Hollow. All rights reserved.</p>
     </footer>
 
+    <div id="warning-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
+        style="background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);">
+        <div
+            class="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
+            <button onclick="closeWarningModal()"
+                class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                    </path>
+                </svg>
+            </button>
+
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-2xl font-black text-white mb-2">Important Information</h3>
+                <p class="text-gray-400 text-sm">Please read before purchasing</p>
+            </div>
+
+            <div class="space-y-4 mb-8">
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
+                    <svg class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <div>
+                        <h4 class="font-bold text-blue-400 text-sm">Shipping Time</h4>
+                        <p class="text-gray-400 text-sm">Please allow approximately <strong class="text-white">2-3 weeks</strong> for shipping and delivery as we handle high demand for these early units.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                    <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                        viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                        </path>
+                    </svg>
+                    <div>
+                        <h4 class="font-bold text-amber-400 text-sm">Potential Bugs</h4>
+                        <p class="text-gray-400 text-sm">This is early access hardware. Expect occasional software bugs and glitches as we refine the experience. Updates are pushed frequently via the companion app.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-3">
+                <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02"
+                    class="primary-btn w-full block text-center !rounded-xl">
+                    I Understand - Complete Purchase
+                </a>
+                <button onclick="closeWarningModal()"
+                    class="w-full py-3 text-gray-500 hover:text-white transition-colors text-sm">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
@@ -171,86 +232,6 @@
             }
         });
     </script>
-
-    <!-- Warning Modal -->
-    <div id="warning-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
-        style="background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);">
-        <div
-            class="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
-            <button onclick="closeWarningModal()"
-                class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
-                    </path>
-                </svg>
-            </button>
-
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                        </path>
-                    </svg>
-                </div>
-                <h3 class="text-2xl font-black text-white mb-2">Important Information</h3>
-                <p class="text-gray-400 text-sm">Please read before purchasing</p>
-            </div>
-
-            <div class="space-y-4 mb-8">
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                    <svg class="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <div>
-                        <h4 class="font-bold text-red-400 text-sm">Battery Life</h4>
-                        <p class="text-gray-400 text-sm">Battery lasts approximately 3-6 hours with active use. This is
-                            an early hardware limitation we're actively improving.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                    <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
-                        </path>
-                    </svg>
-                    <div>
-                        <h4 class="font-bold text-amber-400 text-sm">Known Bugs</h4>
-                        <p class="text-gray-400 text-sm">This is early access hardware. Expect occasional software bugs
-                            and glitches. We provide firmware updates via USB-A cable.</p>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
-                    <svg class="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
-                        viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <div>
-                        <h4 class="font-bold text-blue-400 text-sm">Shipping Time</h4>
-                        <p class="text-gray-400 text-sm">Please allow approximately <strong class="text-white">2
-                                weeks</strong> for shipping and delivery.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="space-y-3">
-                <a href="https://buy.stripe.com/aFafZh11Ebeo31D3832oE02"
-                    class="primary-btn w-full block text-center !rounded-xl">
-                    I Understand - Complete Purchase
-                </a>
-                <button onclick="closeWarningModal()"
-                    class="w-full py-3 text-gray-500 hover:text-white transition-colors text-sm">
-                    Cancel
-                </button>
-            </div>
-        </div>
-    </div>
 
     <script>
         function showWarningModal() {
