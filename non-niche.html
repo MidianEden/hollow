@@ -778,7 +778,8 @@
                             </div>
                             
                             <div class="bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm">
-                                <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Next Function Unlock In:</p>
+                                <p id="next-unlock-label" class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">Next Workflow Unlock In:</p>
+                                <p class="text-xs font-semibold tracking-wide text-blue-400 mb-3">Alarms</p>
                                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center">
                                     <div class="bg-black/40 rounded-lg p-2">
                                         <span id="days" class="text-2xl font-black text-white block leading-none">00</span>
@@ -1328,15 +1329,34 @@
         });
 
         // Countdown Timer Logic
-        function updateCountdown() {
-            // Set the target date to next Monday at midnight
-            const now = new Date();
-            const nextMonday = new Date();
-            nextMonday.setDate(now.getDate() + (1 + 7 - now.getDay()) % 7);
-            if (nextMonday.getDay() === now.getDay()) nextMonday.setDate(nextMonday.getDate() + 7);
-            nextMonday.setHours(0, 0, 0, 0);
+        const COUNTDOWN_CYCLE_MS = 7 * 24 * 60 * 60 * 1000;
+        let countdownTarget = getNextMondayMidnight();
 
-            const distance = nextMonday - now;
+        function getNextMondayMidnight(fromDate = new Date()) {
+            const target = new Date(fromDate);
+            const daysUntilMonday = ((8 - target.getDay()) % 7) || 7;
+            target.setDate(target.getDate() + daysUntilMonday);
+            target.setHours(0, 0, 0, 0);
+            return target;
+        }
+
+        function updateCountdown() {
+            const now = new Date();
+
+            if (countdownTarget <= now) {
+                while (countdownTarget <= now) {
+                    countdownTarget = new Date(countdownTarget.getTime() + COUNTDOWN_CYCLE_MS);
+                }
+                const unlockLabel = document.getElementById("next-unlock-label");
+                if (unlockLabel) {
+                    unlockLabel.textContent = "Alarms Unlocked. Next Unlock In:";
+                    setTimeout(() => {
+                        unlockLabel.textContent = "Next Workflow Unlock In:";
+                    }, 2200);
+                }
+            }
+
+            const distance = countdownTarget - now;
 
             const d = Math.floor(distance / (1000 * 60 * 60 * 24));
             const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -1347,11 +1367,6 @@
             document.getElementById("hours").innerText = h.toString().padStart(2, '0');
             document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
             document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
-
-            if (distance < 0) {
-                clearInterval(countdownInterval);
-                document.getElementById("countdown").innerHTML = "<p class='text-white font-bold'>New Function Releasing Now!</p>";
-            }
         }
 
         const countdownInterval = setInterval(updateCountdown, 1000);
