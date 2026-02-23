@@ -63,7 +63,7 @@
     <style>
         :root {
             --ui-white: #FFFFFF;
-            --ui-black: #0A0A0A;
+            --ui-black: #000000;
             --ui-gray-light: #F2F2F2;
             --ui-gray-mid: #4A4A4A;
             --ui-gray-border: #E0E0E0;
@@ -82,13 +82,13 @@
 
         @media (prefers-color-scheme: light) {
             :root {
-                --bg-base: var(--ui-white);
-                --bg-deep: var(--ui-gray-light);
-                --text-strong: var(--ui-black);
-                --text-muted: var(--ui-gray-mid);
-                --panel-bg: var(--ui-white);
-                --panel-border: var(--ui-gray-border);
-                --header-bg: rgba(255, 255, 255, 0.9);
+                --bg-base: #000000;
+                --bg-deep: #000000;
+                --text-strong: var(--ui-white);
+                --text-muted: var(--ui-gray-border);
+                --panel-bg: rgba(242, 242, 242, 0.04);
+                --panel-border: rgba(224, 224, 224, 0.2);
+                --header-bg: rgba(0, 0, 0, 0.88);
             }
         }
 
@@ -97,39 +97,13 @@
         }
 
         body {
-            background: var(--bg-base);
+            background: #000;
             color: var(--text-strong);
             font-family: "Geist", sans-serif;
             margin: 0;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-        }
-
-        /* Subtle accent wash */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 18% 20%, rgba(25, 118, 255, 0.12) 0%, transparent 45%);
-            pointer-events: none;
-            z-index: 0;
-            animation: backgroundPulse 20s ease-in-out infinite;
-        }
-
-        @keyframes backgroundPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
         }
 
         main {
@@ -520,24 +494,6 @@
             filter: brightness(1.14) contrast(1.06);
         }
 
-        .image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.06);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .image-container:hover::before {
-            opacity: 1;
-        }
-
         /* Hero text enhancements */
         .hero-title {
             color: var(--text-strong);
@@ -771,10 +727,6 @@
                     </div>
 
                     <div class="relative w-full max-w-2xl">
-                        <div
-                            class="absolute -inset-4 bg-white/10 rounded-2xl blur-3xl opacity-50 group-hover:opacity-75 transition-opacity">
-                        </div>
-
                         <div class="relative aspect-square image-container group">
                             <div class="absolute inset-0 bg-black/20 z-10"></div>
                             <img src="0wproto.png" alt="Hollow AI Watch - Voice-controlled smartwatch prototype"
@@ -957,7 +909,7 @@
             </div>
         </div>
 
-        <div class="py-24 px-6 bg-[#0A0A0A] border-t border-white/5">
+        <div class="py-24 px-6 bg-black border-t border-white/5">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl sm:text-6xl font-black tracking-tighter mb-6">
@@ -1171,7 +1123,7 @@
             </div>
         </div>
 
-        <div class="py-16 px-6 bg-[#0A0A0A] border-t border-white/5">
+        <div class="py-16 px-6 bg-black border-t border-white/5">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-400 mb-2">Technical Specifications</h2>
@@ -1242,7 +1194,7 @@
             </div>
         </div>
 
-        <div id="about" class="py-24 px-6 bg-[#0A0A0A] border-t border-white/5">
+        <div id="about" class="py-24 px-6 bg-black border-t border-white/5">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl sm:text-5xl font-black tracking-tighter mb-8">About Hollow</h2>
                 <div class="space-y-6 text-lg text-gray-400 leading-relaxed">
@@ -1275,7 +1227,7 @@
         </div>
 
         <div
-            class="min-h-[58vh] sm:min-h-[70vh] flex flex-col items-center justify-center py-20 sm:py-32 bg-[#0A0A0A] border-t border-white/10 relative">
+            class="min-h-[58vh] sm:min-h-[70vh] flex flex-col items-center justify-center py-20 sm:py-32 bg-black border-t border-white/10 relative">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8 sm:space-y-10">
                 <h2 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter loading-tight">
                     Stay Sharp<br>When Your Day Is Packed.
@@ -1438,13 +1390,6 @@
             if (countdownTarget <= now) {
                 while (countdownTarget <= now) {
                     countdownTarget = new Date(countdownTarget.getTime() + COUNTDOWN_CYCLE_MS);
-                }
-                const unlockLabel = document.getElementById("next-unlock-label");
-                if (unlockLabel) {
-                    unlockLabel.textContent = "Alarms Unlocked. Next Unlock In:";
-                    setTimeout(() => {
-                        unlockLabel.textContent = "Next Workflow Unlock In:";
-                    }, 2200);
                 }
             }
 

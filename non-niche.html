@@ -75,35 +75,6 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Animated gradient background with orbs */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(ellipse 80% 50% at 20% 40%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
-                radial-gradient(ellipse 60% 40% at 80% 20%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
-                radial-gradient(ellipse 70% 60% at 70% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: 0;
-            animation: backgroundPulse 20s ease-in-out infinite;
-        }
-
-        @keyframes backgroundPulse {
-
-            0%,
-            100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
-        }
-
         main {
             position: relative;
             z-index: 1;
@@ -431,24 +402,6 @@
             border-color: rgba(255, 255, 255, 0.1);
         }
 
-        .image-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .image-container:hover::before {
-            opacity: 1;
-        }
-
         /* Hero text enhancements */
         .hero-title {
             background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
@@ -685,10 +638,6 @@
                     </div>
 
                     <div class="relative w-full max-w-2xl">
-                        <div
-                            class="absolute -inset-4 bg-gradient-to-r from-purple-600/20 via-blue-600/20 to-cyan-600/20 rounded-3xl blur-3xl opacity-50 group-hover:opacity-75 transition-opacity">
-                        </div>
-
                         <div class="relative aspect-square image-container group">
                             <div
                                 class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10">
@@ -861,7 +810,7 @@
             </div>
         </div>
 
-        <div class="py-24 px-6 bg-gradient-to-b from-black via-[#050505] to-black border-t border-white/5">
+        <div class="py-24 px-6 bg-black border-t border-white/5">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl sm:text-6xl font-black tracking-tighter mb-6">
@@ -1079,7 +1028,7 @@
             </div>
         </div>
 
-        <div class="py-16 px-6 bg-gradient-to-b from-black to-[#050505] border-t border-white/5">
+        <div class="py-16 px-6 bg-black border-t border-white/5">
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-400 mb-2">Technical Specifications</h2>
@@ -1150,7 +1099,7 @@
             </div>
         </div>
 
-        <div id="about" class="py-24 px-6 bg-gradient-to-b from-[#050505] to-black border-t border-white/5">
+        <div id="about" class="py-24 px-6 bg-black border-t border-white/5">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl sm:text-5xl font-black tracking-tighter mb-8">About Us</h2>
                 <div class="space-y-6 text-lg text-gray-400 leading-relaxed">
@@ -1183,7 +1132,7 @@
         </div>
 
         <div
-            class="min-h-[70vh] flex flex-col items-center justify-center py-32 bg-gradient-to-t from-[#050505] to-black border-t border-white/10 relative">
+            class="min-h-[70vh] flex flex-col items-center justify-center py-32 bg-black border-t border-white/10 relative">
             <div class="max-w-4xl mx-auto px-6 text-center space-y-10">
                 <h2 class="text-5xl sm:text-7xl font-black tracking-tighter loading-tight">
                     Join the<br>Revolution.
@@ -1346,13 +1295,6 @@
             if (countdownTarget <= now) {
                 while (countdownTarget <= now) {
                     countdownTarget = new Date(countdownTarget.getTime() + COUNTDOWN_CYCLE_MS);
-                }
-                const unlockLabel = document.getElementById("next-unlock-label");
-                if (unlockLabel) {
-                    unlockLabel.textContent = "Alarms Unlocked. Next Unlock In:";
-                    setTimeout(() => {
-                        unlockLabel.textContent = "Next Workflow Unlock In:";
-                    }, 2200);
                 }
             }
 
