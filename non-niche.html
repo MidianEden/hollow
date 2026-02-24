@@ -36,7 +36,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
     <script type="application/ld+json">
     {
@@ -61,6 +61,20 @@
 
 
     <style>
+        :root {
+            --ui-white: #FFFFFF;
+            --ui-black: #000000;
+            --ui-gray-light: #F2F2F2;
+            --ui-gray-mid: #4A4A4A;
+            --ui-gray-border: #E0E0E0;
+            --ui-accent: #1976FF;
+            --ui-accent-alt: #00D1FF;
+            --panel-bg: rgba(242, 242, 242, 0.04);
+            --panel-border: rgba(224, 224, 224, 0.2);
+            --header-bg: rgba(0, 0, 0, 0.88);
+            --text-muted: var(--ui-gray-border);
+        }
+
         * {
             box-sizing: border-box;
         }
@@ -68,7 +82,7 @@
         body {
             background: #000;
             color: white;
-            font-family: "Inter", sans-serif;
+            font-family: "Geist", sans-serif;
             margin: 0;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -88,12 +102,12 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--header-bg);
             backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 50;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--panel-border);
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
         }
 
@@ -103,7 +117,7 @@
             right: 2rem;
             width: 44px;
             height: 44px;
-            background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+            background: #171717;
             border-radius: 50%;
             display: none;
             align-items: center;
@@ -117,20 +131,17 @@
         }
 
         #profile-icon:hover {
-            background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+            background: #242424;
             transform: translateY(-2px);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            border-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(0, 209, 255, 0.4);
         }
 
         #brand-logo {
             font-size: 2rem;
             font-weight: 900;
             letter-spacing: -0.05em;
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--ui-white);
         }
 
         /* Content Sections */
@@ -202,7 +213,7 @@
             bottom: 120%;
             left: 50%;
             transform: translateX(-50%) translateY(10px);
-            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+            background: #111111;
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ddd;
             padding: 1.25rem;
@@ -290,8 +301,8 @@
 
         /* Primary CTA button */
         .primary-btn {
-            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-            color: #000;
+            background: var(--ui-accent);
+            color: var(--ui-white);
             padding: 1rem 2rem;
             border-radius: 9999px;
             font-weight: 900;
@@ -301,14 +312,14 @@
             border: none;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 16px rgba(25, 118, 255, 0.35);
             position: relative;
             overflow: hidden;
         }
 
         .primary-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(25, 118, 255, 0.4);
         }
 
         .primary-btn::after {
@@ -331,8 +342,8 @@
 
         /* Secondary button */
         .secondary-btn {
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--panel-border);
+            background: var(--panel-bg);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
             border-radius: 9999px;
@@ -340,10 +351,44 @@
         }
 
         .secondary-btn:hover {
-            border-color: rgba(255, 255, 255, 0.4);
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(0, 209, 255, 0.45);
+            background: rgba(20, 24, 30, 0.88);
             transform: translateY(-2px);
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 16px rgba(0, 209, 255, 0.12);
+        }
+
+        .feature-card {
+            background: rgba(17, 20, 24, 0.9);
+            border: 1px solid var(--panel-border);
+            border-radius: 12px;
+            transition: all 0.25s ease;
+        }
+
+        .feature-card:hover {
+            border-color: rgba(0, 209, 255, 0.45);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+        }
+
+        .feature-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 209, 255, 0.35);
+            background: rgba(25, 118, 255, 0.15);
+        }
+
+        .feature-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: #1976FF;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         /* Feature List Styling */
@@ -360,7 +405,7 @@
             top: 0;
             height: 100%;
             width: 3px;
-            background: linear-gradient(to bottom, transparent, white, transparent);
+            background: rgba(0, 209, 255, 0.55);
             opacity: 0;
             transition: opacity 0.3s ease;
         }
@@ -404,10 +449,7 @@
 
         /* Hero text enhancements */
         .hero-title {
-            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--ui-white);
             animation: fadeInUp 1s ease-out;
         }
 
@@ -467,7 +509,7 @@
         }
 
         .nav-link {
-            color: #888;
+            color: var(--text-muted);
             font-size: 0.875rem;
             font-weight: 500;
             text-decoration: none;
@@ -476,11 +518,11 @@
         }
 
         .nav-link:hover {
-            color: white;
+            color: #f8fafc;
         }
 
         .nav-link.active {
-            color: white;
+            color: #f8fafc;
         }
 
         /* Mobile Navigation */
@@ -605,18 +647,16 @@
 
                     <div class="space-y-8 content-section">
                         <div
-                            class="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/30 px-4 py-2 rounded-full">
-                            <span class="w-2 h-2 bg-amber-500 rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold tracking-widest uppercase text-amber-400">Early Access
+                            class="inline-flex items-center gap-2 bg-[#1976FF]/12 border border-[#1976FF]/30 px-4 py-2 rounded-full">
+                            <span class="w-2 h-2 bg-[#1976FF] rounded-full animate-pulse"></span>
+                            <span class="text-xs font-bold tracking-widest uppercase text-[#1976FF]">Early Access
                                 Edition</span>
                         </div>
 
                         <h1
                             class="hero-title text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9]">
                             Your AI Assistant.<br>
-                            <span
-                                class="text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-gray-400">On
-                                Your Wrist.</span>
+                            <span class="text-white">On Your Wrist.</span>
                         </h1>
                         <p class="text-xl sm:text-2xl text-gray-400 max-w-xl leading-relaxed">
                             Ask questions. Send emails. <br>
@@ -633,7 +673,7 @@
                                         d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
                             </a>
-                            <span class="text-sm text-gray-500 self-center">+ $5-10/month subscription</span>
+                            <span class="text-sm text-gray-500 self-center">+ $10/month subscription</span>
                         </div>
                     </div>
 
@@ -647,7 +687,7 @@
 
                             <div
                                 class="absolute bottom-6 left-6 z-20 flex items-center gap-3 backdrop-blur-md bg-white/10 p-3 rounded-full border border-white/10">
-                                <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                <div class="w-3 h-3 bg-[#1976FF] rounded-full animate-pulse"></div>
                                 <span class="text-xs font-bold tracking-widest uppercase text-white">Shipping Now</span>
                             </div>
 
@@ -677,11 +717,10 @@
 
                         <div class="space-y-3">
                             <div
-                                class="flex items-start gap-4 p-4 rounded-2xl bg-gradient-to-r from-white/5 to-transparent border border-white/5 hover:border-white/20 transition-all group">
+                                class="feature-card flex items-start gap-4 p-4 rounded-lg group">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500/20 to-cyan-500/20 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
+                                    class="feature-icon flex-shrink-0">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                                         </path>
@@ -689,7 +728,7 @@
                                 </div>
                                 <div>
                                     <h4
-                                        class="text-lg font-bold text-white group-hover:text-blue-300 transition-colors">
+                                        class="text-lg font-bold text-white group-hover:text-[#1976FF] transition-colors">
                                         Ask Any Question</h4>
                                     <p class="text-sm text-gray-400">Get instant answers without pulling out your phone.
                                         Facts, calculations, translations—voice in, answer out.</p>
@@ -697,11 +736,10 @@
                             </div>
 
                             <div
-                                class="flex items-start gap-4 p-4 rounded-2xl bg-gradient-to-r from-white/5 to-transparent border border-white/5 hover:border-white/20 transition-all group">
+                                class="feature-card flex items-start gap-4 p-4 rounded-lg group">
                                 <div
-                                    class="flex-shrink-0 w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500/20 to-pink-500/20 flex items-center justify-center">
-                                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
+                                    class="feature-icon flex-shrink-0">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                             d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
                                         </path>
@@ -709,7 +747,7 @@
                                 </div>
                                 <div>
                                     <h4
-                                        class="text-lg font-bold text-white group-hover:text-purple-300 transition-colors">
+                                        class="text-lg font-bold text-white group-hover:text-[#1976FF] transition-colors">
                                         Send Emails by Voice</h4>
                                     <p class="text-sm text-gray-400">Compose and send emails hands-free. Just speak the
                                         recipient, subject, and message. Done.</p>
@@ -720,15 +758,15 @@
                         <div class="mt-8 pt-8 border-t border-white/5 space-y-6">
                             <div class="flex items-center gap-3">
                                 <span class="relative flex h-3 w-3">
-                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1976FF] opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-[#1976FF]"></span>
                                 </span>
                                 <h4 class="text-lg font-black tracking-tight text-white">More functions arriving weekly.</h4>
                             </div>
                             
                             <div class="bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm">
                                 <p id="next-unlock-label" class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">Next Workflow Unlock In:</p>
-                                <p class="text-xs font-semibold tracking-wide text-blue-400 mb-3">Alarms</p>
+                                <p class="text-xs font-semibold tracking-wide text-[#1976FF] mb-3">Alarms</p>
                                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center">
                                     <div class="bg-black/40 rounded-lg p-2">
                                         <span id="days" class="text-2xl font-black text-white block leading-none">00</span>
@@ -752,9 +790,9 @@
                     </div>
 
                     <div
-                        class="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/10 border border-green-500/20">
+                        class="p-6 rounded-lg bg-[#101826] border border-[#1976FF]/30">
                         <div class="flex items-center gap-4">
-                            <div class="text-5xl font-black text-green-400">1.5s</div>
+                            <div class="text-5xl font-black text-[#1976FF]">1.5s</div>
                             <div>
                                 <div class="text-white font-bold">Average Response Time</div>
                                 <div class="text-sm text-gray-400">Faster than unlocking your phone</div>
@@ -814,8 +852,7 @@
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-16">
                     <h2 class="text-4xl sm:text-6xl font-black tracking-tighter mb-6">
-                        Why <span
-                            class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">Hollow</span>?
+                        Why <span class="text-[#1976FF]">Hollow</span>?
                     </h2>
                     <p class="text-xl text-gray-400 max-w-2xl mx-auto">
                         The AI assistant on your phone is powerful—but it's buried behind locks, apps, and distractions.
@@ -879,31 +916,31 @@
                     </div>
 
                     <div
-                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-orange-500/30 transition-all group">
+                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-orange-500/10 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-orange-400" fill="none" stroke="currentColor"
+                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-400 group-hover:text-orange-400 transition-colors">
+                            <h3 class="text-xl font-bold text-gray-400 group-hover:text-red-400 transition-colors">
                                 Other Smartwatches</h3>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-500">
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Slow voice responses, <strong class="text-orange-400">poor
+                                <span>Slow voice responses, <strong class="text-red-400">poor
                                         accuracy</strong></span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -912,7 +949,7 @@
                                 <span>Limited AI—can't compose emails or have real conversations</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -921,7 +958,7 @@
                                 <span>Locked to ecosystems (Apple/Google)</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-orange-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -933,33 +970,33 @@
                     </div>
 
                     <div
-                        class="p-6 rounded-2xl bg-gradient-to-br from-green-500/10 to-emerald-500/5 border border-green-500/30 hover:border-green-400/50 transition-all group relative overflow-hidden">
+                        class="p-6 rounded-lg bg-[#0F1624] border border-[#1976FF]/35 hover:border-[#1976FF]/55 transition-all group relative overflow-hidden">
                         <div
-                            class="absolute top-0 right-0 bg-green-500 text-black text-xs font-bold px-3 py-1 rounded-bl-xl">
+                            class="absolute top-0 right-0 bg-[#1976FF] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                             HOLLOW</div>
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-green-500/20 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor"
+                            <div class="w-12 h-12 rounded-xl bg-[#1976FF]/20 flex items-center justify-center">
+                                <svg class="w-6 h-6 text-[#1976FF]" fill="none" stroke="currentColor"
                                     viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                                 </svg>
                             </div>
-                            <h3 class="text-xl font-bold text-green-400">Hollow Watch</h3>
+                            <h3 class="text-xl font-bold text-[#1976FF]">Hollow Watch</h3>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-300">
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span><strong class="text-green-400">1.5s response time</strong>—faster than unlocking
+                                <span><strong class="text-[#1976FF]">1.5s response time</strong>—faster than unlocking
                                     your phone</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -968,7 +1005,7 @@
                                 <span>True AI: send emails, get answers, set alarms by voice</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
@@ -977,20 +1014,20 @@
                                 <span>Privacy-first: your data stays yours</span>
                             </li>
                             <li class="flex items-start gap-2">
-                                <svg class="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" fill="currentColor"
+                                <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
                                     viewBox="0 0 20 20">
                                     <path fill-rule="evenodd"
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span><strong class="text-green-400">$69.99</strong> + affordable subscription</span>
+                                <span><strong class="text-[#1976FF]">$69.99</strong> + $10/month subscription</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div
-                    class="text-center p-8 rounded-3xl bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-cyan-500/10 border border-white/10">
+                    class="text-center p-8 rounded-3xl bg-[#101826] border border-[#1976FF]/25">
                     <p class="text-2xl font-bold text-white mb-2">
                         The convenience of a voice assistant. The speed of instant access. The simplicity of a dedicated
                         device.

@@ -11,6 +11,24 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        :root {
+            --ui-white: #FFFFFF;
+            --ui-black: #000000;
+            --ui-gray-light: #F2F2F2;
+            --ui-gray-mid: #4A4A4A;
+            --ui-gray-border: #E0E0E0;
+            --ui-accent: #1976FF;
+            --ui-accent-alt: #00D1FF;
+            --panel-bg: rgba(242, 242, 242, 0.04);
+            --panel-border: rgba(224, 224, 224, 0.2);
+            --accent-ink: #FFFFFF;
+            --header-bg: rgba(0, 0, 0, 0.88);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         /* Shared Styles from profile.html/index.html */
         body {
             background: #000;
@@ -33,41 +51,42 @@
 
         /* Unique styles for the success state */
         .code-box {
-            background: #111;
-            border: 1px solid #333;
+            background: var(--panel-bg);
+            border: 1px solid var(--panel-border);
             border-radius: 12px;
             position: relative;
             transition: border-color 0.3s ease;
         }
         
         .code-box:hover {
-            border-color: #555;
+            border-color: rgba(25, 118, 255, 0.5);
         }
 
         .outline-pill {
             display: inline-block;
             padding: 0.75rem 2rem;
-            border: 1px solid white;
+            border: none;
             border-radius: 9999px;
             text-transform: uppercase;
             font-weight: 900;
             font-size: 0.75rem;
             letter-spacing: 0.25em;
             transition: all 0.3s;
-            color: white;
-            background: transparent;
+            color: var(--accent-ink);
+            background: var(--ui-accent);
             cursor: pointer;
+            box-shadow: 0 4px 16px rgba(25, 118, 255, 0.35);
         }
 
         .outline-pill:hover {
-            background: white;
-            color: black;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(25, 118, 255, 0.4);
         }
 
         /* Simple Spinner */
         .loader {
             border: 3px solid #333;
-            border-top: 3px solid #fff;
+            border-top: 3px solid var(--ui-accent);
             border-radius: 50%;
             width: 24px;
             height: 24px;
@@ -79,6 +98,14 @@
 
         /* Hide elements by default */
         .hidden { display: none !important; }
+
+        .header-shell {
+            background: var(--header-bg);
+            border: 1px solid var(--panel-border);
+            border-radius: 14px;
+            backdrop-filter: blur(14px);
+            padding: 0.9rem 1.1rem;
+        }
     </style>
 </head>
 
@@ -86,7 +113,7 @@
 
 <div class="max-w-3xl mx-auto w-full flex-grow flex flex-col">
 
-    <header class="flex items-center justify-between mb-16">
+    <header class="header-shell flex items-center justify-between mb-16">
         <a href="/" class="text-sm text-gray-500 hover:text-white transition">
             ← Home
         </a>
@@ -116,7 +143,7 @@
 
         <div id="state-success" class="hidden w-full max-w-lg animate-[fadeIn_0.5s_ease-out]">
             
-            <div class="mb-8 text-green-400 text-5xl">
+            <div class="mb-8 text-[#1976FF] text-5xl">
                 <i class="fa-regular fa-circle-check"></i>
             </div>
 
@@ -143,7 +170,7 @@
                     </p>
             </div>
 
-            <div class="bg-[#0a0a0a] border border-[#1f1f1f] rounded-lg p-6 text-left mb-10">
+            <div class="bg-[#0f1115] border border-white/15 rounded-lg p-6 text-left mb-10">
                 <h3 class="font-bold text-sm mb-2 text-white">Next Steps:</h3>
                 <ol class="list-decimal list-inside text-sm text-gray-400 space-y-2">
                     <li>Copy the code above.</li>
@@ -243,11 +270,11 @@
             // Visual feedback
             const originalText = copyText.textContent;
             copyText.textContent = "Copied!";
-            copyBtn.classList.add('text-green-400'); // temporary color change
+            copyBtn.style.color = "#1976FF"; // temporary color change
             
             setTimeout(() => {
                 copyText.textContent = originalText;
-                copyBtn.classList.remove('text-green-400');
+                copyBtn.style.color = "";
             }, 2000);
         }).catch(err => {
             console.error('Failed to copy:', err);

@@ -9,6 +9,24 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --ui-white: #FFFFFF;
+            --ui-black: #000000;
+            --ui-gray-light: #F2F2F2;
+            --ui-gray-mid: #4A4A4A;
+            --ui-gray-border: #E0E0E0;
+            --ui-accent: #1976FF;
+            --ui-accent-alt: #00D1FF;
+            --panel-bg: rgba(242, 242, 242, 0.04);
+            --panel-border: rgba(224, 224, 224, 0.2);
+            --header-bg: rgba(0, 0, 0, 0.88);
+            --accent-ink: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background: #000;
             color: white;
@@ -16,30 +34,21 @@
             margin: 0;
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                radial-gradient(circle at 18% 20%, rgba(25, 118, 255, 0.12) 0%, transparent 45%),
-                radial-gradient(circle at 82% 12%, rgba(0, 209, 255, 0.06) 0%, transparent 40%);
-            pointer-events: none;
-            z-index: 0;
-            animation: backgroundPulse 20s ease-in-out infinite;
+        main {
+            position: relative;
+            z-index: 1;
         }
 
         .header-hero {
-            background: rgba(0, 0, 0, 0.85);
+            background: var(--header-bg);
             backdrop-filter: blur(20px);
             position: sticky;
             top: 0;
             z-index: 50;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--panel-border);
         }
 
         .outline-pill,
@@ -50,24 +59,35 @@
         }
 
         .primary-btn {
-            background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
-            color: #000;
+            background: var(--ui-accent);
+            color: var(--accent-ink);
             padding: 1rem 2rem;
             border-radius: 9999px;
             font-weight: 900;
             text-transform: uppercase;
+            letter-spacing: 0.08em;
+            border: none;
+            box-shadow: 0 4px 16px rgba(25, 118, 255, 0.35);
         }
 
         .primary-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 20px rgba(25, 118, 255, 0.4);
         }
 
         .secondary-btn {
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            background: rgba(255, 255, 255, 0.03);
+            border: 2px solid var(--panel-border);
+            background: var(--panel-bg);
             padding: 1rem 2rem;
             border-radius: 9999px;
+            backdrop-filter: blur(10px);
+        }
+
+        .secondary-btn:hover {
+            border-color: rgba(0, 209, 255, 0.45);
+            background: rgba(20, 24, 30, 0.88);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 209, 255, 0.12);
         }
     </style>
 </head>
@@ -86,12 +106,12 @@
             <a href="/" class="text-2xl font-black tracking-tighter text-white no-underline">HOLLOW</a>
         </div>
         <div id="profile-icon"
-            class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center cursor-pointer border border-white/10 hover:border-white/30 transition">
+            class="w-10 h-10 rounded-full bg-[#171717] flex items-center justify-center cursor-pointer border border-white/10 hover:border-[#00D1FF]/40 hover:bg-[#242424] transition">
             ?
         </div>
     </header>
 
-    <main class="flex-grow flex items-center justify-center relative z-10 py-20 px-4">
+    <main class="flex-grow flex items-center justify-center py-20 px-4">
         <div id="loading" class="text-center text-xl text-gray-500">Authenticating...</div>
 
         <div id="dashboard-content" class="w-full max-w-5xl hidden opacity-0 transition-opacity duration-700">
@@ -102,7 +122,7 @@
             <div class="grid md:grid-cols-2 gap-12 items-stretch text-left">
                 <div class="relative">
                     <div
-                        class="aspect-square rounded-3xl bg-gradient-to-br from-gray-900 to-black overflow-hidden border border-white/10">
+                        class="aspect-square rounded-3xl bg-[#101826] overflow-hidden border border-white/10">
                         <img src="0wproto.png" alt="Hollow 0W Prototype" class="w-full h-full object-cover">
                     </div>
                     <div
@@ -114,12 +134,8 @@
                 <div class="flex flex-col justify-between space-y-6 p-8 rounded-3xl bg-white/5 border border-white/10">
                     <div>
                         <div class="flex items-center gap-3 mb-3">
-                            <span
-                                class="bg-amber-500/20 border border-amber-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase text-amber-400">Early
-                                Access</span>
-                            <span
-                                class="bg-green-500/20 border border-green-500/30 px-3 py-1 rounded-full text-xs font-bold uppercase text-green-400">Shipping
-                                Now</span>
+                            <span class="bg-white/5 border border-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase text-gray-300">Early Access</span>
+                            <span class="bg-[#1976FF]/12 border border-[#1976FF]/30 px-3 py-1 rounded-full text-xs font-bold uppercase text-[#1976FF]">Shipping Now</span>
                         </div>
                         <h3 class="text-4xl font-black mb-2">Hollow 0W</h3>
                     </div>
@@ -152,7 +168,7 @@
     <div id="warning-modal" class="fixed inset-0 z-[100] hidden items-center justify-center p-4"
         style="background: rgba(0,0,0,0.9); backdrop-filter: blur(10px);">
         <div
-            class="bg-gradient-to-br from-gray-900 to-black border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
+            class="bg-[#101826] border border-white/10 rounded-3xl max-w-lg w-full p-8 relative shadow-2xl">
             <button onclick="closeWarningModal()"
                 class="absolute top-4 right-4 text-gray-500 hover:text-white transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -162,8 +178,8 @@
             </button>
 
             <div class="text-center mb-6">
-                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-[#1976FF]/12 flex items-center justify-center">
+                    <svg class="w-8 h-8 text-[#1976FF]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
                         </path>
@@ -186,15 +202,15 @@
                     </div>
                 </div>
 
-                <div class="flex items-start gap-3 p-4 rounded-xl bg-amber-500/10 border border-amber-500/20">
-                    <svg class="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
+                <div class="flex items-start gap-3 p-4 rounded-xl bg-white/5 border border-white/15">
+                    <svg class="w-5 h-5 text-gray-300 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
                         </path>
                     </svg>
                     <div>
-                        <h4 class="font-bold text-amber-400 text-sm">Potential Bugs</h4>
+                        <h4 class="font-bold text-gray-200 text-sm">Potential Bugs</h4>
                         <p class="text-gray-400 text-sm">This is early access hardware. Expect occasional software bugs and glitches as we refine the experience. Updates are pushed frequently via the companion app.</p>
                     </div>
                 </div>
