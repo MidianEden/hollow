@@ -54,7 +54,7 @@
         if (href.includes("buy.stripe.com")) {
             gtag("event", "begin_checkout", {
                 currency: "USD",
-                value: 69.99,
+                value: 49.99,
                 item_name: "Hollow 0W",
                 page_path: window.location.pathname
             });
