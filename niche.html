@@ -5,20 +5,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Hollow | AI Assistant Watch - Instant Answers From Your Wrist</title>
-    <meta name="title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
+    <title>Hollow | AI Watch for Field Service Techs</title>
+    <meta name="title" content="Hollow | AI Watch for Field Service Techs">
     <meta name="description"
-        content="Hollow 0W: The AI watch for instant voice answers, emails, and alarms. The wearable AI assistant that responds in 1.5 seconds. No phone needed. Get the Hollow 0W today.">
+        content="Hollow 0W is the AI watch for field service techs. Ask troubleshooting questions, capture job notes, send follow-up emails, and run timers by voice in 1.5 seconds without pulling out your phone.">
     <meta name="keywords"
-        content="Hollow Watch, Hollow AI Watch, Hollow 0W, Hollow, AI watch, wearable AI, voice assistant watch, private AI wearable, smart assistant, voice AI, smartwatch, hands-free assistant, AI wearable">
+        content="Hollow Watch, Hollow 0W, field service tech watch, HVAC AI assistant, plumbing productivity tool, electrical service workflow, hands-free job notes, voice timer watch">
     <meta name="author" content="Hollow">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="product">
     <meta property="og:url" content="https://gethollow.com/">
-    <meta property="og:title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
+    <meta property="og:title" content="Hollow | AI Watch for Field Service Techs">
     <meta property="og:description"
-        content="Hollow 0W - The AI smartwatch that responds in 1.5 seconds. Send emails, get answers, set alarms—all hands-free. Get your Hollow 0W now.">
+        content="The AI watch for HVAC, plumbing, electrical, and other field service teams. Run notes, emails, alarms, and timers by voice.">
     <meta property="og:image" content="https://gethollow.com/0wproto.png">
     <meta property="og:site_name" content="Hollow">
     <meta property="product:price:amount" content="49.99">
@@ -26,9 +26,9 @@
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://gethollow.com/">
-    <meta property="twitter:title" content="Hollow | AI Assistant Watch - Instant Answers From Your Wrist">
+    <meta property="twitter:title" content="Hollow | AI Watch for Field Service Techs">
     <meta property="twitter:description"
-        content="The AI smartwatch that responds in 1.5 seconds. Send emails, get answers, set alarms—all hands-free.">
+        content="Built for hands-on teams on service calls. Get answers, log notes, and send follow-ups by voice in 1.5 seconds.">
     <meta property="twitter:image" content="https://gethollow.com/0wproto.png">
 
     <link rel="canonical" href="https://gethollow.com/">
@@ -43,7 +43,7 @@
         "@context": "https://schema.org",
         "@type": "Product",
         "name": "Hollow 0W",
-        "description": "Hollow 0W - AI-powered smartwatch with 1.5 second response time. Voice-controlled email, instant answers, and alarms.",
+        "description": "Hollow 0W is an AI-powered smartwatch for field service teams. Get troubleshooting answers, capture notes, and send follow-up messages by voice.",
         "image": "https://gethollow.com/0wproto.png",
         "brand": {
             "@type": "Brand",
@@ -69,10 +69,27 @@
             --ui-gray-border: #E0E0E0;
             --ui-accent: #1976FF;
             --ui-accent-alt: #00D1FF;
+
+            --bg-base: var(--ui-black);
+            --bg-deep: #060606;
+            --text-strong: var(--ui-white);
+            --text-muted: var(--ui-gray-border);
             --panel-bg: rgba(242, 242, 242, 0.04);
             --panel-border: rgba(224, 224, 224, 0.2);
-            --header-bg: rgba(0, 0, 0, 0.88);
-            --text-muted: var(--ui-gray-border);
+            --header-bg: rgba(10, 10, 10, 0.88);
+            --accent-ink: var(--ui-white);
+        }
+
+        @media (prefers-color-scheme: light) {
+            :root {
+                --bg-base: #000000;
+                --bg-deep: #000000;
+                --text-strong: var(--ui-white);
+                --text-muted: var(--ui-gray-border);
+                --panel-bg: rgba(242, 242, 242, 0.04);
+                --panel-border: rgba(224, 224, 224, 0.2);
+                --header-bg: rgba(0, 0, 0, 0.88);
+            }
         }
 
         * {
@@ -81,7 +98,7 @@
 
         body {
             background: #000;
-            color: white;
+            color: var(--text-strong);
             font-family: "Geist", sans-serif;
             margin: 0;
             overflow-x: hidden;
@@ -112,9 +129,9 @@
         }
 
         #profile-icon {
-            position: absolute;
-            top: 1.5rem;
-            right: 2rem;
+            position: relative;
+            margin-left: 1rem;
+            flex-shrink: 0;
             width: 44px;
             height: 44px;
             background: #171717;
@@ -126,7 +143,7 @@
             font-weight: bold;
             font-size: 1rem;
             transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--panel-border);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
 
@@ -141,7 +158,7 @@
             font-size: 2rem;
             font-weight: 900;
             letter-spacing: -0.05em;
-            color: var(--ui-white);
+            color: var(--text-strong);
         }
 
         /* Content Sections */
@@ -302,7 +319,7 @@
         /* Primary CTA button */
         .primary-btn {
             background: var(--ui-accent);
-            color: var(--ui-white);
+            color: var(--accent-ink);
             padding: 1rem 2rem;
             border-radius: 9999px;
             font-weight: 900;
@@ -313,31 +330,12 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 4px 16px rgba(25, 118, 255, 0.35);
-            position: relative;
-            overflow: hidden;
         }
 
         .primary-btn:hover {
+            background: var(--ui-accent);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(25, 118, 255, 0.4);
-        }
-
-        .primary-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(0, 0, 0, 0.05);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .primary-btn:hover::after {
-            width: 300px;
-            height: 300px;
         }
 
         /* Secondary button */
@@ -346,7 +344,7 @@
             background: var(--panel-bg);
             backdrop-filter: blur(10px);
             padding: 1rem 2rem;
-            border-radius: 9999px;
+            border-radius: 12px;
             transition: all 0.3s ease;
         }
 
@@ -389,6 +387,46 @@
             stroke-width: 1.8;
             stroke-linecap: round;
             stroke-linejoin: round;
+        }
+
+        .compare-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            background: rgba(30, 41, 59, 0.35);
+            color: #cbd5e1;
+        }
+
+        .compare-icon svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.8;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .compare-icon.bad {
+            border-color: rgba(239, 68, 68, 0.45);
+            background: rgba(239, 68, 68, 0.14);
+            color: #ef4444;
+        }
+
+        .compare-icon.mid {
+            border-color: rgba(25, 118, 255, 0.45);
+            background: rgba(25, 118, 255, 0.16);
+            color: #1976FF;
+        }
+
+        .compare-icon.good {
+            border-color: rgba(25, 118, 255, 0.42);
+            background: rgba(25, 118, 255, 0.2);
+            color: #1976FF;
         }
 
         /* Feature List Styling */
@@ -441,15 +479,24 @@
             transition: all 0.4s ease;
         }
 
+        .image-container img {
+            filter: brightness(1.1) contrast(1.04);
+            transition: transform 0.7s ease, filter 0.4s ease;
+        }
+
         .image-container:hover {
             transform: translateY(-8px);
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
             border-color: rgba(255, 255, 255, 0.1);
         }
 
+        .image-container:hover img {
+            filter: brightness(1.14) contrast(1.06);
+        }
+
         /* Hero text enhancements */
         .hero-title {
-            color: var(--ui-white);
+            color: var(--text-strong);
             animation: fadeInUp 1s ease-out;
         }
 
@@ -615,7 +662,7 @@
                 <a href="#features" class="nav-link">Features</a>
                 <a href="/signup" class="nav-link">Pricing</a>
                 <a href="/faq" class="nav-link">FAQ</a>
-                <a href="#about" class="nav-link">About Us</a>
+                <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
             </nav>
 
@@ -634,7 +681,7 @@
         <a href="#features" onclick="closeMobileMenu()">Features</a>
         <a href="/signup" onclick="closeMobileMenu()">Pricing</a>
         <a href="/faq">FAQ</a>
-        <a href="#about" onclick="closeMobileMenu()">About Us</a>
+        <a href="#about" onclick="closeMobileMenu()">About</a>
         <a href="#contact" onclick="closeMobileMenu()">Contact</a>
     </nav>
 
@@ -645,43 +692,47 @@
 
                 <div class="lg:col-span-7 flex flex-col space-y-10">
 
-                    <div class="space-y-8 content-section">
-                        <div
-                            class="inline-flex items-center gap-2 bg-[#1976FF]/12 border border-[#1976FF]/30 px-4 py-2 rounded-full">
-                            <span class="w-2 h-2 bg-[#1976FF] rounded-full animate-pulse"></span>
-                            <span class="text-xs font-bold tracking-widest uppercase text-[#1976FF]">Early Access
-                                Edition</span>
-                        </div>
-
+                    <div class="space-y-8 content-section pt-4 sm:pt-6">
                         <h1
-                            class="hero-title text-5xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9]">
-                            Your AI Assistant.<br>
-                            <span class="text-white">On Your Wrist.</span>
+                            class="hero-title text-[2.7rem] sm:text-[4.05rem] lg:text-[5.4rem] xl:text-[7.2rem] font-black tracking-tighter leading-[0.9]">
+                            Voice AI Watch for Field Techs -<br>
+                            <span class="text-white">Get Answers in 1.5 Seconds.</span>
                         </h1>
                         <p class="text-xl sm:text-2xl text-gray-400 max-w-xl leading-relaxed">
-                            Ask questions. Send emails. <br>
-                            <span class="text-white font-semibold">Tap to activate. Speak. Getting answers has never
-                                been this fast.</span>
+                            Built for field service techs running back-to-back calls. <br>
+                            <span class="text-white font-semibold">Ask questions, capture job notes, send follow-ups,
+                                and run timers in 1.5s by voice.</span>
                         </p>
 
-                        <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <div class="flex flex-col sm:flex-row sm:items-end gap-4 pt-4">
+                            <div class="rounded-lg bg-[#0E1420] border border-white/10 px-5 py-4">
+                                <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-1">Pricing</p>
+                                <p class="text-3xl font-black text-white leading-none">$49.99</p>
+                                <p class="text-sm text-gray-400 mt-1">+ $10/month subscription</p>
+                            </div>
                             <a href="/signup"
                                 class="primary-btn inline-flex items-center justify-center gap-2 text-center">
-                                <span>Buy Now - $49.99</span>
+                                <span>Buy Now</span>
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                         d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                 </svg>
                             </a>
-                            <span class="text-sm text-gray-500 self-center">+ $10/month subscription</span>
+                        </div>
+
+                        <div class="flex flex-wrap gap-2 text-xs uppercase tracking-wider text-gray-400">
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">HVAC Techs</span>
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">Plumbers</span>
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">Electricians</span>
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">Property Maintenance</span>
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">Pest Control</span>
+                            <span class="px-3 py-1 rounded-full border border-white/10 bg-white/[0.02]">Service Managers</span>
                         </div>
                     </div>
 
                     <div class="relative w-full max-w-2xl">
                         <div class="relative aspect-square image-container group">
-                            <div
-                                class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10">
-                            </div>
+                            <div class="absolute inset-0 bg-black/20 z-10"></div>
                             <img src="0wproto.png" alt="Hollow AI Watch - Voice-controlled smartwatch prototype"
                                 class="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-105">
 
@@ -704,53 +755,74 @@
                 <div class="lg:col-span-5 flex flex-col space-y-12 lg:pl-10 lg:border-l border-white/5">
 
                     <div class="space-y-6 content-section" style="animation-delay: 0.3s">
-                        <h2 class="text-2xl font-bold text-white">Stop Reaching for Your Phone</h2>
+                        <h2 class="text-2xl font-bold text-white">Built for Hands-On Field Work</h2>
                         <p class="text-lg text-gray-400 leading-relaxed">
-                            Every time you pull out your phone for a quick answer, you lose <span
-                                class="text-white font-semibold">8-15 seconds</span> and break your focus. Hollow puts
-                            AI intelligence on your wrist—ready when you are.
+                            When you are moving between crawl spaces, rooftops, panels, and service trucks, every phone
+                            unlock slows you down. Hollow gives you answers, notes, and timers in
+                            <span class="text-white font-semibold">1.5 seconds</span> so you stay on task.
                         </p>
                     </div>
 
+                    <div class="feature-card p-6 content-section" style="animation-delay: 0.4s">
+                        <p class="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-3">First Customer</p>
+                        <blockquote class="text-lg text-gray-200 leading-relaxed">
+                            "I stopped pulling out my phone between calls. I ask Hollow, set a timer, and send the recap before I leave the driveway."
+                        </blockquote>
+                        <p class="text-sm text-gray-500 mt-3">- First Hollow customer, HVAC service tech</p>
+                    </div>
+
                     <div id="features" class="space-y-4 content-section" style="animation-delay: 0.5s">
-                        <h3 class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500 mb-4">What You Can Do</h3>
+                        <h3 class="text-xs font-bold tracking-[0.2em] uppercase text-gray-500 mb-4">On-Site Workflows</h3>
 
                         <div class="space-y-3">
                             <div
                                 class="feature-card flex items-start gap-4 p-4 rounded-lg group">
-                                <div
-                                    class="feature-icon flex-shrink-0">
+                                <div class="feature-icon flex-shrink-0">
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                        </path>
+                                        <path d="M6 7h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-7l-4 3v-3H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2z" />
+                                        <path d="M9 11h6M9 14h4" />
                                     </svg>
                                 </div>
                                 <div>
                                     <h4
                                         class="text-lg font-bold text-white group-hover:text-[#1976FF] transition-colors">
-                                        Ask Any Question</h4>
-                                    <p class="text-sm text-gray-400">Get instant answers without pulling out your phone.
-                                        Facts, calculations, translations—voice in, answer out.</p>
+                                        Troubleshoot Faster</h4>
+                                    <p class="text-sm text-gray-400">Ask wiring, pressure, part, or install questions
+                                        on the spot without breaking your workflow.</p>
                                 </div>
                             </div>
 
                             <div
                                 class="feature-card flex items-start gap-4 p-4 rounded-lg group">
-                                <div
-                                    class="feature-icon flex-shrink-0">
+                                <div class="feature-icon flex-shrink-0">
                                     <svg viewBox="0 0 24 24" aria-hidden="true">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
-                                        </path>
+                                        <path d="M4 7h16v10H4z" />
+                                        <path d="M4 8l8 6 8-6" />
                                     </svg>
                                 </div>
                                 <div>
                                     <h4
                                         class="text-lg font-bold text-white group-hover:text-[#1976FF] transition-colors">
-                                        Send Emails by Voice</h4>
-                                    <p class="text-sm text-gray-400">Compose and send emails hands-free. Just speak the
-                                        recipient, subject, and message. Done.</p>
+                                        Send Follow-Ups Before You Drive Off</h4>
+                                    <p class="text-sm text-gray-400">Dictate customer recap emails and internal updates
+                                        while details are fresh at the job site.</p>
+                                </div>
+                            </div>
+
+                            <div
+                                class="feature-card flex items-start gap-4 p-4 rounded-lg group">
+                                <div class="feature-icon flex-shrink-0">
+                                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M10 7h10M10 12h10M10 17h10" />
+                                        <path d="M4.5 7l1.5 1.5L8 6.5M4.5 12l1.5 1.5L8 11.5M4.5 17l1.5 1.5L8 16.5" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4
+                                        class="text-lg font-bold text-white group-hover:text-[#1976FF] transition-colors">
+                                        Capture Notes and Timers Instantly</h4>
+                                    <p class="text-sm text-gray-400">Log parts needed, callbacks, and set alarms or
+                                        stopwatches for diagnostics and return visits.</p>
                                 </div>
                             </div>
                         </div>
@@ -761,10 +833,10 @@
                                     <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#1976FF] opacity-75"></span>
                                     <span class="relative inline-flex rounded-full h-3 w-3 bg-[#1976FF]"></span>
                                 </span>
-                                <h4 class="text-lg font-black tracking-tight text-white">More functions arriving weekly.</h4>
+                                <h4 class="text-lg font-black tracking-tight text-white">New field workflows arriving weekly.</h4>
                             </div>
                             
-                            <div class="bg-white/5 rounded-2xl p-6 border border-white/10 backdrop-blur-sm">
+                            <div class="bg-white/5 rounded-lg p-6 border border-white/10 backdrop-blur-sm">
                                 <p id="next-unlock-label" class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-1">Next Workflow Unlock In:</p>
                                 <p class="text-xs font-semibold tracking-wide text-[#1976FF] mb-3">Alarms</p>
                                 <div id="countdown" class="grid grid-cols-4 gap-2 text-center">
@@ -795,7 +867,7 @@
                             <div class="text-5xl font-black text-[#1976FF]">1.5s</div>
                             <div>
                                 <div class="text-white font-bold">Average Response Time</div>
-                                <div class="text-sm text-gray-400">Faster than unlocking your phone</div>
+                                <div class="text-sm text-gray-400">Faster than unlocking your phone mid-service call</div>
                             </div>
                         </div>
                     </div>
@@ -855,24 +927,23 @@
                         Why <span class="text-[#1976FF]">Hollow</span>?
                     </h2>
                     <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                        The AI assistant on your phone is powerful—but it's buried behind locks, apps, and distractions.
-                        Other smartwatches? Slow, limited, and overpriced. Hollow fixes all of that.
+                        Phones and generic smartwatches were not built for field work. Hollow is built for techs who
+                        need speed, clarity, and hands-free execution on-site.
                     </p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-6 mb-16">
                     <div
-                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
+                        class="p-6 rounded-lg bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z">
-                                    </path>
+                            <div class="compare-icon bad">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <rect x="7" y="3" width="10" height="18" rx="2" />
+                                    <path d="M11 17h2" />
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-gray-400 group-hover:text-red-400 transition-colors">Phone
-                                + AI</h3>
+                                + Dispatch Apps</h3>
                         </div>
                         <ul class="space-y-3 text-sm text-gray-500">
                             <li class="flex items-start gap-2">
@@ -882,8 +953,8 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span><strong class="text-red-400">8-15 seconds</strong> to unlock, find app, type
-                                    query</span>
+                                <span><strong class="text-red-400">8-15 seconds</strong> lost every time you unlock,
+                                    switch apps, and type in the middle of a call</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -892,7 +963,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Breaks focus—notifications pull you in</span>
+                                <span>Hard to use with gloves, tools, ladders, or both hands busy</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -901,7 +972,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Data harvested by big tech</span>
+                                <span>You stop the job to capture notes, timers, and follow-up steps</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -910,19 +981,19 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>$1000+ device cost</span>
+                                <span>Task details get missed between calls and callbacks</span>
                             </li>
                         </ul>
                     </div>
 
                     <div
-                        class="p-6 rounded-2xl bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
+                        class="p-6 rounded-lg bg-white/[0.02] border border-white/10 hover:border-red-500/30 transition-all group">
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-red-500/10 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-red-400" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <div class="compare-icon bad">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="5" />
+                                    <path d="M12 9v3l2 1" />
+                                    <path d="M9 2h6M9 22h6" />
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-gray-400 group-hover:text-red-400 transition-colors">
@@ -936,8 +1007,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Slow voice responses, <strong class="text-red-400">poor
-                                        accuracy</strong></span>
+                                <span>Built for fitness and notifications, not service-call workflows</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -946,7 +1016,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Limited AI—can't compose emails or have real conversations</span>
+                                <span>Limited AI for customer follow-up and field note capture</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -955,7 +1025,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Locked to ecosystems (Apple/Google)</span>
+                                <span>Weak support for alarms, stopwatches, and job-specific reminders</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" fill="currentColor"
@@ -964,7 +1034,7 @@
                                         d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>$300-500+ price tag</span>
+                                <span>Still sends you back to your phone for real work</span>
                             </li>
                         </ul>
                     </div>
@@ -975,11 +1045,10 @@
                             class="absolute top-0 right-0 bg-[#1976FF] text-white text-xs font-bold px-3 py-1 rounded-bl-lg">
                             HOLLOW</div>
                         <div class="flex items-center gap-3 mb-4">
-                            <div class="w-12 h-12 rounded-xl bg-[#1976FF]/20 flex items-center justify-center">
-                                <svg class="w-6 h-6 text-[#1976FF]" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            <div class="compare-icon good">
+                                <svg viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="M5 12l4 4 10-10" />
+                                    <path d="M17 4h3M20 7V4" />
                                 </svg>
                             </div>
                             <h3 class="text-xl font-bold text-[#1976FF]">Hollow Watch</h3>
@@ -992,8 +1061,8 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span><strong class="text-[#1976FF]">1.5s response time</strong>—faster than unlocking
-                                    your phone</span>
+                                <span><strong class="text-[#1976FF]">1.5s response time</strong> keeps you present and
+                                    moving through each call</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
@@ -1002,7 +1071,7 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>True AI: send emails, get answers, set alarms by voice</span>
+                                <span>Ask troubleshooting questions without pausing the job</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
@@ -1011,7 +1080,7 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span>Privacy-first: your data stays yours</span>
+                                <span>Capture notes, parts needed, and next steps by voice on-site</span>
                             </li>
                             <li class="flex items-start gap-2">
                                 <svg class="w-4 h-4 text-[#1976FF] mt-0.5 flex-shrink-0" fill="currentColor"
@@ -1020,20 +1089,18 @@
                                         d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <span><strong class="text-[#1976FF]">$49.99</strong> + $10/month subscription</span>
+                                <span>Send follow-up emails, set alarms, and run stopwatches from your wrist</span>
                             </li>
                         </ul>
                     </div>
                 </div>
 
                 <div
-                    class="text-center p-8 rounded-3xl bg-[#101826] border border-[#1976FF]/25">
+                    class="text-center p-8 rounded-xl bg-[#0E1420] border border-white/10">
                     <p class="text-2xl font-bold text-white mb-2">
-                        The convenience of a voice assistant. The speed of instant access. The simplicity of a dedicated
-                        device.
+                        Built for crews that run on speed, accountability, and clean handoffs.
                     </p>
-                    <p class="text-gray-400">No distractions. No ecosystem lock-in. Just pure AI assistance on your
-                        wrist.</p>
+                    <p class="text-gray-400">No app juggling. No phone ritual. Just fast execution on your wrist.</p>
                 </div>
             </div>
         </div>
@@ -1041,13 +1108,12 @@
         <div class="py-20 px-6 bg-black border-t border-white/5">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-3xl sm:text-5xl font-black tracking-tighter mb-4">See It In Action</h2>
-                <p class="text-lg text-gray-400 mb-10">Watch Hollow respond to real voice commands in real-time.</p>
+                <p class="text-lg text-gray-400 mb-10">Watch Hollow handle real field-service commands in
+                    real-time.</p>
 
                 <div
                     class="relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden shadow-2xl border border-white/10 group">
-                    <div
-                        class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent pointer-events-none z-10">
-                    </div>
+                    <div class="absolute inset-0 bg-black/45 pointer-events-none z-10"></div>
 
                     <div class="relative pb-[56.25%] h-0">
                         <iframe src="https://www.youtube.com/embed/gxhOIpiqCPk?rel=0&modestbranding=1"
@@ -1059,7 +1125,7 @@
 
                     <div class="absolute bottom-0 left-0 right-0 p-8 z-20 text-center">
                         <p class="text-sm font-bold uppercase tracking-widest text-white/80 mb-2">See It In Action</p>
-                        <p class="text-lg text-gray-300">Watch Hollow respond to real voice commands in real-time.</p>
+                        <p class="text-lg text-gray-300">Watch Hollow answer, draft, and capture call notes in real-time.</p>
                     </div>
                 </div>
             </div>
@@ -1069,7 +1135,7 @@
             <div class="max-w-5xl mx-auto">
                 <div class="text-center mb-8">
                     <h2 class="text-2xl font-bold text-gray-400 mb-2">Technical Specifications</h2>
-                    <p class="text-sm text-gray-600">For developers and hardware enthusiasts</p>
+                    <p class="text-sm text-gray-600">For service owners and technical buyers who want full hardware details</p>
                 </div>
 
                 <details class="group rounded-2xl bg-white/[0.02] border border-white/10 overflow-hidden">
@@ -1138,60 +1204,60 @@
 
         <div id="about" class="py-24 px-6 bg-black border-t border-white/5">
             <div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl sm:text-5xl font-black tracking-tighter mb-8">About Us</h2>
+                <h2 class="text-4xl sm:text-5xl font-black tracking-tighter mb-8">About Hollow</h2>
                 <div class="space-y-6 text-lg text-gray-400 leading-relaxed">
                     <p>
-                        Hollow was born from a simple frustration: <strong class="text-white">why do we need to pull out
-                            a phone for a 5-second question?</strong>
+                        Hollow was built around one question: <strong class="text-white">why should field teams lose
+                            momentum every time they need a quick answer or note?</strong>
                     </p>
                     <p>
-                        I'm a 16-year-old solo founder building the future of wearable AI.
-                        No giant corporations. Just a dedicated device that does one thing exceptionally well:
-                        giving you AI superpowers on your wrist.
+                        We design for people who work with their hands: field techs, on-site operators, and the
+                        service managers supporting them. Hollow stays out of the way and delivers the output you need
+                        instantly.
                     </p>
                     <p>
-                        The Hollow 0W is the first step. I'm shipping to early adopters who want to shape the future.
-                        Your feedback directly influences what Hollow becomes.
+                        The Hollow 0W is our first step. We are shipping to early teams now, and real field feedback
+                        shapes every workflow we launch next.
                     </p>
                 </div>
                 <div class="mt-12 flex flex-wrap justify-center gap-4">
                     <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
-                        <span class="text-sm text-gray-400">🛡️ Privacy-First</span>
+                        <span class="text-sm text-gray-400">Privacy First</span>
                     </div>
                     <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
-                        <span class="text-sm text-gray-400">⚡ Ultra-Fast Response</span>
+                        <span class="text-sm text-gray-400">1.5s Response</span>
                     </div>
                     <div class="px-6 py-3 rounded-full bg-white/5 border border-white/10">
-                        <span class="text-sm text-gray-400">✨ Curated Experience</span>
+                        <span class="text-sm text-gray-400">Field Workflows</span>
                     </div>
                 </div>
             </div>
         </div>
 
         <div
-            class="min-h-[70vh] flex flex-col items-center justify-center py-32 bg-black border-t border-white/10 relative">
-            <div class="max-w-4xl mx-auto px-6 text-center space-y-10">
-                <h2 class="text-5xl sm:text-7xl font-black tracking-tighter loading-tight">
-                    Join the<br>Revolution.
+            class="min-h-[58vh] sm:min-h-[70vh] flex flex-col items-center justify-center py-20 sm:py-32 bg-black border-t border-white/10 relative">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center space-y-8 sm:space-y-10">
+                <h2 class="text-4xl sm:text-6xl lg:text-7xl font-black tracking-tighter loading-tight">
+                    Stay On Schedule<br>Across Every Call.
                 </h2>
-                <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                    Get your Hollow 0W today. Experience the future of wearable AI for just <strong
-                        class="text-white">$49.99</strong>.
+                <p class="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto">
+                    If your team runs service calls all day, Hollow helps you move faster with less admin drag. Get
+                    Hollow 0W for <strong class="text-white">$49.99</strong> and keep your phone in your pocket.
                 </p>
-                <div class="pt-8">
-                    <a href="/signup" class="primary-btn !text-xl !px-12 !py-6 hover:scale-105">
-                        Buy Now - $49.99
+                <div class="pt-4 sm:pt-8">
+                    <a href="/signup" class="primary-btn !text-lg sm:!text-xl !px-8 sm:!px-12 !py-4 sm:!py-6 hover:scale-105 w-full sm:w-auto inline-flex justify-center">
+                        Get Hollow for $49.99
                     </a>
                 </div>
 
-                <div id="contact" class="max-w-md mx-auto text-center border-t border-white/10 pt-16 mt-16">
-                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-gray-500">Waitlist</h3>
-                    <form id="newsletter-form" class="flex gap-2">
-                        <input type="email" placeholder="email for updates"
-                            class="flex-1 bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-white transition-colors"
+                <div id="contact" class="max-w-md mx-auto text-center border-t border-white/10 pt-10 sm:pt-16 mt-10 sm:mt-16">
+                    <h3 class="text-sm font-bold mb-4 uppercase tracking-widest text-gray-500">Field Service Waitlist</h3>
+                    <form id="newsletter-form" class="flex flex-col sm:flex-row gap-3 sm:gap-2">
+                        <input type="email" placeholder="work email for updates"
+                            class="flex-1 bg-transparent border-b border-white/20 py-3 text-white focus:outline-none focus:border-white transition-colors min-w-0"
                             required>
                         <button type="submit"
-                            class="text-white font-bold uppercase text-xs tracking-widest hover:text-gray-300">
+                            class="text-white font-bold uppercase text-xs tracking-widest hover:text-gray-300 border border-white/20 rounded-full py-3 px-5 sm:border-0 sm:rounded-none sm:py-0 sm:px-0">
                             Join
                         </button>
                     </form>
@@ -1199,13 +1265,13 @@
             </div>
         </div>
 
-        <footer class="py-12 text-center text-xs text-gray-600 border-t border-gray-900 bg-black">
-            <div class="flex justify-center gap-6 mb-4">
+        <footer class="py-10 sm:py-12 text-center text-[11px] sm:text-xs text-gray-600 border-t border-gray-900 bg-black">
+            <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 mb-4 px-4">
                 <a href="#" class="hover:text-white transition-colors">Home</a>
                 <a href="#features" class="hover:text-white transition-colors">Features</a>
                 <a href="/signup" class="hover:text-white transition-colors">Pricing</a>
                 <a href="/faq" class="hover:text-white transition-colors">FAQ</a>
-                <a href="#about" class="hover:text-white transition-colors">About Us</a>
+                <a href="#about" class="hover:text-white transition-colors">About</a>
             </div>
             <p>&copy; 2025 Hollow. All rights reserved.</p>
         </footer>
