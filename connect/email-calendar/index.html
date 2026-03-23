@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hollow | Connect Email and Calendar</title>
+    <meta name="description"
+        content="Connect your Google Mail and Calendar to Hollow so the assistant can read email, send email, and manage your schedule." />
+    <link rel="canonical" href="https://gethollow.com/connect/email-calendar/" />
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --ui-white: #ffffff;
+            --ui-black: #000000;
+            --ui-gray-border: rgba(224, 224, 224, 0.18);
+            --ui-accent: #1976ff;
+            --ui-accent-alt: #00d1ff;
+            --panel-bg: rgba(10, 14, 20, 0.88);
+            --panel-border: rgba(224, 224, 224, 0.16);
+            --header-bg: rgba(0, 0, 0, 0.88);
+            --success: #3ddc97;
+            --danger: #ff6b6b;
+            --warning: #ffb84d;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Geist", sans-serif;
+            color: var(--ui-white);
+            background:
+                radial-gradient(circle at top, rgba(25, 118, 255, 0.25), transparent 34%),
+                radial-gradient(circle at 85% 20%, rgba(0, 209, 255, 0.16), transparent 28%),
+                linear-gradient(180deg, #020406 0%, #060b12 48%, #020406 100%);
+        }
+
+        .top-header {
+            background: var(--header-bg);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--panel-border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .hero-shell {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-shell::before,
+        .hero-shell::after {
+            content: "";
+            position: absolute;
+            inset: auto;
+            border-radius: 999px;
+            filter: blur(80px);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        .hero-shell::before {
+            width: 340px;
+            height: 340px;
+            background: rgba(25, 118, 255, 0.22);
+            top: 4rem;
+            left: -6rem;
+        }
+
+        .hero-shell::after {
+            width: 280px;
+            height: 280px;
+            background: rgba(0, 209, 255, 0.18);
+            bottom: -3rem;
+            right: -4rem;
+        }
+
+        .connect-card {
+            position: relative;
+            background: linear-gradient(180deg, rgba(14, 18, 26, 0.96), rgba(8, 11, 16, 0.92));
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        }
+
+        .glow-frame {
+            position: relative;
+            border-radius: 28px;
+            overflow: hidden;
+        }
+
+        .glow-frame::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: 28px;
+            background: linear-gradient(135deg, rgba(25, 118, 255, 0.8), rgba(0, 209, 255, 0.35), rgba(255, 255, 255, 0.08));
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .status-pill {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .primary-btn {
+            background: linear-gradient(135deg, var(--ui-accent), #33a1ff);
+            color: var(--ui-white);
+            border: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(25, 118, 255, 0.32);
+        }
+
+        .ghost-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: white;
+            transition: border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .ghost-btn:hover {
+            border-color: rgba(0, 209, 255, 0.4);
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .mode-btn {
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.03);
+            color: #a8b3c7;
+        }
+
+        .mode-btn.active {
+            color: white;
+            background: rgba(25, 118, 255, 0.16);
+            border-color: rgba(25, 118, 255, 0.5);
+        }
+
+        .field {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 1rem;
+            color: white;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .field:focus {
+            outline: none;
+            border-color: rgba(25, 118, 255, 0.55);
+            box-shadow: 0 0 0 4px rgba(25, 118, 255, 0.12);
+        }
+
+        .notice {
+            display: none;
+            border-radius: 18px;
+            border: 1px solid transparent;
+            padding: 1rem 1.1rem;
+        }
+
+        .notice.success {
+            display: block;
+            background: rgba(61, 220, 151, 0.08);
+            border-color: rgba(61, 220, 151, 0.22);
+        }
+
+        .notice.error {
+            display: block;
+            background: rgba(255, 107, 107, 0.08);
+            border-color: rgba(255, 107, 107, 0.22);
+        }
+
+        .notice.info {
+            display: block;
+            background: rgba(25, 118, 255, 0.08);
+            border-color: rgba(25, 118, 255, 0.22);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .spinner {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 999px;
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            border-top-color: white;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="top-header py-5 px-6 w-full">
+        <div class="mx-auto flex max-w-6xl items-center justify-between">
+            <a href="/" class="flex items-center gap-3 text-gray-300 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                <span class="text-sm font-bold uppercase tracking-[0.2em]">Back to Hollow</span>
+            </a>
+            <span class="status-pill rounded-full px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-gray-300">
+                Mail + Calendar
+            </span>
+        </div>
+    </header>
+
+    <main class="hero-shell px-6 py-10 sm:py-16">
+        <div class="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
+            <section class="pt-4 lg:pt-12">
+                <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">
+                    Google OAuth
+                </div>
+                <h1 class="mt-6 max-w-3xl text-4xl font-black tracking-[-0.05em] text-white sm:text-5xl lg:text-6xl">
+                    Let Hollow handle your inbox and your calendar.
+                </h1>
+                <p class="mt-5 max-w-2xl text-lg leading-8 text-gray-300">
+                    Sign into your Hollow account, connect Google once, and Zero can read email, send email, and help with scheduling from the same assistant flow.
+                </p>
+
+                <div class="mt-8 grid gap-4 sm:grid-cols-3">
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                        <div class="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-200">Read</div>
+                        <p class="mt-2 text-sm leading-6 text-gray-300">Ask Hollow what arrived today or what needs your attention.</p>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                        <div class="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-200">Send</div>
+                        <p class="mt-2 text-sm leading-6 text-gray-300">Draft and send email without leaving the assistant.</p>
+                    </div>
+                    <div class="rounded-2xl border border-white/10 bg-white/5 p-5">
+                        <div class="text-sm font-semibold uppercase tracking-[0.18em] text-cyan-200">Schedule</div>
+                        <p class="mt-2 text-sm leading-6 text-gray-300">Create events and check what is coming up from your calendar.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="glow-frame">
+                <div class="connect-card rounded-[28px] p-6 sm:p-8">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <p class="text-xs font-semibold uppercase tracking-[0.24em] text-cyan-200">Connect Account</p>
+                            <h2 class="mt-3 text-3xl font-black tracking-[-0.04em]">Email and calendar access</h2>
+                            <p class="mt-3 text-sm leading-6 text-gray-400">
+                                Use the same Hollow account you use in the app. Once connected, Hollow will be able to work with Google Mail and Calendar.
+                            </p>
+                        </div>
+                        <div class="rounded-2xl border border-white/10 bg-white/5 p-3">
+                            <svg class="h-8 w-8 text-cyan-200" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16v12H4z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="m4 8 8 5 8-5"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8 4v2"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M16 4v2"></path>
+                            </svg>
+                        </div>
+                    </div>
+
+                    <div id="notice" class="notice mt-6">
+                        <div id="notice-title" class="font-semibold"></div>
+                        <p id="notice-body" class="mt-1 text-sm leading-6 text-gray-200"></p>
+                    </div>
+
+                    <div id="account-panel" class="mt-6 hidden rounded-2xl border border-white/10 bg-white/5 p-5">
+                        <div class="flex flex-wrap items-center justify-between gap-3">
+                            <div>
+                                <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">Signed In As</p>
+                                <p id="account-email" class="mt-2 text-base font-semibold text-white"></p>
+                            </div>
+                            <button id="signout-btn" class="ghost-btn rounded-full px-4 py-2 text-sm font-semibold">
+                                Use a different account
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="auth-panel" class="mt-6">
+                        <div class="grid grid-cols-2 gap-3 rounded-2xl border border-white/10 bg-black/25 p-2">
+                            <button id="mode-signin" class="mode-btn active rounded-xl px-4 py-3 text-sm font-semibold">Sign In</button>
+                            <button id="mode-signup" class="mode-btn rounded-xl px-4 py-3 text-sm font-semibold">Create Account</button>
+                        </div>
+
+                        <form id="auth-form" class="mt-5 space-y-4">
+                            <div>
+                                <label for="email" class="mb-2 block text-sm font-medium text-gray-300">Email</label>
+                                <input id="email" type="email" class="field" placeholder="you@example.com" autocomplete="email">
+                            </div>
+                            <div>
+                                <label for="password" class="mb-2 block text-sm font-medium text-gray-300">Password</label>
+                                <input id="password" type="password" class="field" placeholder="At least 6 characters" autocomplete="current-password">
+                            </div>
+                            <div id="confirm-wrap" class="hidden">
+                                <label for="confirm-password" class="mb-2 block text-sm font-medium text-gray-300">Confirm Password</label>
+                                <input id="confirm-password" type="password" class="field" placeholder="Repeat password" autocomplete="new-password">
+                            </div>
+
+                            <button id="email-auth-btn" type="submit" class="primary-btn flex w-full items-center justify-center gap-3 rounded-2xl px-5 py-4 text-base font-bold">
+                                <span id="email-auth-text">Sign In to Hollow</span>
+                            </button>
+                        </form>
+
+                        <div class="relative my-5 py-2">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-white/10"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="bg-[rgba(10,14,20,0.96)] px-4 text-xs font-semibold uppercase tracking-[0.24em] text-gray-500">or</span>
+                            </div>
+                        </div>
+
+                        <button id="google-auth-btn" class="ghost-btn flex w-full items-center justify-center gap-3 rounded-2xl px-5 py-4 text-base font-semibold">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="Google">
+                            <span>Continue with Google</span>
+                        </button>
+                    </div>
+
+                    <div id="connection-panel" class="mt-6 hidden space-y-4">
+                        <div class="rounded-2xl border border-white/10 bg-black/20 p-5">
+                            <div class="flex items-start justify-between gap-4">
+                                <div>
+                                    <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">Connection Status</p>
+                                    <h3 id="connection-title" class="mt-2 text-xl font-bold">Ready to connect Google</h3>
+                                    <p id="connection-body" class="mt-2 text-sm leading-6 text-gray-400">
+                                        Start the secure Google authorization flow to unlock email and calendar inside Hollow.
+                                    </p>
+                                </div>
+                                <div id="connection-badge" class="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-300">
+                                    Not Connected
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="grid gap-3 sm:grid-cols-2">
+                            <button id="connect-btn" class="primary-btn flex w-full items-center justify-center gap-3 rounded-2xl px-5 py-4 text-base font-bold">
+                                <span id="connect-btn-text">Connect Google Mail + Calendar</span>
+                            </button>
+                            <a href="/" class="ghost-btn flex items-center justify-center rounded-2xl px-5 py-4 text-base font-semibold no-underline">
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+
+                    <p class="mt-6 text-xs leading-6 text-gray-500">
+                        Hollow uses Google authorization through Nylas. You can revoke access later from your Google account or Hollow settings.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import {
+            GoogleAuthProvider,
+            browserLocalPersistence,
+            createUserWithEmailAndPassword,
+            getAuth,
+            onAuthStateChanged,
+            setPersistence,
+            signInWithEmailAndPassword,
+            signInWithPopup,
+            signOut,
+        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+        const FIREBASE_CONFIG = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a",
+            messagingSenderId: "536360139071",
+            storageBucket: "hollow-7ff49.firebasestorage.app",
+        };
+
+        const BACKEND_BASE_URL = "https://hollow-backend.fly.dev";
+        const BACKEND_SHARED_TOKEN = "mVOgIUDjpQ0f5TswKFJa28ZN3P9SRWBu";
+        const GOOGLE_PROVIDER = new GoogleAuthProvider();
+        const state = {
+            authMode: "signin",
+            currentUser: null,
+            nylasStatus: null,
+        };
+
+        const app = initializeApp(FIREBASE_CONFIG);
+        const auth = getAuth(app);
+        await setPersistence(auth, browserLocalPersistence).catch(() => {});
+
+        const noticeEl = document.getElementById("notice");
+        const noticeTitleEl = document.getElementById("notice-title");
+        const noticeBodyEl = document.getElementById("notice-body");
+        const authPanelEl = document.getElementById("auth-panel");
+        const accountPanelEl = document.getElementById("account-panel");
+        const accountEmailEl = document.getElementById("account-email");
+        const connectionPanelEl = document.getElementById("connection-panel");
+        const connectionTitleEl = document.getElementById("connection-title");
+        const connectionBodyEl = document.getElementById("connection-body");
+        const connectionBadgeEl = document.getElementById("connection-badge");
+        const connectBtnEl = document.getElementById("connect-btn");
+        const connectBtnTextEl = document.getElementById("connect-btn-text");
+        const authFormEl = document.getElementById("auth-form");
+        const signInModeEl = document.getElementById("mode-signin");
+        const signUpModeEl = document.getElementById("mode-signup");
+        const confirmWrapEl = document.getElementById("confirm-wrap");
+        const emailInputEl = document.getElementById("email");
+        const passwordInputEl = document.getElementById("password");
+        const confirmPasswordEl = document.getElementById("confirm-password");
+        const emailAuthBtnEl = document.getElementById("email-auth-btn");
+        const emailAuthTextEl = document.getElementById("email-auth-text");
+        const googleAuthBtnEl = document.getElementById("google-auth-btn");
+        const signOutBtnEl = document.getElementById("signout-btn");
+
+        function setMode(mode) {
+            state.authMode = mode;
+            const isSignup = mode === "signup";
+            signInModeEl.classList.toggle("active", !isSignup);
+            signUpModeEl.classList.toggle("active", isSignup);
+            confirmWrapEl.classList.toggle("hidden", !isSignup);
+            emailAuthTextEl.textContent = isSignup ? "Create Hollow Account" : "Sign In to Hollow";
+            passwordInputEl.autocomplete = isSignup ? "new-password" : "current-password";
+        }
+
+        function setNotice(kind, title, body) {
+            noticeEl.className = `notice mt-6 ${kind}`;
+            noticeTitleEl.textContent = title;
+            noticeBodyEl.textContent = body;
+        }
+
+        function clearNotice() {
+            noticeEl.className = "notice mt-6";
+            noticeTitleEl.textContent = "";
+            noticeBodyEl.textContent = "";
+        }
+
+        function setButtonBusy(buttonEl, labelEl, busy, label, busyLabel) {
+            buttonEl.disabled = busy;
+            buttonEl.classList.toggle("opacity-70", busy);
+            if (busy) {
+                labelEl.innerHTML = `<span class="spinner"></span><span>${busyLabel}</span>`;
+            } else {
+                labelEl.textContent = label;
+            }
+        }
+
+        function currentRedirectUri() {
+            const url = new URL(window.location.href);
+            url.search = "";
+            url.hash = "";
+            return url.toString();
+        }
+
+        async function authHeaders(forceRefresh = false) {
+            if (!auth.currentUser) {
+                throw new Error("Sign in to your Hollow account first.");
+            }
+
+            const token = await auth.currentUser.getIdToken(forceRefresh);
+            return {
+                "Content-Type": "application/json",
+                "X-User-Token": BACKEND_SHARED_TOKEN,
+                "Authorization": `Bearer ${token}`,
+            };
+        }
+
+        async function apiRequest(method, path, body, forceRefresh = false) {
+            const response = await fetch(`${BACKEND_BASE_URL}${path}`, {
+                method,
+                headers: await authHeaders(forceRefresh),
+                body: body ? JSON.stringify(body) : undefined,
+            });
+
+            const text = await response.text();
+            let payload = {};
+
+            if (text) {
+                try {
+                    payload = JSON.parse(text);
+                } catch {
+                    payload = { detail: text };
+                }
+            }
+
+            if (!response.ok) {
+                throw new Error(payload.detail || `Request failed (${response.status})`);
+            }
+
+            return payload;
+        }
+
+        async function loadConnectionStatus(forceRefresh = false) {
+            if (!auth.currentUser) {
+                state.nylasStatus = null;
+                render();
+                return;
+            }
+
+            connectionTitleEl.textContent = "Checking connection";
+            connectionBodyEl.textContent = "Looking up your current Hollow mailbox and calendar status.";
+            connectionBadgeEl.textContent = "Checking";
+
+            try {
+                const status = await apiRequest("GET", "/v1/nylas/status", undefined, forceRefresh);
+                state.nylasStatus = status;
+            } catch (error) {
+                state.nylasStatus = { connected: false };
+                setNotice("error", "Could not load mailbox status", error.message || "Please try again.");
+            }
+
+            render();
+        }
+
+        function render() {
+            const user = state.currentUser;
+            const status = state.nylasStatus;
+            const callbackParams = new URLSearchParams(window.location.search);
+            const callbackState = callbackParams.get("nylas");
+            const callbackEmail = callbackParams.get("email");
+            const callbackProvider = callbackParams.get("provider");
+            const callbackMessage = callbackParams.get("message");
+
+            authPanelEl.classList.toggle("hidden", Boolean(user));
+            accountPanelEl.classList.toggle("hidden", !user);
+            connectionPanelEl.classList.toggle("hidden", !user);
+            accountEmailEl.textContent = user?.email || "Signed in";
+
+            if (callbackState === "connected") {
+                setNotice(
+                    "success",
+                    "Mailbox and calendar connected",
+                    callbackEmail && callbackProvider
+                        ? `${callbackEmail} is now connected through ${callbackProvider}.`
+                        : "Google Mail and Calendar are now ready inside Hollow."
+                );
+            } else if (callbackState === "error") {
+                setNotice(
+                    "error",
+                    "Connection failed",
+                    callbackMessage ? callbackMessage.replace(/\+/g, " ") : "Google authorization did not finish."
+                );
+            } else if (!noticeTitleEl.textContent) {
+                clearNotice();
+            }
+
+            const connected = Boolean(status?.connected) || callbackState === "connected";
+            connectionTitleEl.textContent = connected ? "Google is connected" : "Ready to connect Google";
+            connectionBodyEl.textContent = connected
+                ? `${status?.email || callbackEmail || "Your Google account"} is available to Hollow for mailbox and calendar actions.`
+                : "Start the secure Google authorization flow to unlock email and calendar inside Hollow.";
+            connectionBadgeEl.textContent = connected ? "Connected" : "Not Connected";
+            connectionBadgeEl.className = connected
+                ? "rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-200"
+                : "rounded-full border border-white/10 bg-white/5 px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-gray-300";
+            connectBtnTextEl.textContent = connected ? "Reconnect Google Mail + Calendar" : "Connect Google Mail + Calendar";
+        }
+
+        async function startNylasOauth() {
+            clearNotice();
+            setButtonBusy(connectBtnEl, connectBtnTextEl, true, "Connect Google Mail + Calendar", "Opening Google...");
+            try {
+                const payload = await apiRequest("POST", "/v1/nylas/oauth/start", {
+                    provider: "google",
+                    app_redirect_uri: currentRedirectUri(),
+                }, true);
+                window.location.assign(payload.auth_url);
+            } catch (error) {
+                setNotice("error", "Could not start Google connection", error.message || "Please try again.");
+                setButtonBusy(connectBtnEl, connectBtnTextEl, false, "Connect Google Mail + Calendar", "Opening Google...");
+            }
+        }
+
+        authFormEl.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            clearNotice();
+
+            const email = emailInputEl.value.trim();
+            const password = passwordInputEl.value;
+            const confirmPassword = confirmPasswordEl.value;
+
+            if (!email) {
+                setNotice("error", "Email required", "Enter the email address tied to your Hollow account.");
+                return;
+            }
+
+            if (password.length < 6) {
+                setNotice("error", "Password too short", "Use at least 6 characters.");
+                return;
+            }
+
+            if (state.authMode === "signup" && password !== confirmPassword) {
+                setNotice("error", "Passwords do not match", "Re-enter the same password in both fields.");
+                return;
+            }
+
+            setButtonBusy(emailAuthBtnEl, emailAuthTextEl, true, state.authMode === "signup" ? "Create Hollow Account" : "Sign In to Hollow", "Working...");
+
+            try {
+                if (state.authMode === "signup") {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                setNotice("info", "Account ready", "You are signed in. Connect Google to finish email and calendar access.");
+            } catch (error) {
+                setNotice("error", "Authentication failed", error.message || "Please try again.");
+            } finally {
+                setButtonBusy(emailAuthBtnEl, emailAuthTextEl, false, state.authMode === "signup" ? "Create Hollow Account" : "Sign In to Hollow", "Working...");
+            }
+        });
+
+        googleAuthBtnEl.addEventListener("click", async () => {
+            clearNotice();
+            googleAuthBtnEl.disabled = true;
+            googleAuthBtnEl.classList.add("opacity-70");
+            try {
+                await signInWithPopup(auth, GOOGLE_PROVIDER);
+                setNotice("info", "Google sign-in complete", "You are signed in. Connect Google to finish email and calendar access.");
+            } catch (error) {
+                setNotice("error", "Google sign-in failed", error.message || "Please try again.");
+            } finally {
+                googleAuthBtnEl.disabled = false;
+                googleAuthBtnEl.classList.remove("opacity-70");
+            }
+        });
+
+        signOutBtnEl.addEventListener("click", async () => {
+            await signOut(auth).catch(() => {});
+            state.nylasStatus = null;
+            clearNotice();
+            render();
+        });
+
+        connectBtnEl.addEventListener("click", async () => {
+            await startNylasOauth();
+        });
+
+        signInModeEl.addEventListener("click", () => setMode("signin"));
+        signUpModeEl.addEventListener("click", () => setMode("signup"));
+
+        onAuthStateChanged(auth, async (user) => {
+            state.currentUser = user;
+            render();
+            if (user) {
+                await loadConnectionStatus();
+            }
+        });
+
+        setMode("signin");
+        render();
+    </script>
+    <script src="/analytics.js" defer></script>
+</body>
+
+</html>
