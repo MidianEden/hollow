@@ -29,16 +29,18 @@
 
     <style>
         :root {
-            --bg-0: #050608;
-            --bg-1: #0b0d12;
-            --panel: rgba(14, 17, 24, 0.78);
-            --panel-strong: rgba(18, 22, 30, 0.92);
-            --panel-border: rgba(255, 255, 255, 0.12);
-            --text-muted: #aab3c5;
+            --bg-0: #f6f0e6;
+            --bg-1: #ece5d8;
+            --panel: rgba(255, 255, 255, 0.72);
+            --panel-strong: rgba(255, 251, 245, 0.94);
+            --panel-border: rgba(17, 24, 39, 0.08);
+            --text-muted: #6b7280;
             --blue: #1976ff;
             --cyan: #00d1ff;
             --gold: #ffcb6b;
             --green: #68f0b2;
+            --ink: #111827;
+            --ink-soft: #4b5563;
         }
 
         * {
@@ -53,11 +55,11 @@
             margin: 0;
             min-height: 100vh;
             font-family: "Geist", sans-serif;
-            color: white;
+            color: var(--ink);
             background:
-                radial-gradient(circle at top left, rgba(25, 118, 255, 0.22), transparent 26%),
-                radial-gradient(circle at 85% 10%, rgba(0, 209, 255, 0.14), transparent 24%),
-                radial-gradient(circle at 50% 100%, rgba(255, 203, 107, 0.08), transparent 28%),
+                radial-gradient(circle at top left, rgba(25, 118, 255, 0.12), transparent 26%),
+                radial-gradient(circle at 85% 10%, rgba(0, 209, 255, 0.08), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(255, 203, 107, 0.12), transparent 28%),
                 linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
@@ -68,40 +70,41 @@
             position: fixed;
             inset: 0;
             background-image:
-                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+                linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px);
             background-size: 32px 32px;
             mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 80%);
             pointer-events: none;
-            opacity: 0.18;
+            opacity: 0.4;
         }
 
         .topbar {
             position: sticky;
             top: 0;
             z-index: 50;
-            background: rgba(5, 6, 8, 0.82);
+            background: rgba(246, 240, 230, 0.86);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--panel-border);
         }
 
         .brand-chip {
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.04);
-            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+            color: #f8fafc;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: #111827;
+            box-shadow: 0 18px 48px rgba(17, 24, 39, 0.16);
         }
 
         .panel {
             background: var(--panel);
             border: 1px solid var(--panel-border);
-            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+            box-shadow: 0 24px 80px rgba(17, 24, 39, 0.1);
             backdrop-filter: blur(18px);
         }
 
         .panel-strong {
-            background: linear-gradient(180deg, rgba(15, 19, 26, 0.98), rgba(10, 13, 18, 0.96));
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(249, 244, 235, 0.98));
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            box-shadow: 0 30px 90px rgba(17, 24, 39, 0.14);
         }
 
         .eyebrow {
@@ -123,15 +126,15 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             text-decoration: none;
-            color: white;
-            background: linear-gradient(135deg, var(--blue), #46a5ff);
-            box-shadow: 0 12px 30px rgba(25, 118, 255, 0.3);
+            color: #f8fafc;
+            background: linear-gradient(135deg, #111827, #1f2937);
+            box-shadow: 0 12px 30px rgba(17, 24, 39, 0.18);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
         .primary-btn:hover {
             transform: translateY(-1px);
-            box-shadow: 0 16px 36px rgba(25, 118, 255, 0.38);
+            box-shadow: 0 16px 36px rgba(17, 24, 39, 0.24);
         }
 
         .secondary-btn {
@@ -146,21 +149,21 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             text-decoration: none;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.16);
-            background: rgba(255, 255, 255, 0.03);
+            color: var(--ink);
+            border: 1px solid rgba(17, 24, 39, 0.14);
+            background: rgba(255, 255, 255, 0.66);
             transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
         }
 
         .secondary-btn:hover {
             transform: translateY(-1px);
-            border-color: rgba(0, 209, 255, 0.35);
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(25, 118, 255, 0.25);
+            background: rgba(255, 255, 255, 0.92);
         }
 
         .manifest-window {
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(17, 24, 39, 0.03);
+            border: 1px solid rgba(17, 24, 39, 0.08);
         }
 
         .manifest-window pre {
@@ -169,7 +172,7 @@
             word-break: break-word;
             font-size: 0.88rem;
             line-height: 1.7;
-            color: rgba(255, 255, 255, 0.86);
+            color: rgba(17, 24, 39, 0.88);
         }
 
         .glow-border {
@@ -183,7 +186,7 @@
             inset: 0;
             padding: 1px;
             border-radius: inherit;
-            background: linear-gradient(135deg, rgba(25, 118, 255, 0.55), rgba(0, 209, 255, 0.28), rgba(255, 203, 107, 0.16));
+            background: linear-gradient(135deg, rgba(25, 118, 255, 0.3), rgba(0, 209, 255, 0.14), rgba(255, 203, 107, 0.18));
             -webkit-mask:
                 linear-gradient(#fff 0 0) content-box,
                 linear-gradient(#fff 0 0);
@@ -204,8 +207,8 @@
         .trust-card:hover,
         .check-card:hover {
             transform: translateY(-4px);
-            border-color: rgba(0, 209, 255, 0.28);
-            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(25, 118, 255, 0.18);
+            background: rgba(255, 255, 255, 0.94);
         }
 
         .icon-pill {
@@ -215,8 +218,9 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: rgba(25, 118, 255, 0.14);
-            border: 1px solid rgba(25, 118, 255, 0.28);
+            color: #0f4ea6;
+            background: rgba(25, 118, 255, 0.08);
+            border: 1px solid rgba(25, 118, 255, 0.16);
         }
 
         .soft-link {
@@ -226,7 +230,64 @@
         }
 
         .soft-link:hover {
-            color: white;
+            color: var(--ink);
+        }
+
+        .text-white {
+            color: var(--ink) !important;
+        }
+
+        .text-slate-300 {
+            color: var(--ink-soft) !important;
+        }
+
+        .text-slate-400 {
+            color: #6b7280 !important;
+        }
+
+        .text-blue-200,
+        .text-\[\#7bd8ff\] {
+            color: #0f5ea8 !important;
+        }
+
+        .text-\[\#ffcb6b\] {
+            color: #9a6112 !important;
+        }
+
+        .text-\[\#68f0b2\] {
+            color: #0f8a57 !important;
+        }
+
+        .border-white\/10 {
+            border-color: rgba(17, 24, 39, 0.08) !important;
+        }
+
+        .border-white\/12 {
+            border-color: rgba(17, 24, 39, 0.12) !important;
+        }
+
+        .bg-white\/5 {
+            background: rgba(17, 24, 39, 0.03) !important;
+        }
+
+        .bg-black\/20 {
+            background: rgba(17, 24, 39, 0.035) !important;
+        }
+
+        .border-blue-400\/35 {
+            border-color: rgba(25, 118, 255, 0.22) !important;
+        }
+
+        .bg-blue-500\/10 {
+            background: rgba(25, 118, 255, 0.08) !important;
+        }
+
+        .border-\[\#68f0b2\]\/30 {
+            border-color: rgba(15, 138, 87, 0.2) !important;
+        }
+
+        .bg-\[\#68f0b2\]\/10 {
+            background: rgba(15, 138, 87, 0.08) !important;
         }
     </style>
 </head>
