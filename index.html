@@ -33,6 +33,25 @@
 
     <link rel="canonical" href="https://gethollow.com/">
 
+    <script>
+        (() => {
+            const host = window.location.hostname.toLowerCase();
+            if (host !== "developer.gethollow.com") return;
+
+            const { pathname, search, hash } = window.location;
+            const suffix = `${search}${hash}`;
+
+            if (pathname === "/" || pathname === "/index.html") {
+                window.location.replace(`/developer/${suffix}`);
+                return;
+            }
+
+            if (pathname === "/login" || pathname === "/login/" || pathname === "/login/index.html") {
+                window.location.replace(`/developer/login/${suffix}`);
+            }
+        })();
+    </script>
+
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>

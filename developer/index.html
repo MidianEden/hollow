@@ -8,15 +8,15 @@
     <meta name="description"
         content="Build and publish Hollow connections. Create manifest-driven integrations, wire real APIs, and ship installable tools into the Hollow ecosystem." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://gethollow.com/developer/" />
+    <link id="canonical-url" rel="canonical" href="https://gethollow.com/developer/" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://gethollow.com/developer/" />
+    <meta id="og-url" property="og:url" content="https://gethollow.com/developer/" />
     <meta property="og:title" content="Hollow Developer | Build Connections For Hollow" />
     <meta property="og:description"
         content="The Hollow developer portal for creators who want to publish connections, APIs, and installable capabilities." />
     <meta property="og:image" content="https://gethollow.com/0wproto.png" />
     <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://gethollow.com/developer/" />
+    <meta id="twitter-url" property="twitter:url" content="https://gethollow.com/developer/" />
     <meta property="twitter:title" content="Hollow Developer | Build Connections For Hollow" />
     <meta property="twitter:description"
         content="Build manifest-driven Hollow connections and publish them into the Hollow store." />
@@ -352,12 +352,12 @@
                 </div>
                 <div>
                     <div class="text-sm font-semibold">Hollow Developer</div>
-                    <div class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">gethollow.com/developer</div>
+                    <div id="developer-host-label" class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">gethollow.com/developer</div>
                 </div>
             </a>
 
             <nav class="hidden items-center gap-6 text-sm md:flex">
-                <a href="/developer/login/" class="soft-link">Login</a>
+                <a href="/developer/login/" data-dev-login-link class="soft-link">Login</a>
                 <a href="#flow" class="soft-link">Setup</a>
                 <a href="#quickstart" class="soft-link">API</a>
                 <a href="#prompt" class="soft-link">Prompt</a>
@@ -367,7 +367,7 @@
                 <a href="#publish" class="soft-link">Publish</a>
             </nav>
 
-            <a href="/developer/login/?return_to=/developer/" class="secondary-btn !px-5 !py-3 !text-xs">Developer Login</a>
+            <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="secondary-btn !px-5 !py-3 !text-xs">Developer Login</a>
         </div>
     </header>
 
@@ -394,7 +394,7 @@
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/login/?return_to=/developer/" class="primary-btn">
+                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">
                             Developer Login
                             <span aria-hidden="true">→</span>
                         </a>
@@ -561,7 +561,7 @@
                         </p>
                     </div>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/login/?return_to=/developer/" class="primary-btn">Open Developer Login</a>
+                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Open Developer Login</a>
                         <a href="/signup" class="secondary-btn">Create Hollow Account</a>
                     </div>
                 </div>
@@ -876,8 +876,8 @@ Important constraints:
                             turning that into a properly permissioned developer program.
                         </p>
                         <div class="mt-6 flex flex-wrap gap-4">
-                            <a href="/developer/login/?return_to=/developer/" class="primary-btn">Open Developer Login</a>
-                            <a href="/" class="secondary-btn">Back To Main Site</a>
+                            <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Open Developer Login</a>
+                            <a href="https://gethollow.com/" data-main-site-link class="secondary-btn">Back To Main Site</a>
                         </div>
                     </div>
                 </div>
@@ -885,6 +885,32 @@ Important constraints:
         </section>
     </main>
     <script>
+        const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
+        const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
+        const developerLoginPath = isDeveloperHost ? "/login/" : "/developer/login/";
+        const developerPortalUrl = `${window.location.origin}${window.location.pathname}`;
+
+        document.querySelectorAll("[data-dev-login-link]").forEach((linkEl) => {
+            linkEl.setAttribute("href", `${developerLoginPath}?return_to=${encodeURIComponent(developerPortalPath)}`);
+        });
+
+        document.querySelectorAll("[data-main-site-link]").forEach((linkEl) => {
+            linkEl.setAttribute("href", "https://gethollow.com/");
+        });
+
+        const hostLabelEl = document.getElementById("developer-host-label");
+        if (hostLabelEl) {
+            hostLabelEl.textContent = isDeveloperHost ? "developer.gethollow.com" : "gethollow.com/developer";
+        }
+
+        const canonicalEl = document.getElementById("canonical-url");
+        const ogUrlEl = document.getElementById("og-url");
+        const twitterUrlEl = document.getElementById("twitter-url");
+
+        if (canonicalEl) canonicalEl.setAttribute("href", developerPortalUrl);
+        if (ogUrlEl) ogUrlEl.setAttribute("content", developerPortalUrl);
+        if (twitterUrlEl) twitterUrlEl.setAttribute("content", developerPortalUrl);
+
         const copyPromptButton = document.getElementById("copy-vibe-prompt");
         const promptTextEl = document.getElementById("vibe-prompt-text");
 

@@ -141,7 +141,7 @@
     <main class="relative z-10 min-h-screen px-6 py-8">
         <div class="mx-auto max-w-6xl">
             <div class="flex flex-wrap items-center justify-between gap-4">
-                <a href="/developer/" class="flex items-center gap-3 text-inherit no-underline">
+                <a href="/developer/" data-dev-portal-link class="flex items-center gap-3 text-inherit no-underline">
                     <div class="brand-chip flex h-11 w-11 items-center justify-center rounded-2xl">
                         <span class="text-lg font-black tracking-[-0.08em]">H</span>
                     </div>
@@ -152,7 +152,7 @@
                 </a>
 
                 <div class="flex flex-wrap gap-3">
-                    <a href="/developer/" class="secondary-btn no-underline">Back To Portal</a>
+                    <a href="/developer/" data-dev-portal-link class="secondary-btn no-underline">Back To Portal</a>
                 </div>
             </div>
 
@@ -252,6 +252,13 @@
             signInWithPopup
         } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
+        const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
+        const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
+
+        document.querySelectorAll("[data-dev-portal-link]").forEach((linkEl) => {
+            linkEl.setAttribute("href", developerPortalPath);
+        });
+
         const firebaseConfig = {
             apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
             authDomain: "hollow-7ff49.firebaseapp.com",
@@ -282,9 +289,9 @@
 
         function resolveReturnTo() {
             const params = new URLSearchParams(window.location.search);
-            const candidate = params.get("return_to") || "/developer/";
-            if (!candidate.startsWith("/")) return "/developer/";
-            if (candidate.startsWith("//")) return "/developer/";
+            const candidate = params.get("return_to") || developerPortalPath;
+            if (!candidate.startsWith("/")) return developerPortalPath;
+            if (candidate.startsWith("//")) return developerPortalPath;
             return candidate;
         }
 
