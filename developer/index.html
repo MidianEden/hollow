@@ -191,6 +191,35 @@
             color: rgba(17, 24, 39, 0.9);
         }
 
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            border-radius: 9999px;
+            padding: 0.85rem 1.2rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--ink);
+            border: 1px solid rgba(17, 24, 39, 0.14);
+            background: rgba(255, 255, 255, 0.92);
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(25, 118, 255, 0.32);
+        }
+
+        .mini-note {
+            font-size: 0.82rem;
+            line-height: 1.7;
+            color: var(--text-muted);
+        }
+
         .glow-border {
             position: relative;
             overflow: hidden;
@@ -328,14 +357,16 @@
             </a>
 
             <nav class="hidden items-center gap-6 text-sm md:flex">
+                <a href="/developer/login/" class="soft-link">Login</a>
                 <a href="#flow" class="soft-link">Flow</a>
                 <a href="#quickstart" class="soft-link">Quickstart</a>
+                <a href="#prompt" class="soft-link">Prompt</a>
                 <a href="#ideas" class="soft-link">Examples</a>
                 <a href="#trust" class="soft-link">Trust</a>
                 <a href="#publish" class="soft-link">Publish</a>
             </nav>
 
-            <a href="#quickstart" class="secondary-btn !px-5 !py-3 !text-xs">Start Building</a>
+            <a href="/developer/login/?return_to=/developer/" class="secondary-btn !px-5 !py-3 !text-xs">Developer Login</a>
         </div>
     </header>
 
@@ -353,22 +384,21 @@
                     </div>
 
                     <h1 class="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl xl:text-7xl">
-                        Build the Hollow connections people install to get real work done.
+                        Build a Hollow connector, plug it into a real API, and let people install it.
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                        The Hollow developer portal is for API builders, workflow creators, and product teams who want to
-                        publish installable capabilities into Hollow. Define a connector, wire real auth, expose
-                        structured actions, and ship it into the Hollow store.
+                        This is the builder side of Hollow. Use the developer login entry point, describe what your
+                        connector does, add the API calls it needs, and publish it so people can turn it on inside Hollow.
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="#manifest" class="primary-btn">
-                            Read The Manifest
+                        <a href="/developer/login/?return_to=/developer/" class="primary-btn">
+                            Developer Login
                             <span aria-hidden="true">→</span>
                         </a>
-                        <a href="#flow" class="secondary-btn">
-                            See The Publishing Flow
+                        <a href="#quickstart" class="secondary-btn">
+                            See The 3 Steps
                         </a>
                     </div>
 
@@ -377,32 +407,33 @@
                             <div class="eyebrow text-[#7bd8ff]">Trust</div>
                             <div class="mt-3 text-2xl font-black tracking-tight">Scoped installs</div>
                             <p class="mt-2 text-sm leading-7 text-slate-300">
-                                Users see what a connector can read and write before they install it.
+                                People can see what your connector touches before they install it.
                             </p>
                         </div>
                         <div class="panel stat-card rounded-[1.5rem] p-5">
                             <div class="eyebrow text-[#7bd8ff]">Delivery</div>
                             <div class="mt-3 text-2xl font-black tracking-tight">Zero-native</div>
                             <p class="mt-2 text-sm leading-7 text-slate-300">
-                                Send outputs into Zero Inbox, assistant actions, Telegram, Mac, or the app.
+                                Results can land in Zero Inbox, the app, Telegram, or Mac.
                             </p>
                         </div>
-	                        <div class="panel stat-card rounded-[1.5rem] p-5">
-	                            <div class="eyebrow text-[#7bd8ff]">Publish</div>
-	                            <div class="mt-3 text-2xl font-black tracking-tight">Store-ready</div>
-	                            <p class="mt-2 text-sm leading-7 text-slate-300">
-	                                Give creators a catalog, not a hidden integrations menu.
-	                            </p>
-	                        </div>
-	                        <div class="panel stat-card rounded-[1.5rem] p-5 sm:col-span-3">
-	                            <div class="eyebrow text-[#7bd8ff]">Runtime</div>
-	                            <div class="mt-3 text-2xl font-black tracking-tight">Manifest-defined HTTP actions</div>
-	                            <p class="mt-2 text-sm leading-7 text-slate-300">
-	                                Hollow can execute declared API actions from a connector manifest so creators ship real integrations without uploading arbitrary backend code.
-	                            </p>
-	                        </div>
-	                    </div>
-	                </div>
+                        <div class="panel stat-card rounded-[1.5rem] p-5">
+                            <div class="eyebrow text-[#7bd8ff]">Publish</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Store-ready</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">
+                                Your connector gets a real listing instead of living in a hidden admin menu.
+                            </p>
+                        </div>
+                        <div class="panel stat-card rounded-[1.5rem] p-5 sm:col-span-3">
+                            <div class="eyebrow text-[#7bd8ff]">Runtime</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Manifest-defined HTTP actions</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">
+                                Hollow can run the API calls you declare in the manifest, so builders ship real integrations
+                                without uploading arbitrary backend code.
+                            </p>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="panel-strong glow-border rounded-[2rem] p-6 md:p-8">
                     <div class="flex items-start justify-between gap-4">
@@ -460,13 +491,13 @@
                         <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
                             <div class="eyebrow text-[#ffcb6b]">Auth built in</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                OAuth, API keys, and webhooks should feel native instead of bolted on later.
+                                API keys, OAuth, and webhooks should feel like first-class parts of the flow.
                             </p>
                         </div>
                         <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
                             <div class="eyebrow text-[#68f0b2]">Planner-aware</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Hollow can reason over actions because inputs and outputs stay structured.
+                                Hollow can understand the action because inputs and outputs stay structured.
                             </p>
                         </div>
                     </div>
@@ -474,65 +505,68 @@
             </div>
         </section>
 
-	        <section id="flow" class="mx-auto max-w-7xl px-6 py-10">
+        <section id="flow" class="mx-auto max-w-7xl px-6 py-10">
             <div class="max-w-3xl">
                 <div class="eyebrow text-[#7bd8ff]">Builder Flow</div>
                 <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
-                    From connector idea to store listing
+                    The simple version of how this should work
                 </h2>
                 <p class="mt-4 text-lg leading-8 text-slate-300">
-                    The portal should walk builders through the exact path from API concept to a public, installable
-                    integration.
+                    You should be able to go from idea to working connector without guessing what Hollow expects.
                 </p>
             </div>
 
             <div class="mt-10 grid gap-4 lg:grid-cols-3">
                 <div class="panel idea-card rounded-[1.5rem] p-6">
                     <div class="icon-pill">01</div>
-                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Define your connection</h3>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Describe the job</h3>
                     <p class="mt-3 text-sm leading-7 text-slate-300">
-                        Start with a Hollow manifest describing auth, scopes, actions, and output schemas.
+                        Say what the connector does, what it needs access to, and which actions it exposes.
                     </p>
                 </div>
                 <div class="panel idea-card rounded-[1.5rem] p-6">
                     <div class="icon-pill">02</div>
-                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Connect real APIs</h3>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Wire the API calls</h3>
                     <p class="mt-3 text-sm leading-7 text-slate-300">
-                        Map the connector to OAuth, API keys, or webhooks so Hollow can execute against trusted systems.
+                        Add the real HTTP requests, auth, and runtime input templates that Hollow should execute.
                     </p>
                 </div>
                 <div class="panel idea-card rounded-[1.5rem] p-6">
                     <div class="icon-pill">03</div>
-                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Publish to the store</h3>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Ship and test it</h3>
                     <p class="mt-3 text-sm leading-7 text-slate-300">
-                        Ship docs, screenshots, and a reviewable permission model so users can install confidently.
+                        Publish the listing, install it with test settings, and make sure the action does what it says.
                     </p>
                 </div>
             </div>
-	        </section>
+        </section>
 
-	        <section id="quickstart" class="mx-auto max-w-7xl px-6 py-14">
-	            <div class="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]">
-	                <div class="max-w-3xl">
-	                    <div class="eyebrow text-[#7bd8ff]">Quickstart</div>
-	                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
-	                        Publish, install, and invoke a connector
-	                    </h2>
-	                    <p class="mt-4 text-lg leading-8 text-slate-300">
-	                        The Hollow connector MVP now has the core system shape: registry records, per-user installs,
-	                        slug-based lookup, and a manifest-driven invoke API for declared HTTP actions.
-	                    </p>
-	                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-	                        <div>1. Create a connector listing with metadata, scopes, actions, and manifest.</div>
-	                        <div>2. Install it for a user with account-specific settings like API keys.</div>
-	                        <div>3. Invoke a declared action through Hollow so request templates stay reviewable.</div>
-	                    </div>
-	                </div>
+        <section id="quickstart" class="mx-auto max-w-7xl px-6 py-14">
+            <div class="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]">
+                <div class="max-w-3xl">
+                    <div class="eyebrow text-[#7bd8ff]">Quickstart</div>
+                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
+                        Sign in, create a connector, test it
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-300">
+                        There are three practical pieces: a dev login, a connector listing with actions, and a way to
+                        install and invoke those actions with real settings.
+                    </p>
+                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
+                        <div>1. Use the developer login so you land in the builder flow with your Hollow account.</div>
+                        <div>2. Publish a connector with plain metadata, scopes, and action definitions.</div>
+                        <div>3. Install it with settings like API keys, then run an action through Hollow.</div>
+                    </div>
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="/developer/login/?return_to=/developer/" class="primary-btn">Open Developer Login</a>
+                        <a href="/signup" class="secondary-btn">Create Hollow Account</a>
+                    </div>
+                </div>
 
-	                <div class="space-y-4">
-	                    <div class="code-shell">
-	                        <div class="eyebrow text-[#ffcb6b]">1. Publish</div>
-	                        <pre>POST /v1/connectors
+                <div class="space-y-4">
+                    <div class="code-shell">
+                        <div class="eyebrow text-[#ffcb6b]">1. Publish</div>
+                        <pre>POST /v1/connectors
 {
   "name": "Linear Incident Runner",
   "slug": "linear-incident-runner",
@@ -557,34 +591,109 @@
     }
   ]
 }</pre>
-	                    </div>
+                    </div>
 
-	                    <div class="code-shell">
-	                        <div class="eyebrow text-[#68f0b2]">2. Install</div>
-	                        <pre>POST /v1/connectors/linear-incident-runner/install
+                    <div class="code-shell">
+                        <div class="eyebrow text-[#68f0b2]">2. Install</div>
+                        <pre>POST /v1/connectors/linear-incident-runner/install
 {
   "granted_scopes": ["issues:read", "issues:write"],
   "settings": {
     "api_key": "sk_live_..."
   }
 }</pre>
-	                    </div>
+                    </div>
 
-	                    <div class="code-shell">
-	                        <div class="eyebrow text-[#7bd8ff]">3. Invoke</div>
-	                        <pre>POST /v1/connectors/linear-incident-runner/actions/search_incidents/invoke
+                    <div class="code-shell">
+                        <div class="eyebrow text-[#7bd8ff]">3. Invoke</div>
+                        <pre>POST /v1/connectors/linear-incident-runner/actions/search_incidents/invoke
 {
   "input": {
     "query": "sev1 incidents",
     "limit": 5
   }
 }</pre>
-	                    </div>
-	                </div>
-	            </div>
-	        </section>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-	        <section id="ideas" class="mx-auto max-w-7xl px-6 py-14">
+        <section id="prompt" class="mx-auto max-w-7xl px-6 py-14">
+            <div class="grid gap-8 xl:grid-cols-[0.95fr_1.05fr]">
+                <div class="max-w-3xl">
+                    <div class="eyebrow text-[#7bd8ff]">Vibe Coding Prompt</div>
+                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
+                        Give builders something they can paste straight into Cursor or Claude Code
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-300">
+                        This prompt is meant to turn a product idea into a Hollow-ready connector draft with action
+                        schemas, request templates, install settings, and sample payloads.
+                    </p>
+                    <p class="mini-note mt-5">
+                        Replace the bracketed parts with your product, API docs, and use case. The model should give you a
+                        strong first draft, not a final production review.
+                    </p>
+                </div>
+
+                <div class="panel-strong rounded-[2rem] p-6 md:p-8">
+                    <div class="flex flex-wrap items-start justify-between gap-4">
+                        <div>
+                            <div class="eyebrow text-[#ffcb6b]">Copy Prompt</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Use this to generate a connector manifest and runtime action definitions.
+                            </p>
+                        </div>
+                        <button id="copy-vibe-prompt" class="copy-btn" type="button">Copy Prompt</button>
+                    </div>
+                    <div class="code-shell mt-6">
+                        <pre id="vibe-prompt-text">You are helping me build a Hollow connector.
+
+I need a clean first draft for a connector called [CONNECTOR NAME] that connects Hollow to [PRODUCT OR API].
+
+Context:
+- User job to solve: [WHAT THE USER WANTS TO DO]
+- API docs or endpoints: [PASTE DOCS OR URL NOTES]
+- Auth model: [api_key, oauth2, webhook, or none]
+- Important scopes or permissions: [SCOPES]
+- Main actions I need: [ACTION 1], [ACTION 2], [ACTION 3]
+
+Return:
+1. A short plain-English summary of what the connector does.
+2. A Hollow connector JSON payload with:
+   - name
+   - slug
+   - tagline
+   - description
+   - category
+   - visibility
+   - status
+   - auth_type
+   - scopes
+   - actions
+   - manifest
+3. For each action, include:
+   - key
+   - name
+   - description
+   - input_schema
+   - output_schema
+   - request with method, url, headers, query, and body
+4. Use {{settings.*}} for secrets like API keys.
+5. Use {{input.*}} for runtime values from the user.
+6. Include a sample install payload with settings.
+7. Include a sample invoke payload for each action.
+
+Important constraints:
+- Keep this manifest-driven. Do not invent arbitrary backend code execution.
+- Make the copy clear and non-hypey.
+- Prefer simple action names and minimal required scopes.
+- If the docs are unclear, call that out and make the safest reasonable assumption.</pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="ideas" class="mx-auto max-w-7xl px-6 py-14">
             <div class="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
                 <div class="max-w-3xl">
                     <div class="eyebrow text-[#7bd8ff]">Connection Ideas</div>
@@ -669,16 +778,18 @@
         <section id="publish" class="mx-auto max-w-7xl px-6 pb-24 pt-6">
             <div class="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
                 <div class="panel-strong rounded-[2rem] p-6 md:p-8">
-                    <div class="eyebrow text-[#ffcb6b]">Portal Roadmap</div>
+                    <div class="eyebrow text-[#ffcb6b]">What Still Needs Shipping</div>
                     <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                        What this site should grow into next
+                        What we still need before this becomes a real dev platform
                     </h2>
-	                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-	                        <div>Registry, installs, slug lookup, and invoke APIs</div>
-	                        <div>OAuth, API key, and webhook auth flows</div>
-	                        <div>Creator publishing queue with review states</div>
-	                        <div>Store ranking, usage analytics, and trust badges</div>
-	                    </div>
+                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
+                        <div>Developer roles and publisher permissions, not just a separate login page.</div>
+                        <div>OAuth install flows, token refresh, and secret storage for live connectors.</div>
+                        <div>Review queue, verification, abuse controls, and connector takedown tools.</div>
+                        <div>Analytics, logs, and error reporting so builders know what broke.</div>
+                        <div>Planner selection so Hollow can pick the right connector action automatically.</div>
+                        <div>Better docs, examples, and onboarding around action schemas and delivery surfaces.</div>
+                    </div>
                 </div>
 
                 <div id="manifest" class="panel rounded-[2rem] p-6 md:p-8">
@@ -721,22 +832,45 @@
                         </div>
                     </div>
 
-	                    <div class="mt-8 rounded-[1.5rem] border border-dashed border-white/12 bg-black/20 p-5">
-	                        <div class="eyebrow text-[#7bd8ff]">Next</div>
-	                        <p class="mt-3 text-base leading-7 text-slate-300">
-	                            The core connector system now exists locally: marketplace records, installs, direct slug lookup,
-	                            and manifest-defined action execution. The next product step is hardening auth flows, review
-	                            queues, analytics, and planner-driven connector selection.
-	                        </p>
+                    <div class="mt-8 rounded-[1.5rem] border border-dashed border-white/12 bg-black/20 p-5">
+                        <div class="eyebrow text-[#7bd8ff]">Right Now</div>
+                        <p class="mt-3 text-base leading-7 text-slate-300">
+                            The base pieces are here: a dedicated developer login page, clearer docs, connector registry
+                            APIs, installs, direct slug lookup, and manifest-defined action execution. The next step is
+                            turning that into a properly permissioned developer program.
+                        </p>
                         <div class="mt-6 flex flex-wrap gap-4">
+                            <a href="/developer/login/?return_to=/developer/" class="primary-btn">Open Developer Login</a>
                             <a href="/" class="secondary-btn">Back To Main Site</a>
-                            <a href="/signup" class="primary-btn">Get Hollow</a>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
     </main>
+    <script>
+        const copyPromptButton = document.getElementById("copy-vibe-prompt");
+        const promptTextEl = document.getElementById("vibe-prompt-text");
+
+        if (copyPromptButton && promptTextEl) {
+            copyPromptButton.addEventListener("click", async () => {
+                const originalLabel = copyPromptButton.textContent;
+                try {
+                    await navigator.clipboard.writeText(promptTextEl.textContent || "");
+                    copyPromptButton.textContent = "Copied";
+                    setTimeout(() => {
+                        copyPromptButton.textContent = originalLabel;
+                    }, 1800);
+                } catch (error) {
+                    copyPromptButton.textContent = "Copy Failed";
+                    setTimeout(() => {
+                        copyPromptButton.textContent = originalLabel;
+                    }, 1800);
+                }
+            });
+        }
+    </script>
+    <script src="/analytics.js" defer></script>
 </body>
 
 </html>
