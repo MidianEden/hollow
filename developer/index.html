@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hollow Developer | Build Connections For Hollow</title>
+    <meta name="description"
+        content="Build and publish Hollow connections. Create manifest-driven integrations, wire real APIs, and ship installable tools into the Hollow ecosystem." />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://gethollow.com/developer/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://gethollow.com/developer/" />
+    <meta property="og:title" content="Hollow Developer | Build Connections For Hollow" />
+    <meta property="og:description"
+        content="The Hollow developer portal for creators who want to publish connections, APIs, and installable capabilities." />
+    <meta property="og:image" content="https://gethollow.com/0wproto.png" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://gethollow.com/developer/" />
+    <meta property="twitter:title" content="Hollow Developer | Build Connections For Hollow" />
+    <meta property="twitter:description"
+        content="Build manifest-driven Hollow connections and publish them into the Hollow store." />
+    <meta property="twitter:image" content="https://gethollow.com/0wproto.png" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+
+    <style>
+        :root {
+            --bg-0: #050608;
+            --bg-1: #0b0d12;
+            --panel: rgba(14, 17, 24, 0.78);
+            --panel-strong: rgba(18, 22, 30, 0.92);
+            --panel-border: rgba(255, 255, 255, 0.12);
+            --text-muted: #aab3c5;
+            --blue: #1976ff;
+            --cyan: #00d1ff;
+            --gold: #ffcb6b;
+            --green: #68f0b2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Geist", sans-serif;
+            color: white;
+            background:
+                radial-gradient(circle at top left, rgba(25, 118, 255, 0.22), transparent 26%),
+                radial-gradient(circle at 85% 10%, rgba(0, 209, 255, 0.14), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(255, 203, 107, 0.08), transparent 28%),
+                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), transparent 80%);
+            pointer-events: none;
+            opacity: 0.18;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(5, 6, 8, 0.82);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .brand-chip {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, 0.28);
+        }
+
+        .panel {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.34);
+            backdrop-filter: blur(18px);
+        }
+
+        .panel-strong {
+            background: linear-gradient(180deg, rgba(15, 19, 26, 0.98), rgba(10, 13, 18, 0.96));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.5);
+        }
+
+        .eyebrow {
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border-radius: 9999px;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            background: linear-gradient(135deg, var(--blue), #46a5ff);
+            box-shadow: 0 12px 30px rgba(25, 118, 255, 0.3);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 16px 36px rgba(25, 118, 255, 0.38);
+        }
+
+        .secondary-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            border-radius: 9999px;
+            padding: 1rem 1.5rem;
+            font-size: 0.9rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: rgba(255, 255, 255, 0.03);
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .secondary-btn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(0, 209, 255, 0.35);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .manifest-window {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .manifest-window pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.86);
+        }
+
+        .glow-border {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glow-border::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            padding: 1px;
+            border-radius: inherit;
+            background: linear-gradient(135deg, rgba(25, 118, 255, 0.55), rgba(0, 209, 255, 0.28), rgba(255, 203, 107, 0.16));
+            -webkit-mask:
+                linear-gradient(#fff 0 0) content-box,
+                linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        .stat-card,
+        .idea-card,
+        .trust-card,
+        .check-card {
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+        }
+
+        .stat-card:hover,
+        .idea-card:hover,
+        .trust-card:hover,
+        .check-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 209, 255, 0.28);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .icon-pill {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(25, 118, 255, 0.14);
+            border: 1px solid rgba(25, 118, 255, 0.28);
+        }
+
+        .soft-link {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .soft-link:hover {
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-grid"></div>
+
+    <header class="topbar">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+            <a href="/" class="flex items-center gap-3 text-white no-underline">
+                <div class="brand-chip flex h-11 w-11 items-center justify-center rounded-2xl">
+                    <span class="text-lg font-black tracking-[-0.08em]">H</span>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold">Hollow Developer</div>
+                    <div class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-400">developer.gethollow.com</div>
+                </div>
+            </a>
+
+            <nav class="hidden items-center gap-6 text-sm md:flex">
+                <a href="#flow" class="soft-link">Flow</a>
+                <a href="#ideas" class="soft-link">Examples</a>
+                <a href="#trust" class="soft-link">Trust</a>
+                <a href="#publish" class="soft-link">Publish</a>
+            </nav>
+
+            <a href="#publish" class="secondary-btn !px-5 !py-3 !text-xs">Start Building</a>
+        </div>
+    </header>
+
+    <main>
+        <section class="mx-auto max-w-7xl px-6 pb-16 pt-16 md:pt-20">
+            <div class="grid gap-8 xl:grid-cols-[1.1fr_0.9fr] xl:items-center">
+                <div>
+                    <div class="flex flex-wrap items-center gap-3">
+                        <div class="rounded-full border border-blue-400/35 bg-blue-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-blue-200">
+                            Builder Beta
+                        </div>
+                        <div class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-slate-300">
+                            Creator-published connections for Hollow
+                        </div>
+                    </div>
+
+                    <h1 class="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl xl:text-7xl">
+                        Build the Hollow connections people install to get real work done.
+                    </h1>
+
+                    <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
+                        The Hollow developer portal is for API builders, workflow creators, and product teams who want to
+                        publish installable capabilities into Hollow. Define a connector, wire real auth, expose
+                        structured actions, and ship it into the Hollow store.
+                    </p>
+
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="#manifest" class="primary-btn">
+                            Read The Manifest
+                            <span aria-hidden="true">→</span>
+                        </a>
+                        <a href="#flow" class="secondary-btn">
+                            See The Publishing Flow
+                        </a>
+                    </div>
+
+                    <div class="mt-10 grid gap-4 sm:grid-cols-3">
+                        <div class="panel stat-card rounded-[1.5rem] p-5">
+                            <div class="eyebrow text-[#7bd8ff]">Trust</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Scoped installs</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">
+                                Users see what a connector can read and write before they install it.
+                            </p>
+                        </div>
+                        <div class="panel stat-card rounded-[1.5rem] p-5">
+                            <div class="eyebrow text-[#7bd8ff]">Delivery</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Zero-native</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">
+                                Send outputs into Zero Inbox, assistant actions, Telegram, Mac, or the app.
+                            </p>
+                        </div>
+                        <div class="panel stat-card rounded-[1.5rem] p-5">
+                            <div class="eyebrow text-[#7bd8ff]">Publish</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Store-ready</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-300">
+                                Give creators a catalog, not a hidden integrations menu.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-strong glow-border rounded-[2rem] p-6 md:p-8">
+                    <div class="flex items-start justify-between gap-4">
+                        <div>
+                            <div class="eyebrow text-[#ffcb6b]">Manifest Preview</div>
+                            <h2 class="mt-3 text-3xl font-black tracking-tight text-white">
+                                A creator-facing connector contract
+                            </h2>
+                        </div>
+                        <div class="icon-pill">
+                            <span class="text-xl">◎</span>
+                        </div>
+                    </div>
+
+                    <div class="manifest-window mt-6 rounded-[1.5rem] p-4 md:p-5">
+                        <div class="mb-3 flex items-center gap-2">
+                            <span class="h-3 w-3 rounded-full bg-[#ffcb6b]"></span>
+                            <span class="h-3 w-3 rounded-full bg-[#00d1ff]"></span>
+                            <span class="h-3 w-3 rounded-full bg-[#68f0b2]"></span>
+                        </div>
+                        <pre>{
+  "slug": "linear-incident-runner",
+  "name": "Linear Incident Runner",
+  "version": "0.1.0",
+  "auth": {
+    "type": "oauth2",
+    "scopes": ["issues:read", "issues:write"]
+  },
+  "actions": [
+    {
+      "name": "create_issue",
+      "input_schema": {
+        "title": "string",
+        "description": "string",
+        "team_id": "string"
+      }
+    },
+    {
+      "name": "search_incidents",
+      "input_schema": {
+        "query": "string",
+        "limit": "number"
+      }
+    }
+  ],
+  "delivery": {
+    "surface": "zero_inbox"
+  }
+}</pre>
+                    </div>
+
+                    <div class="mt-6 grid gap-4 sm:grid-cols-2">
+                        <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
+                            <div class="eyebrow text-[#ffcb6b]">Auth built in</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                OAuth, API keys, and webhooks should feel native instead of bolted on later.
+                            </p>
+                        </div>
+                        <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
+                            <div class="eyebrow text-[#68f0b2]">Planner-aware</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Hollow can reason over actions because inputs and outputs stay structured.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="flow" class="mx-auto max-w-7xl px-6 py-10">
+            <div class="max-w-3xl">
+                <div class="eyebrow text-[#7bd8ff]">Builder Flow</div>
+                <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
+                    From connector idea to store listing
+                </h2>
+                <p class="mt-4 text-lg leading-8 text-slate-300">
+                    The portal should walk builders through the exact path from API concept to a public, installable
+                    integration.
+                </p>
+            </div>
+
+            <div class="mt-10 grid gap-4 lg:grid-cols-3">
+                <div class="panel idea-card rounded-[1.5rem] p-6">
+                    <div class="icon-pill">01</div>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Define your connection</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        Start with a Hollow manifest describing auth, scopes, actions, and output schemas.
+                    </p>
+                </div>
+                <div class="panel idea-card rounded-[1.5rem] p-6">
+                    <div class="icon-pill">02</div>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Connect real APIs</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        Map the connector to OAuth, API keys, or webhooks so Hollow can execute against trusted systems.
+                    </p>
+                </div>
+                <div class="panel idea-card rounded-[1.5rem] p-6">
+                    <div class="icon-pill">03</div>
+                    <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Publish to the store</h3>
+                    <p class="mt-3 text-sm leading-7 text-slate-300">
+                        Ship docs, screenshots, and a reviewable permission model so users can install confidently.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="ideas" class="mx-auto max-w-7xl px-6 py-14">
+            <div class="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
+                <div class="max-w-3xl">
+                    <div class="eyebrow text-[#7bd8ff]">Connection Ideas</div>
+                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
+                        The right store is broad enough for real work.
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-300">
+                        Hollow connections should cover team systems, commerce, support, personal ops, and device
+                        surfaces, not just generic chat plugins.
+                    </p>
+                </div>
+
+                <div class="grid gap-4 sm:grid-cols-2">
+                    <div class="panel idea-card rounded-[1.5rem] p-6">
+                        <div class="eyebrow text-[#ffcb6b]">Engineering</div>
+                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Linear Incident Runner</h3>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Create issues, pull sprint context, and turn voice notes into triage-ready tickets.
+                        </p>
+                    </div>
+                    <div class="panel idea-card rounded-[1.5rem] p-6">
+                        <div class="eyebrow text-[#ffcb6b]">Commerce</div>
+                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Shopify Ops Copilot</h3>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Read orders, tag refunds, and surface urgent store events into Zero Inbox.
+                        </p>
+                    </div>
+                    <div class="panel idea-card rounded-[1.5rem] p-6">
+                        <div class="eyebrow text-[#ffcb6b]">Knowledge</div>
+                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Notion Memory Bridge</h3>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Turn team docs into durable assistant memory and keep long-lived context fresh.
+                        </p>
+                    </div>
+                    <div class="panel idea-card rounded-[1.5rem] p-6">
+                        <div class="eyebrow text-[#ffcb6b]">Messaging</div>
+                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Slack Action Relay</h3>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Search channels, draft replies, and ship follow-ups back into the Hollow workflow.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="trust" class="mx-auto max-w-7xl px-6 py-14">
+            <div class="panel-strong rounded-[2rem] p-6 md:p-8">
+                <div class="max-w-3xl">
+                    <div class="eyebrow text-[#7bd8ff]">Trust Model</div>
+                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
+                        The store needs guardrails, not just glossy cards.
+                    </h2>
+                    <p class="mt-4 text-lg leading-8 text-slate-300">
+                        Creators move faster when permissions, auth, review states, and revocation are obvious from the
+                        start.
+                    </p>
+                </div>
+
+                <div class="mt-10 grid gap-4 lg:grid-cols-3">
+                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                        <div class="eyebrow text-[#68f0b2]">Reviewable scopes</div>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Every connector declares the exact data it can read or write before a user installs it.
+                        </p>
+                    </div>
+                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                        <div class="eyebrow text-[#68f0b2]">Manifest-first execution</div>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            The safest v1 keeps execution inside Hollow with declared actions instead of arbitrary uploaded code.
+                        </p>
+                    </div>
+                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+                        <div class="eyebrow text-[#68f0b2]">Human-readable installs</div>
+                        <p class="mt-3 text-sm leading-7 text-slate-300">
+                            Users should understand what a connector does, what it touches, and how to revoke it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="publish" class="mx-auto max-w-7xl px-6 pb-24 pt-6">
+            <div class="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
+                <div class="panel-strong rounded-[2rem] p-6 md:p-8">
+                    <div class="eyebrow text-[#ffcb6b]">Portal Roadmap</div>
+                    <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
+                        What this site should grow into next
+                    </h2>
+                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
+                        <div>Registry, installs, and connector permissions</div>
+                        <div>OAuth, API key, and webhook auth flows</div>
+                        <div>Creator publishing queue with review states</div>
+                        <div>Store ranking, usage analytics, and trust badges</div>
+                    </div>
+                </div>
+
+                <div id="manifest" class="panel rounded-[2rem] p-6 md:p-8">
+                    <div class="flex flex-wrap items-start justify-between gap-4">
+                        <div class="max-w-2xl">
+                            <div class="eyebrow text-[#7bd8ff]">Publishing Checklist</div>
+                            <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
+                                A creator portal with enough structure to scale
+                            </h2>
+                        </div>
+                        <div class="rounded-full border border-[#68f0b2]/30 bg-[#68f0b2]/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#68f0b2]">
+                            MVP-ready direction
+                        </div>
+                    </div>
+
+                    <div class="mt-8 grid gap-4 md:grid-cols-2">
+                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
+                            <div class="eyebrow text-[#ffcb6b]">Core docs</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Authentication guides, manifest schema, action examples, and delivery surface docs should live here.
+                            </p>
+                        </div>
+                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
+                            <div class="eyebrow text-[#ffcb6b]">Review pipeline</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Built-in, verified, and community trust tiers give users a way to judge what they install.
+                            </p>
+                        </div>
+                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
+                            <div class="eyebrow text-[#ffcb6b]">Planner integration</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Connectors should expose structured actions so Hollow can choose them and explain them clearly.
+                            </p>
+                        </div>
+                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
+                            <div class="eyebrow text-[#ffcb6b]">Safe auth storage</div>
+                            <p class="mt-3 text-sm leading-7 text-slate-300">
+                                Secrets, tokens, and revocation controls should be first-class parts of the install flow.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="mt-8 rounded-[1.5rem] border border-dashed border-white/12 bg-black/20 p-5">
+                        <div class="eyebrow text-[#7bd8ff]">Next</div>
+                        <p class="mt-3 text-base leading-7 text-slate-300">
+                            This page makes the website developer-ready. The next product step is the actual connector registry,
+                            install records, and publish/install APIs behind it.
+                        </p>
+                        <div class="mt-6 flex flex-wrap gap-4">
+                            <a href="/" class="secondary-btn">Back To Main Site</a>
+                            <a href="/signup" class="primary-btn">Get Hollow</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
