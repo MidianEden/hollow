@@ -391,6 +391,7 @@
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
                         This is the builder side of Hollow. Use the developer login entry point, describe what your
                         connector does, add the API calls it needs, and publish it so people can turn it on inside Hollow.
+                        If an API speaks HTTP, developers should be able to wire it in here.
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
@@ -427,10 +428,10 @@
                         </div>
                         <div class="panel stat-card rounded-[1.5rem] p-5 sm:col-span-3">
                             <div class="eyebrow text-[#7bd8ff]">Runtime</div>
-                            <div class="mt-3 text-2xl font-black tracking-tight">Manifest-defined HTTP actions</div>
+                            <div class="mt-3 text-2xl font-black tracking-tight">Any HTTP API</div>
                             <p class="mt-2 text-sm leading-7 text-slate-300">
-                                Hollow can run the API calls you declare in the manifest, so builders ship real integrations
-                                without uploading arbitrary backend code.
+                                Hollow can run the calls you declare in the manifest, including REST, GraphQL, XML, and
+                                odd vendor APIs that need custom headers, form bodies, or response mapping.
                             </p>
                         </div>
                     </div>
@@ -461,27 +462,31 @@
 	  "version": "1.0",
 	  "auth_type": "api_key",
 	  "scopes": ["issues:read", "issues:write"],
-	  "actions": [
-	    {
-	      "key": "search_incidents",
-	      "name": "Search Incidents",
+		  "actions": [
+		    {
+		      "key": "search_incidents",
+		      "name": "Search Incidents",
 	      "input_schema": {
 	        "query": "string",
 	        "limit": "number"
 	      },
-	      "request": {
-	        "method": "POST",
-	        "url": "https://api.example.com/incidents/search",
-	        "headers": {
-	          "Authorization": "Bearer {{settings.api_key}}"
-	        },
-	        "body": {
-	          "query": "{{input.query}}",
-	          "limit": "{{input.limit}}"
-	        }
-	      }
-	    }
-	  ],
+		      "request": {
+		        "method": "POST",
+		        "url": "https://api.example.com/incidents/search",
+		        "body_mode": "json",
+		        "headers": {
+		          "Authorization": "Bearer {{settings.api_key}}",
+		          "X-Workspace": "{{settings.workspace_id}}"
+		        },
+		        "body": {
+		          "query": "{{input.query}}",
+		          "limit": "{{input.limit}}"
+		        },
+		        "response_path": "results",
+		        "success_status_codes": [200]
+		      }
+		    }
+		  ],
 	  "delivery": {
 	    "surface": "zero_inbox"
 	  }
@@ -492,7 +497,8 @@
                         <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
                             <div class="eyebrow text-[#ffcb6b]">Auth built in</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                API keys, OAuth, and webhooks should feel like first-class parts of the flow.
+                                API keys, bearer tokens, OAuth, webhooks, query auth, and custom vendor headers should
+                                feel like first-class parts of the flow.
                             </p>
                         </div>
                         <div class="rounded-[1.35rem] border border-white/10 bg-white/5 p-4">
@@ -530,7 +536,8 @@
                     <div class="icon-pill">⇄</div>
                     <h3 class="mt-5 text-2xl font-black tracking-tight text-white">Safe runtime wiring</h3>
                     <p class="mt-3 text-sm leading-7 text-slate-300">
-                        Add the real HTTP requests, auth templates, and runtime input fields Hollow should execute.
+                        Add the real HTTP requests, auth templates, body mode, content type, and response path Hollow
+                        should execute.
                     </p>
                 </div>
                 <div class="panel idea-card rounded-[1.5rem] p-6">
@@ -551,8 +558,8 @@
                         Core API surfaces
                     </h2>
                     <p class="mt-4 text-lg leading-8 text-slate-300">
-                        These are the main endpoints behind the builder experience: create a connector, install it with
-                        settings, and invoke an action through Hollow.
+                        These are the main endpoints behind the builder experience: create a connector for any HTTP API,
+                        install it with settings, and invoke an action through Hollow.
                     </p>
                     <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
                         <p class="text-sm leading-7 text-slate-300">
@@ -581,18 +588,22 @@
     {
       "key": "search_incidents",
       "name": "Search Incidents",
-      "request": {
-        "method": "POST",
-        "url": "https://api.example.com/incidents/search",
-        "headers": {
-          "Authorization": "Bearer {{settings.api_key}}"
-        },
-        "body": {
-          "query": "{{input.query}}"
-        }
-      }
-    }
-  ]
+	      "request": {
+	        "method": "POST",
+	        "url": "https://api.example.com/incidents/search",
+	        "body_mode": "json",
+	        "headers": {
+	          "Authorization": "Bearer {{settings.api_key}}",
+	          "X-Workspace": "{{settings.workspace_id}}"
+	        },
+	        "body": {
+	          "query": "{{input.query}}"
+	        },
+	        "response_path": "results",
+	        "success_status_codes": [200]
+	      }
+	    }
+	  ]
 }</pre>
                     </div>
 
@@ -631,7 +642,7 @@
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
                         <div>Developer login entry point and account routing.</div>
                         <div>Connector registry, listings, installs, and direct slug lookup.</div>
-                        <div>Manifest-defined runtime execution for declared HTTP actions.</div>
+                        <div>Manifest-defined runtime execution for declared HTTP actions across generic APIs.</div>
                         <div>Install-time permission prompts and shared trust language.</div>
                         <div>Eventually: review, analytics, logs, verification, and publisher roles.</div>
                     </div>
@@ -644,8 +655,8 @@
                     </h2>
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
                         <div>A real use case worth turning into a connector.</div>
-                        <div>API docs or endpoint notes we can map into actions.</div>
-                        <div>The auth method and the minimum scopes the connector needs.</div>
+                        <div>API docs or endpoint notes for whatever HTTP API you want to connect.</div>
+                        <div>The auth method, custom headers, and minimum scopes the connector needs.</div>
                         <div>Test credentials or a sandbox account for the first run.</div>
                         <div>Plain-English copy for the listing so users know what it does.</div>
                         <div>Someone who owns support when the connector breaks.</div>
@@ -686,10 +697,12 @@
 
 I need a clean first draft for a connector called [CONNECTOR NAME] that connects Hollow to [PRODUCT OR API].
 
+Assume the developer should be able to connect any HTTP API they want, including REST, GraphQL, XML/SOAP, webhook-based tools, or weird vendor APIs with custom headers.
+
 Context:
 - User job to solve: [WHAT THE USER WANTS TO DO]
 - API docs or endpoints: [PASTE DOCS OR URL NOTES]
-- Auth model: [api_key, oauth2, webhook, or none]
+- Auth model: [api_key, bearer, basic, oauth2, webhook, query_param, custom header, signed request, or none]
 - Important scopes or permissions: [SCOPES]
 - Main actions I need: [ACTION 1], [ACTION 2], [ACTION 3]
 
@@ -713,11 +726,12 @@ Return:
    - description
    - input_schema
    - output_schema
-   - request with method, url, headers, query, and body
+   - request with method, url, headers, query, body, body_mode, content_type, response_format, response_path, and success_status_codes when needed
 4. Use {{settings.*}} for secrets like API keys.
 5. Use {{input.*}} for runtime values from the user.
 6. Include a sample install payload with settings.
 7. Include a sample invoke payload for each action.
+8. If the API needs custom auth headers, form encoding, XML/text payloads, or non-2xx success semantics, model that explicitly in the request definition.
 
 Important constraints:
 - Keep this manifest-driven. Do not invent arbitrary backend code execution.
