@@ -362,9 +362,6 @@
                 <a href="#quickstart" class="soft-link">API</a>
                 <a href="#prompt" class="soft-link">Prompt</a>
                 <a href="#ownership" class="soft-link">Guide</a>
-                <a href="#ideas" class="soft-link">Examples</a>
-                <a href="#trust" class="soft-link">Trust</a>
-                <a href="#publish" class="soft-link">Publish</a>
             </nav>
 
             <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="secondary-btn !px-5 !py-3 !text-xs">Developer Login</a>
@@ -568,7 +565,7 @@
                         </p>
                     </div>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Open Developer Login</a>
+                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Developer Login</a>
                         <a href="/signup" class="secondary-btn">Create Hollow Account</a>
                     </div>
                 </div>
@@ -743,159 +740,6 @@ Important constraints:
             </div>
         </section>
 
-        <section id="ideas" class="mx-auto max-w-7xl px-6 py-14">
-            <div class="grid gap-8 xl:grid-cols-[0.9fr_1.1fr]">
-                <div class="max-w-3xl">
-                    <div class="eyebrow text-[#7bd8ff]">Connection Ideas</div>
-                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
-                        The right store is broad enough for real work.
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-300">
-                        Hollow connections should cover team systems, commerce, support, personal ops, and device
-                        surfaces, not just generic chat plugins.
-                    </p>
-                </div>
-
-                <div class="grid gap-4 sm:grid-cols-2">
-                    <div class="panel idea-card rounded-[1.5rem] p-6">
-                        <div class="eyebrow text-[#ffcb6b]">Engineering</div>
-                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Linear Incident Runner</h3>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Create issues, pull sprint context, and turn voice notes into triage-ready tickets.
-                        </p>
-                    </div>
-                    <div class="panel idea-card rounded-[1.5rem] p-6">
-                        <div class="eyebrow text-[#ffcb6b]">Commerce</div>
-                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Shopify Ops Copilot</h3>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Read orders, tag refunds, and surface urgent store events into Zero Inbox.
-                        </p>
-                    </div>
-                    <div class="panel idea-card rounded-[1.5rem] p-6">
-                        <div class="eyebrow text-[#ffcb6b]">Knowledge</div>
-                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Notion Memory Bridge</h3>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Turn team docs into durable assistant memory and keep long-lived context fresh.
-                        </p>
-                    </div>
-                    <div class="panel idea-card rounded-[1.5rem] p-6">
-                        <div class="eyebrow text-[#ffcb6b]">Messaging</div>
-                        <h3 class="mt-4 text-2xl font-black tracking-tight text-white">Slack Action Relay</h3>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Search channels, draft replies, and ship follow-ups back into the Hollow workflow.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="trust" class="mx-auto max-w-7xl px-6 py-14">
-            <div class="panel-strong rounded-[2rem] p-6 md:p-8">
-                <div class="max-w-3xl">
-                    <div class="eyebrow text-[#7bd8ff]">Trust Model</div>
-                    <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
-                        The store needs guardrails, not just glossy cards.
-                    </h2>
-                    <p class="mt-4 text-lg leading-8 text-slate-300">
-                        Creators move faster when permissions, auth, review states, and revocation are obvious from the
-                        start.
-                    </p>
-                </div>
-
-                <div class="mt-10 grid gap-4 lg:grid-cols-3">
-                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-                        <div class="eyebrow text-[#68f0b2]">Reviewable scopes</div>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Every connector declares the exact data it can read or write before a user installs it.
-                        </p>
-                    </div>
-                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-                        <div class="eyebrow text-[#68f0b2]">Manifest-first execution</div>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            The safest v1 keeps execution inside Hollow with declared actions instead of arbitrary uploaded code.
-                        </p>
-                    </div>
-                    <div class="trust-card rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
-                        <div class="eyebrow text-[#68f0b2]">Human-readable installs</div>
-                        <p class="mt-3 text-sm leading-7 text-slate-300">
-                            Users should understand what a connector does, what it touches, and how to revoke it.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="publish" class="mx-auto max-w-7xl px-6 pb-24 pt-6">
-            <div class="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
-                <div class="panel-strong rounded-[2rem] p-6 md:p-8">
-                    <div class="eyebrow text-[#ffcb6b]">Current Beta</div>
-                    <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                        What you can do today
-                    </h2>
-                    <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-                        <div>Publish draft, unlisted, or public connectors.</div>
-                        <div>Install them with real settings and granted scopes.</div>
-                        <div>Invoke manifest-defined actions against live HTTP APIs.</div>
-                        <div>Model custom headers, form bodies, response paths, and success rules.</div>
-                        <div>Share a clear listing instead of shipping a hidden internal tool.</div>
-                        <div>Test ideas quickly before turning them into deeper platform integrations.</div>
-                    </div>
-                </div>
-
-                <div id="manifest" class="panel rounded-[2rem] p-6 md:p-8">
-                    <div class="flex flex-wrap items-start justify-between gap-4">
-                        <div class="max-w-2xl">
-                            <div class="eyebrow text-[#7bd8ff]">Publishing Notes</div>
-                            <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                                Ship connectors people can actually trust
-                            </h2>
-                        </div>
-                        <div class="rounded-full border border-[#68f0b2]/30 bg-[#68f0b2]/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#68f0b2]">
-                            Developer-facing
-                        </div>
-                    </div>
-
-                    <div class="mt-8 grid gap-4 md:grid-cols-2">
-                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Core docs</div>
-                            <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Good connectors explain auth, install settings, scopes, and action behavior clearly.
-                            </p>
-                        </div>
-                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Trust signals</div>
-                            <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Clear scopes, useful descriptions, and predictable behavior matter more than hype.
-                            </p>
-                        </div>
-                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Structured actions</div>
-                            <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Expose actions with clean inputs and outputs so Hollow can reason over them well.
-                            </p>
-                        </div>
-                        <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Safe installs</div>
-                            <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Ask for the smallest useful scope set and make it obvious what the connector touches.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 rounded-[1.5rem] border border-dashed border-white/12 bg-black/20 p-5">
-                        <div class="eyebrow text-[#7bd8ff]">Best Use</div>
-                        <p class="mt-3 text-base leading-7 text-slate-300">
-                            Hollow Developer is best for HTTP-first connectors with explicit scopes, strong action
-                            definitions, and install settings that make sense to real users.
-                        </p>
-                        <div class="mt-6 flex flex-wrap gap-4">
-                            <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Open Developer Login</a>
-                            <a href="https://gethollow.com/" data-main-site-link class="secondary-btn">Back To Main Site</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
     </main>
     <script>
         const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
