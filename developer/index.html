@@ -361,7 +361,7 @@
                 <a href="#flow" class="soft-link">Setup</a>
                 <a href="#quickstart" class="soft-link">API</a>
                 <a href="#prompt" class="soft-link">Prompt</a>
-                <a href="#ownership" class="soft-link">Needs</a>
+                <a href="#ownership" class="soft-link">Guide</a>
                 <a href="#ideas" class="soft-link">Examples</a>
                 <a href="#trust" class="soft-link">Trust</a>
                 <a href="#publish" class="soft-link">Publish</a>
@@ -389,8 +389,8 @@
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                        This is the builder side of Hollow. Use the developer login entry point, describe what your
-                        connector does, add the API calls it needs, and publish it so people can turn it on inside Hollow.
+                        This is the Hollow developer portal. Sign in, describe what your connector does, add the API
+                        calls it needs, and publish it so people can turn it on inside Hollow.
                         If an API speaks HTTP, developers should be able to wire it in here.
                     </p>
 
@@ -563,8 +563,8 @@
                     </p>
                     <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
                         <p class="text-sm leading-7 text-slate-300">
-                            The dedicated developer login gets people into the portal. After that, the product mostly
-                            comes down to these core APIs working cleanly and being easy to understand.
+                            Sign in once, then use these APIs to publish connectors, install them with real settings,
+                            and invoke actions through Hollow.
                         </p>
                     </div>
                     <div class="mt-8 flex flex-wrap gap-4">
@@ -635,31 +635,31 @@
         <section id="ownership" class="mx-auto max-w-7xl px-6 py-14">
             <div class="grid gap-6 xl:grid-cols-2">
                 <div class="panel-strong rounded-[2rem] p-6 md:p-8">
-                    <div class="eyebrow text-[#7bd8ff]">What Hollow Handles</div>
+                    <div class="eyebrow text-[#7bd8ff]">What You Get</div>
                     <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                        The platform side
+                        Built into Hollow
                     </h2>
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-                        <div>Developer login entry point and account routing.</div>
-                        <div>Connector registry, listings, installs, and direct slug lookup.</div>
-                        <div>Manifest-defined runtime execution for declared HTTP actions across generic APIs.</div>
-                        <div>Install-time permission prompts and shared trust language.</div>
-                        <div>Eventually: review, analytics, logs, verification, and publisher roles.</div>
+                        <div>Connector listings, installs, and direct slug lookup.</div>
+                        <div>Manifest-defined runtime execution for HTTP actions.</div>
+                        <div>Per-user install settings and templated request rendering.</div>
+                        <div>Clear permission copy and human-readable installs.</div>
+                        <div>A single place to build, test, and publish connectors.</div>
                     </div>
                 </div>
 
                 <div class="panel rounded-[2rem] p-6 md:p-8">
-                    <div class="eyebrow text-[#ffcb6b]">What You Need To Bring</div>
+                    <div class="eyebrow text-[#ffcb6b]">Build Guide</div>
                     <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                        Your side of the deal
+                        What strong connectors include
                     </h2>
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-                        <div>A real use case worth turning into a connector.</div>
-                        <div>API docs or endpoint notes for whatever HTTP API you want to connect.</div>
-                        <div>The auth method, custom headers, and minimum scopes the connector needs.</div>
-                        <div>Test credentials or a sandbox account for the first run.</div>
-                        <div>Plain-English copy for the listing so users know what it does.</div>
-                        <div>Someone who owns support when the connector breaks.</div>
+                        <div>A real use case with clear actions and outcomes.</div>
+                        <div>API docs or endpoint notes for the service you want to connect.</div>
+                        <div>Explicit auth, scopes, and install settings.</div>
+                        <div>Plain-English copy so users know what the connector does.</div>
+                        <div>Structured outputs that Hollow can route cleanly.</div>
+                        <div>A maintained integration someone actually owns.</div>
                     </div>
                 </div>
             </div>
@@ -828,30 +828,30 @@ Important constraints:
         <section id="publish" class="mx-auto max-w-7xl px-6 pb-24 pt-6">
             <div class="grid gap-6 xl:grid-cols-[0.85fr_1.15fr]">
                 <div class="panel-strong rounded-[2rem] p-6 md:p-8">
-                    <div class="eyebrow text-[#ffcb6b]">What Still Needs Shipping</div>
+                    <div class="eyebrow text-[#ffcb6b]">Current Beta</div>
                     <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                        What we still need before this becomes a real dev platform
+                        What you can do today
                     </h2>
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
-                        <div>Developer roles and publisher permissions, not just a separate login page.</div>
-                        <div>OAuth install flows, token refresh, and secret storage for live connectors.</div>
-                        <div>Review queue, verification, abuse controls, and connector takedown tools.</div>
-                        <div>Analytics, logs, and error reporting so builders know what broke.</div>
-                        <div>Planner selection so Hollow can pick the right connector action automatically.</div>
-                        <div>Better docs, examples, and onboarding around action schemas and delivery surfaces.</div>
+                        <div>Publish draft, unlisted, or public connectors.</div>
+                        <div>Install them with real settings and granted scopes.</div>
+                        <div>Invoke manifest-defined actions against live HTTP APIs.</div>
+                        <div>Model custom headers, form bodies, response paths, and success rules.</div>
+                        <div>Share a clear listing instead of shipping a hidden internal tool.</div>
+                        <div>Test ideas quickly before turning them into deeper platform integrations.</div>
                     </div>
                 </div>
 
                 <div id="manifest" class="panel rounded-[2rem] p-6 md:p-8">
                     <div class="flex flex-wrap items-start justify-between gap-4">
                         <div class="max-w-2xl">
-                            <div class="eyebrow text-[#7bd8ff]">Platform Shape</div>
+                            <div class="eyebrow text-[#7bd8ff]">Publishing Notes</div>
                             <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
-                                A creator portal with enough structure to scale
+                                Ship connectors people can actually trust
                             </h2>
                         </div>
                         <div class="rounded-full border border-[#68f0b2]/30 bg-[#68f0b2]/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-[#68f0b2]">
-                            MVP-ready direction
+                            Developer-facing
                         </div>
                     </div>
 
@@ -859,35 +859,34 @@ Important constraints:
                         <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
                             <div class="eyebrow text-[#ffcb6b]">Core docs</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Authentication guides, manifest schema, action examples, and delivery surface docs should live here.
+                                Good connectors explain auth, install settings, scopes, and action behavior clearly.
                             </p>
                         </div>
                         <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Review pipeline</div>
+                            <div class="eyebrow text-[#ffcb6b]">Trust signals</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Built-in, verified, and community trust tiers give users a way to judge what they install.
+                                Clear scopes, useful descriptions, and predictable behavior matter more than hype.
                             </p>
                         </div>
                         <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Planner integration</div>
+                            <div class="eyebrow text-[#ffcb6b]">Structured actions</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Connectors should expose structured actions so Hollow can choose them and explain them clearly.
+                                Expose actions with clean inputs and outputs so Hollow can reason over them well.
                             </p>
                         </div>
                         <div class="check-card rounded-[1.4rem] border border-white/10 bg-white/5 p-5">
-                            <div class="eyebrow text-[#ffcb6b]">Safe auth storage</div>
+                            <div class="eyebrow text-[#ffcb6b]">Safe installs</div>
                             <p class="mt-3 text-sm leading-7 text-slate-300">
-                                Secrets, tokens, and revocation controls should be first-class parts of the install flow.
+                                Ask for the smallest useful scope set and make it obvious what the connector touches.
                             </p>
                         </div>
                     </div>
 
                     <div class="mt-8 rounded-[1.5rem] border border-dashed border-white/12 bg-black/20 p-5">
-                        <div class="eyebrow text-[#7bd8ff]">Right Now</div>
+                        <div class="eyebrow text-[#7bd8ff]">Best Use</div>
                         <p class="mt-3 text-base leading-7 text-slate-300">
-                            The base pieces are here: a dedicated developer login page, clearer docs, connector registry
-                            APIs, installs, direct slug lookup, and manifest-defined action execution. What remains is
-                            turning that into a properly permissioned developer program.
+                            Hollow Developer is best for HTTP-first connectors with explicit scopes, strong action
+                            definitions, and install settings that make sense to real users.
                         </p>
                         <div class="mt-6 flex flex-wrap gap-4">
                             <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Open Developer Login</a>
