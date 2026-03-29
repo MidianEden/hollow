@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hollow Developer Dashboard</title>
+    <meta name="description" content="Manage developer access and build Hollow connectors from one dashboard." />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --bg-0: #ffffff;
+            --bg-1: #f8fafc;
+            --panel: rgba(255, 255, 255, 0.92);
+            --panel-border: rgba(17, 24, 39, 0.08);
+            --ink: #111827;
+            --muted: #64748b;
+            --blue: #2563eb;
+            --green: #0f8a57;
+            --red: #dc2626;
+            --amber: #b45309;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Geist", sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 24%),
+                radial-gradient(circle at 90% 10%, rgba(14, 165, 233, 0.08), transparent 22%),
+                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .page-grid {
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px);
+            background-size: 32px 32px;
+            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 82%);
+            pointer-events: none;
+            opacity: 0.35;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 40;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .shell {
+            background: var(--panel);
+            border: 1px solid var(--panel-border);
+            box-shadow: 0 24px 70px rgba(17, 24, 39, 0.1);
+            backdrop-filter: blur(18px);
+        }
+
+        .brand-chip {
+            color: #f8fafc;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: #111827;
+            box-shadow: 0 18px 48px rgba(17, 24, 39, 0.16);
+        }
+
+        .primary-btn,
+        .secondary-btn,
+        .small-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.65rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+        }
+
+        .primary-btn {
+            border-radius: 1rem;
+            padding: 0.95rem 1.2rem;
+            border: none;
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: #f8fafc;
+            background: linear-gradient(135deg, #111827, #1f2937);
+        }
+
+        .secondary-btn {
+            border-radius: 1rem;
+            padding: 0.95rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--ink);
+            border: 1px solid rgba(17, 24, 39, 0.14);
+            background: rgba(255, 255, 255, 0.94);
+        }
+
+        .small-btn {
+            border-radius: 9999px;
+            padding: 0.65rem 0.9rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            color: var(--ink);
+            border: 1px solid rgba(17, 24, 39, 0.12);
+            background: rgba(255, 255, 255, 0.94);
+        }
+
+        .primary-btn:hover,
+        .secondary-btn:hover,
+        .small-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        label.field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #475569;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid rgba(17, 24, 39, 0.12);
+            background: rgba(255, 255, 255, 0.92);
+            padding: 0.95rem 1rem;
+            color: var(--ink);
+            font-size: 0.95rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: rgba(37, 99, 235, 0.4);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+        }
+
+        .eyebrow {
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.24em;
+            text-transform: uppercase;
+            color: #2563eb;
+        }
+
+        .status-chip {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.72rem;
+            font-weight: 900;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .status-approved {
+            color: var(--green);
+            background: rgba(15, 138, 87, 0.12);
+        }
+
+        .status-pending {
+            color: var(--amber);
+            background: rgba(180, 83, 9, 0.12);
+        }
+
+        .status-rejected {
+            color: var(--red);
+            background: rgba(220, 38, 38, 0.1);
+        }
+
+        .status-not_applied {
+            color: #475569;
+            background: rgba(148, 163, 184, 0.16);
+        }
+
+        .list-card {
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: rgba(248, 250, 252, 0.92);
+            border-radius: 1.25rem;
+            padding: 1rem;
+        }
+
+        .list-card.active {
+            border-color: rgba(37, 99, 235, 0.28);
+            box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.16);
+            background: rgba(239, 246, 255, 0.8);
+        }
+
+        .code-box {
+            border-radius: 1rem;
+            border: 1px solid rgba(17, 24, 39, 0.08);
+            background: rgba(248, 250, 252, 0.92);
+            padding: 1rem;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #334155;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .hidden-panel {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-grid"></div>
+
+    <header class="topbar">
+        <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-6 py-4">
+            <a href="/developer/" data-dev-portal-link class="flex items-center gap-3 text-inherit no-underline">
+                <div class="brand-chip flex h-11 w-11 items-center justify-center rounded-2xl">
+                    <span class="text-lg font-black tracking-[-0.08em]">H</span>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold">Hollow Developer</div>
+                    <div class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Developer Dashboard</div>
+                </div>
+            </a>
+
+            <div class="flex flex-wrap gap-3">
+                <a href="/developer/" data-dev-portal-link class="secondary-btn no-underline">Portal</a>
+                <button id="header-switch-account" type="button" class="secondary-btn">Switch Account</button>
+                <button id="header-sign-out" type="button" class="secondary-btn">Sign Out</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="relative z-10 min-h-screen px-6 py-8">
+        <div class="mx-auto max-w-7xl space-y-8">
+            <section class="shell rounded-[2rem] p-6 sm:p-8">
+                <div class="flex flex-wrap items-start justify-between gap-6">
+                    <div class="max-w-3xl">
+                        <div class="eyebrow">Developer Dashboard</div>
+                        <h1 class="mt-4 text-4xl font-black tracking-[-0.05em] text-slate-900 sm:text-5xl">
+                            Manage access, build connectors, and keep the right account attached.
+                        </h1>
+                        <p id="account-summary" class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
+                            Checking your Hollow developer account.
+                        </p>
+                    </div>
+                    <div id="account-badge" class="status-chip status-not_applied">Loading</div>
+                </div>
+                <p id="page-status" class="mt-5 text-sm text-slate-500"></p>
+            </section>
+
+            <section class="grid gap-4 md:grid-cols-3">
+                <div class="shell rounded-[1.5rem] p-5">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Access</p>
+                    <p id="stat-access" class="mt-3 text-3xl font-black tracking-tight text-slate-900">...</p>
+                    <p id="stat-access-copy" class="mt-2 text-sm leading-7 text-slate-600">Checking approval state.</p>
+                </div>
+                <div class="shell rounded-[1.5rem] p-5">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Connectors</p>
+                    <p id="stat-connectors" class="mt-3 text-3xl font-black tracking-tight text-slate-900">0</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-600">Drafts and published connectors owned by this developer account.</p>
+                </div>
+                <div class="shell rounded-[1.5rem] p-5">
+                    <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Installs</p>
+                    <p id="stat-installs" class="mt-3 text-3xl font-black tracking-tight text-slate-900">0</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-600">Total installs across connectors attached to this account.</p>
+                </div>
+            </section>
+
+            <section class="grid gap-8 xl:grid-cols-[0.92fr_1.08fr]">
+                <div class="space-y-6">
+                    <section class="shell rounded-[2rem] p-6 sm:p-8">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <div class="eyebrow">Access State</div>
+                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Developer approval</h2>
+                            </div>
+                            <div id="developer-status-chip" class="status-chip status-not_applied">Pending</div>
+                        </div>
+
+                        <p id="access-summary" class="mt-5 text-sm leading-7 text-slate-600">
+                            Loading your developer access state.
+                        </p>
+
+                        <div id="application-readout" class="mt-6 hidden-panel rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5"></div>
+
+                        <form id="application-form" class="mt-6 space-y-4 hidden-panel">
+                            <label class="field">
+                                Builder Name
+                                <input id="requested-name" type="text" placeholder="Studio name or your name" />
+                            </label>
+                            <label class="field">
+                                Website Or Docs
+                                <input id="application-website" type="url" placeholder="https://example.com" />
+                            </label>
+                            <label class="field">
+                                What Are You Building
+                                <textarea id="application-use-case" placeholder="Explain the API, workflow, or connector you want to build."></textarea>
+                            </label>
+                            <label class="field">
+                                Notes For Review
+                                <textarea id="application-notes" placeholder="Anything you want the Hollow team to know before approval."></textarea>
+                            </label>
+                            <button id="submit-application-btn" type="submit" class="primary-btn">Submit For Review</button>
+                        </form>
+                    </section>
+
+                    <section id="owner-review-card" class="shell hidden-panel rounded-[2rem] p-6 sm:p-8">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <div class="eyebrow">Owner Review</div>
+                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Pending developer requests</h2>
+                            </div>
+                            <div id="pending-count-chip" class="status-chip status-pending">0 Pending</div>
+                        </div>
+                        <div id="pending-applications" class="mt-6 space-y-4"></div>
+                    </section>
+                </div>
+
+                <div class="space-y-6">
+                    <section id="builder-card" class="shell hidden-panel rounded-[2rem] p-6 sm:p-8">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <div class="eyebrow">Connector Builder</div>
+                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Create or update a connector</h2>
+                                <p class="mt-3 text-sm leading-7 text-slate-600">
+                                    This builder is intentionally manifest-first. You can manage metadata here and paste structured JSON for actions and manifest fields.
+                                </p>
+                            </div>
+                            <button id="new-connector-btn" type="button" class="secondary-btn">New Draft</button>
+                        </div>
+
+                        <form id="connector-form" class="mt-6 grid gap-4 md:grid-cols-2">
+                            <input id="connector-id" type="hidden" />
+
+                            <label class="field">
+                                Name
+                                <input id="connector-name" type="text" placeholder="Linear Incident Runner" />
+                            </label>
+                            <label class="field">
+                                Slug
+                                <input id="connector-slug" type="text" placeholder="linear-incident-runner" />
+                            </label>
+                            <label class="field md:col-span-2">
+                                Tagline
+                                <input id="connector-tagline" type="text" placeholder="Turn Hollow into an incident triage copilot." />
+                            </label>
+                            <label class="field md:col-span-2">
+                                Description
+                                <textarea id="connector-description" placeholder="Explain what the connector does, what it touches, and how someone should use it."></textarea>
+                            </label>
+                            <label class="field">
+                                Category
+                                <input id="connector-category" type="text" placeholder="automation" />
+                            </label>
+                            <label class="field">
+                                Auth Type
+                                <select id="connector-auth-type">
+                                    <option value="none">none</option>
+                                    <option value="api_key">api_key</option>
+                                    <option value="bearer">bearer</option>
+                                    <option value="basic">basic</option>
+                                    <option value="oauth2">oauth2</option>
+                                    <option value="webhook">webhook</option>
+                                    <option value="custom">custom</option>
+                                </select>
+                            </label>
+                            <label class="field">
+                                Visibility
+                                <select id="connector-visibility">
+                                    <option value="private">private</option>
+                                    <option value="unlisted">unlisted</option>
+                                    <option value="public">public</option>
+                                </select>
+                            </label>
+                            <label class="field">
+                                Status
+                                <select id="connector-status">
+                                    <option value="draft">draft</option>
+                                    <option value="published">published</option>
+                                    <option value="archived">archived</option>
+                                </select>
+                            </label>
+                            <label class="field">
+                                Developer Name
+                                <input id="connector-developer-name" type="text" placeholder="Your studio or brand" />
+                            </label>
+                            <label class="field">
+                                Website Url
+                                <input id="connector-website-url" type="url" placeholder="https://example.com" />
+                            </label>
+                            <label class="field md:col-span-2">
+                                Docs Url
+                                <input id="connector-docs-url" type="url" placeholder="https://docs.example.com" />
+                            </label>
+                            <label class="field md:col-span-2">
+                                Scopes
+                                <textarea id="connector-scopes" placeholder="issues:read, issues:write"></textarea>
+                            </label>
+                            <label class="field md:col-span-2">
+                                Actions Json
+                                <textarea id="connector-actions" placeholder='[{"key":"search_incidents","name":"Search Incidents","request":{"method":"POST","url":"https://api.example.com/search"}}]'></textarea>
+                            </label>
+                            <label class="field md:col-span-2">
+                                Manifest Json
+                                <textarea id="connector-manifest" placeholder='{"version":"1.0"}'></textarea>
+                            </label>
+                            <div class="md:col-span-2 flex flex-wrap gap-3">
+                                <button id="save-connector-btn" type="submit" class="primary-btn">Save Connector</button>
+                                <button id="reset-connector-btn" type="button" class="secondary-btn">Reset Form</button>
+                            </div>
+                        </form>
+                    </section>
+
+                    <section id="connectors-card" class="shell hidden-panel rounded-[2rem] p-6 sm:p-8">
+                        <div class="flex flex-wrap items-center justify-between gap-4">
+                            <div>
+                                <div class="eyebrow">Your Work</div>
+                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Developer connectors</h2>
+                            </div>
+                            <p class="text-sm leading-7 text-slate-600">Pick a connector to load it into the editor.</p>
+                        </div>
+                        <div id="connector-list" class="mt-6 grid gap-4"></div>
+                    </section>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+        import {
+            browserLocalPersistence,
+            getAuth,
+            onAuthStateChanged,
+            setPersistence,
+            signOut,
+        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+        const BACKEND_BASE_URL = "https://hollow-backend.fly.dev";
+        const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
+        const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
+        const developerLoginPath = isDeveloperHost ? "/login/" : "/developer/login/";
+        const developerDashboardPath = isDeveloperHost ? "/dashboard/" : "/developer/dashboard/";
+
+        document.querySelectorAll("[data-dev-portal-link]").forEach((linkEl) => {
+            linkEl.setAttribute("href", developerPortalPath);
+        });
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+            authDomain: "hollow-7ff49.firebaseapp.com",
+            projectId: "hollow-7ff49",
+            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
+        };
+
+        const firebaseApp = initializeApp(firebaseConfig);
+        const auth = getAuth(firebaseApp);
+        await setPersistence(auth, browserLocalPersistence).catch(() => {});
+
+        const accountSummaryEl = document.getElementById("account-summary");
+        const accountBadgeEl = document.getElementById("account-badge");
+        const pageStatusEl = document.getElementById("page-status");
+        const statAccessEl = document.getElementById("stat-access");
+        const statAccessCopyEl = document.getElementById("stat-access-copy");
+        const statConnectorsEl = document.getElementById("stat-connectors");
+        const statInstallsEl = document.getElementById("stat-installs");
+        const developerStatusChipEl = document.getElementById("developer-status-chip");
+        const accessSummaryEl = document.getElementById("access-summary");
+        const applicationReadoutEl = document.getElementById("application-readout");
+        const applicationFormEl = document.getElementById("application-form");
+        const requestedNameEl = document.getElementById("requested-name");
+        const applicationWebsiteEl = document.getElementById("application-website");
+        const applicationUseCaseEl = document.getElementById("application-use-case");
+        const applicationNotesEl = document.getElementById("application-notes");
+        const submitApplicationBtnEl = document.getElementById("submit-application-btn");
+        const ownerReviewCardEl = document.getElementById("owner-review-card");
+        const pendingCountChipEl = document.getElementById("pending-count-chip");
+        const pendingApplicationsEl = document.getElementById("pending-applications");
+        const builderCardEl = document.getElementById("builder-card");
+        const connectorsCardEl = document.getElementById("connectors-card");
+        const connectorListEl = document.getElementById("connector-list");
+        const newConnectorBtnEl = document.getElementById("new-connector-btn");
+        const connectorFormEl = document.getElementById("connector-form");
+        const connectorIdEl = document.getElementById("connector-id");
+        const connectorNameEl = document.getElementById("connector-name");
+        const connectorSlugEl = document.getElementById("connector-slug");
+        const connectorTaglineEl = document.getElementById("connector-tagline");
+        const connectorDescriptionEl = document.getElementById("connector-description");
+        const connectorCategoryEl = document.getElementById("connector-category");
+        const connectorAuthTypeEl = document.getElementById("connector-auth-type");
+        const connectorVisibilityEl = document.getElementById("connector-visibility");
+        const connectorStatusEl = document.getElementById("connector-status");
+        const connectorDeveloperNameEl = document.getElementById("connector-developer-name");
+        const connectorWebsiteUrlEl = document.getElementById("connector-website-url");
+        const connectorDocsUrlEl = document.getElementById("connector-docs-url");
+        const connectorScopesEl = document.getElementById("connector-scopes");
+        const connectorActionsEl = document.getElementById("connector-actions");
+        const connectorManifestEl = document.getElementById("connector-manifest");
+        const resetConnectorBtnEl = document.getElementById("reset-connector-btn");
+        const headerSwitchAccountBtnEl = document.getElementById("header-switch-account");
+        const headerSignOutBtnEl = document.getElementById("header-sign-out");
+
+        const state = {
+            portalMe: null,
+            activeConnectorId: null,
+        };
+
+        function escapeHtml(value) {
+            return String(value || "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#39;");
+        }
+
+        function formatJson(value, fallback) {
+            return JSON.stringify(value ?? fallback, null, 2);
+        }
+
+        function setPageStatus(message = "", isError = false) {
+            pageStatusEl.textContent = message;
+            pageStatusEl.style.color = isError ? "#dc2626" : "#64748b";
+        }
+
+        function statusClass(status) {
+            const normalized = String(status || "not_applied").toLowerCase();
+            if (normalized === "approved") return "status-approved";
+            if (normalized === "pending") return "status-pending";
+            if (normalized === "rejected") return "status-rejected";
+            return "status-not_applied";
+        }
+
+        function humanStatus(status) {
+            const normalized = String(status || "not_applied").toLowerCase();
+            if (normalized === "not_applied") return "Not Applied";
+            return normalized.replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
+        }
+
+        function showPanel(element, visible) {
+            element.classList.toggle("hidden-panel", !visible);
+        }
+
+        function redirectToLogin(switchAccount = false) {
+            const params = new URLSearchParams();
+            params.set("return_to", developerDashboardPath);
+            if (switchAccount) params.set("switch_account", "1");
+            window.location.replace(`${developerLoginPath}?${params.toString()}`);
+        }
+
+        async function getIdToken() {
+            const user = auth.currentUser;
+            if (!user) {
+                throw new Error("You are not signed in.");
+            }
+            return user.getIdToken();
+        }
+
+        async function apiRequest(path, options = {}) {
+            const token = await getIdToken();
+            const response = await fetch(`${BACKEND_BASE_URL}${path}`, {
+                method: options.method || "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                    ...(options.headers || {}),
+                },
+                body: options.body ? JSON.stringify(options.body) : undefined,
+            });
+
+            let payload = null;
+            try {
+                payload = await response.json();
+            } catch (error) {
+                payload = null;
+            }
+
+            if (!response.ok) {
+                const detail = payload?.detail || payload?.message || `Request failed with status ${response.status}`;
+                throw new Error(detail);
+            }
+
+            return payload;
+        }
+
+        function readScopes(text) {
+            return String(text || "")
+                .split(/[\n,]/)
+                .map((item) => item.trim())
+                .filter(Boolean);
+        }
+
+        function parseJsonField(text, fallback, label) {
+            const raw = String(text || "").trim();
+            if (!raw) return fallback;
+            try {
+                return JSON.parse(raw);
+            } catch (error) {
+                throw new Error(`${label} must be valid JSON.`);
+            }
+        }
+
+        function resetConnectorForm() {
+            connectorIdEl.value = "";
+            connectorNameEl.value = "";
+            connectorSlugEl.value = "";
+            connectorTaglineEl.value = "";
+            connectorDescriptionEl.value = "";
+            connectorCategoryEl.value = "automation";
+            connectorAuthTypeEl.value = "none";
+            connectorVisibilityEl.value = "private";
+            connectorStatusEl.value = "draft";
+            connectorDeveloperNameEl.value = state.portalMe?.application?.requested_name || "";
+            connectorWebsiteUrlEl.value = state.portalMe?.application?.website_url || "";
+            connectorDocsUrlEl.value = "";
+            connectorScopesEl.value = "";
+            connectorActionsEl.value = "[]";
+            connectorManifestEl.value = "{\n  \"version\": \"1.0\"\n}";
+        }
+
+        function populateConnectorForm(connector) {
+            if (!connector) {
+                resetConnectorForm();
+                return;
+            }
+            connectorIdEl.value = connector.id || "";
+            connectorNameEl.value = connector.name || "";
+            connectorSlugEl.value = connector.slug || "";
+            connectorTaglineEl.value = connector.tagline || "";
+            connectorDescriptionEl.value = connector.description || "";
+            connectorCategoryEl.value = connector.category || "automation";
+            connectorAuthTypeEl.value = connector.auth_type || "none";
+            connectorVisibilityEl.value = connector.visibility || "private";
+            connectorStatusEl.value = connector.status || "draft";
+            connectorDeveloperNameEl.value = connector.developer_name || "";
+            connectorWebsiteUrlEl.value = connector.website_url || "";
+            connectorDocsUrlEl.value = connector.docs_url || "";
+            connectorScopesEl.value = (connector.scopes || []).join(", ");
+            connectorActionsEl.value = formatJson(connector.actions || [], []);
+            connectorManifestEl.value = formatJson(connector.manifest || { version: "1.0" }, {});
+        }
+
+        function selectedConnector() {
+            if (!state.portalMe?.connectors?.length || !state.activeConnectorId) return null;
+            return state.portalMe.connectors.find((connector) => String(connector.id) === String(state.activeConnectorId)) || null;
+        }
+
+        function renderApplicationReadout(application) {
+            if (!application) {
+                showPanel(applicationReadoutEl, false);
+                return;
+            }
+
+            const decisionLine = application.decision_note
+                ? `<div class="mt-4 text-sm leading-7 text-slate-600"><strong>Review note:</strong> ${escapeHtml(application.decision_note)}</div>`
+                : "";
+
+            applicationReadoutEl.innerHTML = `
+                <div class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Current Application</div>
+                <div class="mt-3 text-xl font-black text-slate-900">${escapeHtml(application.requested_name || "Developer account")}</div>
+                <div class="mt-2 text-sm leading-7 text-slate-600">${escapeHtml(application.use_case || "")}</div>
+                <div class="mt-4 grid gap-2 text-sm text-slate-600">
+                    <div><strong>Status:</strong> ${escapeHtml(humanStatus(application.status))}</div>
+                    <div><strong>Email:</strong> ${escapeHtml(application.email || "")}</div>
+                    ${application.website_url ? `<div><strong>Website:</strong> ${escapeHtml(application.website_url)}</div>` : ""}
+                </div>
+                ${decisionLine}
+            `;
+            showPanel(applicationReadoutEl, true);
+        }
+
+        function renderPendingApplications(items) {
+            const pendingItems = items || [];
+            pendingCountChipEl.className = `status-chip ${statusClass(pendingItems.length ? "pending" : "not_applied")}`;
+            pendingCountChipEl.textContent = pendingItems.length ? `${pendingItems.length} Pending` : "No Queue";
+
+            if (!pendingItems.length) {
+                pendingApplicationsEl.innerHTML = `
+                    <div class="list-card">
+                        <div class="text-sm font-semibold text-slate-900">No developer applications are waiting right now.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            pendingApplicationsEl.innerHTML = pendingItems.map((application) => `
+                <div class="list-card" data-application-card="${application.id}">
+                    <div class="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                            <div class="text-lg font-black text-slate-900">${escapeHtml(application.requested_name || application.email || "Developer account")}</div>
+                            <div class="mt-1 text-sm text-slate-500">${escapeHtml(application.email || "")}</div>
+                        </div>
+                        <div class="status-chip ${statusClass(application.status)}">${escapeHtml(humanStatus(application.status))}</div>
+                    </div>
+                    <div class="mt-4 text-sm leading-7 text-slate-600">${escapeHtml(application.use_case || "")}</div>
+                    ${application.website_url ? `<div class="mt-3 text-sm text-slate-600"><strong>Website:</strong> ${escapeHtml(application.website_url)}</div>` : ""}
+                    <textarea id="review-note-${application.id}" class="mt-4" placeholder="Optional approval or rejection note"></textarea>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                        <button type="button" class="small-btn" data-review-action="approve" data-application-id="${application.id}">Approve</button>
+                        <button type="button" class="small-btn" data-review-action="reject" data-application-id="${application.id}">Reject</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function renderConnectorList(connectors) {
+            const connectorItems = connectors || [];
+            if (!connectorItems.length) {
+                connectorListEl.innerHTML = `
+                    <div class="list-card">
+                        <div class="text-lg font-black text-slate-900">No connectors yet</div>
+                        <p class="mt-2 text-sm leading-7 text-slate-600">Start with a draft on the right, then publish when the manifest and actions are ready.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            connectorListEl.innerHTML = connectorItems.map((connector) => `
+                <button type="button" class="list-card text-left ${String(connector.id) === String(state.activeConnectorId) ? "active" : ""}" data-connector-id="${connector.id}">
+                    <div class="flex flex-wrap items-start justify-between gap-3">
+                        <div>
+                            <div class="text-lg font-black text-slate-900">${escapeHtml(connector.name || connector.slug)}</div>
+                            <div class="mt-1 text-sm text-slate-500">${escapeHtml(connector.slug || "")}</div>
+                        </div>
+                        <div class="status-chip ${statusClass(connector.status === "published" ? "approved" : "not_applied")}">${escapeHtml(humanStatus(connector.status))}</div>
+                    </div>
+                    <div class="mt-3 text-sm leading-7 text-slate-600">${escapeHtml(connector.tagline || connector.description || "No summary yet.")}</div>
+                    <div class="mt-4 grid gap-2 text-sm text-slate-600 sm:grid-cols-3">
+                        <div><strong>Visibility:</strong> ${escapeHtml(connector.visibility || "private")}</div>
+                        <div><strong>Auth:</strong> ${escapeHtml(connector.auth_type || "none")}</div>
+                        <div><strong>Installs:</strong> ${escapeHtml(String(connector.install_count || 0))}</div>
+                    </div>
+                </button>
+            `).join("");
+        }
+
+        function renderDashboard() {
+            const portalMe = state.portalMe;
+            if (!portalMe) return;
+
+            const developerStatus = portalMe.developer_status || "not_applied";
+            const application = portalMe.application || null;
+            const canAccessDashboard = Boolean(portalMe.can_access_dashboard);
+
+            accountSummaryEl.textContent = canAccessDashboard
+                ? `Signed in as ${portalMe.email || "this account"}. This developer account can publish and manage connectors.`
+                : `Signed in as ${portalMe.email || "this account"}. This account still needs developer approval before connector tools open up.`;
+            accountBadgeEl.className = `status-chip ${statusClass(developerStatus)}`;
+            accountBadgeEl.textContent = humanStatus(developerStatus);
+
+            statAccessEl.textContent = humanStatus(developerStatus);
+            statAccessCopyEl.textContent = canAccessDashboard
+                ? "This account can open the builder and manage connectors."
+                : "Use a dedicated developer account and submit it for review before building.";
+            statConnectorsEl.textContent = String(portalMe.connector_count || 0);
+            statInstallsEl.textContent = String(portalMe.install_total || 0);
+
+            developerStatusChipEl.className = `status-chip ${statusClass(developerStatus)}`;
+            developerStatusChipEl.textContent = humanStatus(developerStatus);
+
+            if (portalMe.is_zero_owner) {
+                accessSummaryEl.textContent = "Owner access is active. You can review applications and manage connectors immediately.";
+            } else if (developerStatus === "approved") {
+                accessSummaryEl.textContent = "Developer access is approved for this account. You can now build and publish connectors.";
+            } else if (developerStatus === "pending") {
+                accessSummaryEl.textContent = "This developer account is waiting for approval. You can keep the account signed in, but connector tools stay locked until review.";
+            } else if (developerStatus === "rejected") {
+                accessSummaryEl.textContent = "This account was not approved yet. Update the details below and resubmit when you are ready.";
+            } else {
+                accessSummaryEl.textContent = "Developer access is separate from consumer access. Submit this account for review before you publish or manage connectors.";
+            }
+
+            if (application) {
+                requestedNameEl.value = application.requested_name || "";
+                applicationWebsiteEl.value = application.website_url || "";
+                applicationUseCaseEl.value = application.use_case || "";
+                applicationNotesEl.value = application.notes || "";
+            } else {
+                requestedNameEl.value = "";
+                applicationWebsiteEl.value = "";
+                applicationUseCaseEl.value = "";
+                applicationNotesEl.value = "";
+            }
+
+            renderApplicationReadout(application);
+            showPanel(applicationFormEl, !portalMe.is_zero_owner && developerStatus !== "approved" && developerStatus !== "pending");
+            submitApplicationBtnEl.textContent = developerStatus === "rejected" ? "Resubmit For Review" : "Submit For Review";
+
+            showPanel(ownerReviewCardEl, Boolean(portalMe.is_zero_owner));
+            if (portalMe.is_zero_owner) {
+                renderPendingApplications(portalMe.pending_applications || []);
+            }
+
+            showPanel(builderCardEl, canAccessDashboard);
+            showPanel(connectorsCardEl, canAccessDashboard);
+
+            if (canAccessDashboard) {
+                const connectors = portalMe.connectors || [];
+                if (!state.activeConnectorId && connectors.length) {
+                    state.activeConnectorId = connectors[0].id;
+                }
+                if (state.activeConnectorId && !selectedConnector()) {
+                    state.activeConnectorId = connectors[0]?.id || null;
+                }
+                renderConnectorList(connectors);
+                populateConnectorForm(selectedConnector());
+            } else {
+                state.activeConnectorId = null;
+                resetConnectorForm();
+            }
+        }
+
+        async function loadPortalMe() {
+            try {
+                setPageStatus("Loading your developer dashboard...");
+                state.portalMe = await apiRequest("/v1/developer-portal/me");
+                renderDashboard();
+                setPageStatus("");
+            } catch (error) {
+                setPageStatus(error?.message || "Could not load the developer dashboard.", true);
+            }
+        }
+
+        async function submitDeveloperApplication(event) {
+            event.preventDefault();
+            try {
+                submitApplicationBtnEl.disabled = true;
+                setPageStatus("Submitting developer access request...");
+                await apiRequest("/v1/developer-portal/apply", {
+                    method: "POST",
+                    body: {
+                        requested_name: requestedNameEl.value.trim(),
+                        website_url: applicationWebsiteEl.value.trim(),
+                        use_case: applicationUseCaseEl.value.trim(),
+                        notes: applicationNotesEl.value.trim(),
+                    },
+                });
+                await loadPortalMe();
+                setPageStatus("Developer access request submitted.");
+            } catch (error) {
+                setPageStatus(error?.message || "Could not submit the developer access request.", true);
+            } finally {
+                submitApplicationBtnEl.disabled = false;
+            }
+        }
+
+        async function saveConnector(event) {
+            event.preventDefault();
+            const connectorId = connectorIdEl.value.trim();
+
+            try {
+                setPageStatus(connectorId ? "Updating connector..." : "Creating connector...");
+
+                const payload = {
+                    name: connectorNameEl.value.trim(),
+                    slug: connectorSlugEl.value.trim() || null,
+                    tagline: connectorTaglineEl.value.trim() || null,
+                    description: connectorDescriptionEl.value.trim() || null,
+                    category: connectorCategoryEl.value.trim() || "automation",
+                    visibility: connectorVisibilityEl.value,
+                    status: connectorStatusEl.value,
+                    developer_name: connectorDeveloperNameEl.value.trim() || null,
+                    docs_url: connectorDocsUrlEl.value.trim() || null,
+                    website_url: connectorWebsiteUrlEl.value.trim() || null,
+                    auth_type: connectorAuthTypeEl.value,
+                    scopes: readScopes(connectorScopesEl.value),
+                    actions: parseJsonField(connectorActionsEl.value, [], "Actions JSON"),
+                    manifest: parseJsonField(connectorManifestEl.value, {}, "Manifest JSON"),
+                };
+
+                const method = connectorId ? "PUT" : "POST";
+                const path = connectorId
+                    ? `/v1/developer-portal/connectors/${connectorId}`
+                    : "/v1/developer-portal/connectors";
+                const response = await apiRequest(path, { method, body: payload });
+                state.activeConnectorId = response?.id || state.activeConnectorId;
+                await loadPortalMe();
+                setPageStatus(connectorId ? "Connector updated." : "Connector created.");
+            } catch (error) {
+                setPageStatus(error?.message || "Could not save the connector.", true);
+            }
+        }
+
+        async function handleOwnerReviewClick(event) {
+            const button = event.target.closest("[data-review-action]");
+            if (!button) return;
+
+            const applicationId = button.getAttribute("data-application-id");
+            const action = button.getAttribute("data-review-action");
+            const noteEl = document.getElementById(`review-note-${applicationId}`);
+            const note = noteEl?.value?.trim() || "";
+
+            try {
+                setPageStatus(action === "approve" ? "Approving developer access..." : "Rejecting developer access...");
+                await apiRequest(`/v1/developer-portal/applications/${applicationId}/${action}`, {
+                    method: "POST",
+                    body: { note },
+                });
+                await loadPortalMe();
+                setPageStatus(action === "approve" ? "Developer access approved." : "Developer access rejected.");
+            } catch (error) {
+                setPageStatus(error?.message || "Could not review this application.", true);
+            }
+        }
+
+        async function switchAccount() {
+            try {
+                await signOut(auth);
+                redirectToLogin(true);
+            } catch (error) {
+                setPageStatus(error?.message || "Could not switch accounts right now.", true);
+            }
+        }
+
+        async function signOutToPortal() {
+            try {
+                await signOut(auth);
+                window.location.replace(developerPortalPath);
+            } catch (error) {
+                setPageStatus(error?.message || "Could not sign out right now.", true);
+            }
+        }
+
+        applicationFormEl.addEventListener("submit", submitDeveloperApplication);
+        connectorFormEl.addEventListener("submit", saveConnector);
+        pendingApplicationsEl.addEventListener("click", handleOwnerReviewClick);
+
+        connectorListEl.addEventListener("click", (event) => {
+            const button = event.target.closest("[data-connector-id]");
+            if (!button) return;
+            state.activeConnectorId = button.getAttribute("data-connector-id");
+            renderDashboard();
+        });
+
+        newConnectorBtnEl.addEventListener("click", () => {
+            state.activeConnectorId = null;
+            resetConnectorForm();
+            setPageStatus("Starting a fresh connector draft.");
+        });
+
+        resetConnectorBtnEl.addEventListener("click", () => {
+            populateConnectorForm(selectedConnector());
+            setPageStatus("Form reset.");
+        });
+
+        headerSwitchAccountBtnEl.addEventListener("click", switchAccount);
+        headerSignOutBtnEl.addEventListener("click", signOutToPortal);
+
+        onAuthStateChanged(auth, async (user) => {
+            if (!user) {
+                redirectToLogin();
+                return;
+            }
+            await loadPortalMe();
+        });
+    </script>
+    <script src="/analytics.js" defer></script>
+</body>
+
+</html>

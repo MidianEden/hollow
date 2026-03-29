@@ -357,14 +357,15 @@
             </a>
 
             <nav class="hidden items-center gap-6 text-sm md:flex">
-                <a href="/developer/login/" data-dev-login-link class="soft-link">Login</a>
+                <a href="/developer/dashboard/" data-dev-dashboard-link class="soft-link">Dashboard</a>
+                <a href="/developer/login/" data-dev-login-link class="soft-link">Switch Account</a>
                 <a href="#flow" class="soft-link">Setup</a>
                 <a href="#quickstart" class="soft-link">API</a>
                 <a href="#prompt" class="soft-link">Prompt</a>
                 <a href="#ownership" class="soft-link">Guide</a>
             </nav>
 
-            <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="secondary-btn !px-5 !py-3 !text-xs">Developer Login</a>
+            <a href="/developer/dashboard/" data-dev-dashboard-link class="secondary-btn !px-5 !py-3 !text-xs">Open Dashboard</a>
         </div>
     </header>
 
@@ -386,14 +387,13 @@
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                        This is the Hollow developer portal. Sign in, describe what your connector does, add the API
-                        calls it needs, and publish it so people can turn it on inside Hollow.
-                        If an API speaks HTTP, developers should be able to wire it in here.
+                        This is the Hollow developer portal. Create a dedicated developer account, get it approved, and
+                        then build connectors that plug Hollow into any HTTP API you need.
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">
-                            Developer Login
+                        <a href="/developer/dashboard/" data-dev-dashboard-link class="primary-btn">
+                            Open Dashboard
                             <span aria-hidden="true">→</span>
                         </a>
                         <a href="#quickstart" class="secondary-btn">
@@ -560,13 +560,13 @@
                     </p>
                     <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
                         <p class="text-sm leading-7 text-slate-300">
-                            Sign in once, then use these APIs to publish connectors, install them with real settings,
-                            and invoke actions through Hollow.
+                            Use a separate developer account, wait for approval, and then use these APIs to publish
+                            connectors, install them with real settings, and invoke actions through Hollow.
                         </p>
                     </div>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/login/?return_to=/developer/" data-dev-login-link class="primary-btn">Developer Login</a>
-                        <a href="/signup" class="secondary-btn">Create Hollow Account</a>
+                        <a href="/developer/dashboard/" data-dev-dashboard-link class="primary-btn">Open Dashboard</a>
+                        <a href="/developer/login/" data-dev-login-link class="secondary-btn">Create Developer Account</a>
                     </div>
                 </div>
 
@@ -745,10 +745,15 @@ Important constraints:
         const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
         const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
         const developerLoginPath = isDeveloperHost ? "/login/" : "/developer/login/";
+        const developerDashboardPath = isDeveloperHost ? "/dashboard/" : "/developer/dashboard/";
         const developerPortalUrl = `${window.location.origin}${window.location.pathname}`;
 
+        document.querySelectorAll("[data-dev-dashboard-link]").forEach((linkEl) => {
+            linkEl.setAttribute("href", developerDashboardPath);
+        });
+
         document.querySelectorAll("[data-dev-login-link]").forEach((linkEl) => {
-            linkEl.setAttribute("href", `${developerLoginPath}?return_to=${encodeURIComponent(developerPortalPath)}`);
+            linkEl.setAttribute("href", `${developerLoginPath}?return_to=${encodeURIComponent(developerDashboardPath)}`);
         });
 
         document.querySelectorAll("[data-main-site-link]").forEach((linkEl) => {

@@ -165,25 +165,25 @@
                         Sign in to build on Hollow.
                     </h1>
                     <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                        Use your Hollow account to create connectors, test installs, and publish integrations into the
-                        Hollow ecosystem.
+                        Use a dedicated developer login for Hollow, apply for approval, and then manage connectors from
+                        the developer dashboard.
                     </p>
 
                     <div class="mt-8 grid gap-4 sm:grid-cols-3">
                         <div class="shell rounded-[1.5rem] p-5">
                             <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Access</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Your Hollow account</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">Sign in with the same account you already use across Hollow.</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Dedicated developer account</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">Keep developer access separate so approvals and connector ownership stay clean.</p>
                         </div>
                         <div class="shell rounded-[1.5rem] p-5">
                             <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Build</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Connector tools</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">Create manifests, wire APIs, and test installs in one place.</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Approved dashboard</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">Once approved, create manifests, wire APIs, and manage connector drafts in one place.</p>
                         </div>
                         <div class="shell rounded-[1.5rem] p-5">
                             <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Redirect</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Back to portal</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">After auth, you go straight back into the developer portal.</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Dashboard first</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">After auth, you land in the dashboard so you can see your approval state right away.</p>
                         </div>
                     </div>
                 </section>
@@ -197,39 +197,54 @@
                     <div class="mt-6">
                         <h2 class="text-3xl font-black tracking-tight text-slate-900">Developer Access</h2>
                         <p id="mode-copy" class="mt-3 text-sm leading-7 text-slate-600">
-                            Sign in with email or Google to continue to the Hollow developer portal.
+                            Create a dedicated developer account, then continue to the dashboard and apply for approval.
                         </p>
                     </div>
 
-                    <form id="auth-form" class="mt-6 space-y-4">
-                        <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
-                        <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-                        <input type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password" class="hidden" />
-
-                        <button id="email-auth-btn" class="primary-btn w-full" type="submit">
-                            <span id="email-auth-text">Sign In</span>
-                        </button>
-                    </form>
-
-                    <div class="relative py-6">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-slate-200"></div>
-                        </div>
-                        <div class="relative flex justify-center">
-                            <span class="bg-white px-4 text-xs uppercase tracking-[0.24em] text-slate-400">Or</span>
+                    <div id="signed-in-shell" class="mt-6 hidden rounded-[1.5rem] border border-blue-200 bg-blue-50 p-5">
+                        <p class="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Already Signed In</p>
+                        <p id="signed-in-email" class="mt-3 text-xl font-black text-slate-900"></p>
+                        <p class="mt-3 text-sm leading-7 text-slate-600">
+                            If this is your consumer account, switch accounts and create a separate developer login before you apply.
+                        </p>
+                        <div class="mt-5 flex flex-wrap gap-3">
+                            <a id="continue-link" href="/developer/dashboard/" class="primary-btn no-underline">Continue To Dashboard</a>
+                            <button id="switch-account-btn" type="button" class="secondary-btn">Switch Account</button>
+                            <button id="sign-out-btn" type="button" class="secondary-btn">Sign Out</button>
                         </div>
                     </div>
 
-                    <button id="google-auth-btn" class="secondary-btn w-full" type="button">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="Google" />
-                        <span>Continue with Google</span>
-                    </button>
+                    <div id="auth-controls" class="mt-6">
+                        <form id="auth-form" class="space-y-4">
+                            <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
+                            <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
+                            <input type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password" class="hidden" />
+
+                            <button id="email-auth-btn" class="primary-btn w-full" type="submit">
+                                <span id="email-auth-text">Create Developer Account</span>
+                            </button>
+                        </form>
+
+                        <div class="relative py-6">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-slate-200"></div>
+                            </div>
+                            <div class="relative flex justify-center">
+                                <span class="bg-white px-4 text-xs uppercase tracking-[0.24em] text-slate-400">Or</span>
+                            </div>
+                        </div>
+
+                        <button id="google-auth-btn" class="secondary-btn w-full" type="button">
+                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="Google" />
+                            <span>Continue with Google</span>
+                        </button>
+                    </div>
 
                     <div class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
                         <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">What this is</p>
                         <p class="mt-3 text-sm leading-7 text-slate-600">
-                            A focused entry point for connector builders. Sign in here to create, test, and publish
-                            integrations for Hollow.
+                            A dedicated entry point for approved connector builders. Developer access is reviewed before
+                            the dashboard opens up publishing tools.
                         </p>
                     </div>
 
@@ -248,12 +263,14 @@
             onAuthStateChanged,
             setPersistence,
             browserLocalPersistence,
+            signOut,
             signInWithEmailAndPassword,
             signInWithPopup
         } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
         const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
         const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
+        const developerDashboardPath = isDeveloperHost ? "/dashboard/" : "/developer/dashboard/";
 
         document.querySelectorAll("[data-dev-portal-link]").forEach((linkEl) => {
             linkEl.setAttribute("href", developerPortalPath);
@@ -270,11 +287,13 @@
         const auth = getAuth(app);
         await setPersistence(auth, browserLocalPersistence).catch(() => {});
         const googleProvider = new GoogleAuthProvider();
+        googleProvider.setCustomParameters({ prompt: "select_account" });
 
         const emailEl = document.getElementById("email");
         const passwordEl = document.getElementById("password");
         const confirmPasswordEl = document.getElementById("confirm-password");
         const formEl = document.getElementById("auth-form");
+        const authControlsEl = document.getElementById("auth-controls");
         const googleBtnEl = document.getElementById("google-auth-btn");
         const emailBtnEl = document.getElementById("email-auth-btn");
         const emailBtnTextEl = document.getElementById("email-auth-text");
@@ -282,20 +301,27 @@
         const statusMessageEl = document.getElementById("status-message");
         const signInModeEl = document.getElementById("mode-signin");
         const signUpModeEl = document.getElementById("mode-signup");
+        const signedInShellEl = document.getElementById("signed-in-shell");
+        const signedInEmailEl = document.getElementById("signed-in-email");
+        const continueLinkEl = document.getElementById("continue-link");
+        const switchAccountBtnEl = document.getElementById("switch-account-btn");
+        const signOutBtnEl = document.getElementById("sign-out-btn");
 
         const state = {
-            mode: "signin"
+            mode: "signup",
+            redirectAfterAuth: false
         };
 
         function resolveReturnTo() {
             const params = new URLSearchParams(window.location.search);
-            const candidate = params.get("return_to") || developerPortalPath;
-            if (!candidate.startsWith("/")) return developerPortalPath;
-            if (candidate.startsWith("//")) return developerPortalPath;
+            const candidate = params.get("return_to") || developerDashboardPath;
+            if (!candidate.startsWith("/")) return developerDashboardPath;
+            if (candidate.startsWith("//")) return developerDashboardPath;
             return candidate;
         }
 
         const returnTo = resolveReturnTo();
+        continueLinkEl.setAttribute("href", returnTo);
 
         function setStatus(message = "", isError = false) {
             statusMessageEl.textContent = message;
@@ -313,6 +339,18 @@
             emailBtnTextEl.textContent = busy ? busyText : idleText;
         }
 
+        function setSignedInView(user) {
+            const email = user?.email || "Signed-in account";
+            signedInEmailEl.textContent = email;
+            signedInShellEl.classList.remove("hidden");
+            authControlsEl.classList.add("hidden");
+        }
+
+        function clearSignedInView() {
+            signedInShellEl.classList.add("hidden");
+            authControlsEl.classList.remove("hidden");
+        }
+
         function setMode(mode) {
             state.mode = mode;
             const isSignup = mode === "signup";
@@ -322,8 +360,8 @@
             passwordEl.autocomplete = isSignup ? "new-password" : "current-password";
             emailBtnTextEl.textContent = isSignup ? "Create Developer Account" : "Sign In";
             modeCopyEl.textContent = isSignup
-                ? "Create a Hollow account and continue into the developer portal."
-                : "Sign in with email or Google to continue to the Hollow developer portal.";
+                ? "Create a dedicated Hollow developer account, then continue to the dashboard and apply for access."
+                : "Sign in with your approved developer account to open the Hollow developer dashboard.";
             setStatus("");
         }
 
@@ -332,8 +370,16 @@
 
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                window.location.replace(returnTo);
+                setSignedInView(user);
+                if (state.redirectAfterAuth) {
+                    window.location.replace(returnTo);
+                    return;
+                }
+                setStatus(`You're already signed in as ${user.email || "this account"}.`, false);
+                return;
             }
+            clearSignedInView();
+            state.redirectAfterAuth = false;
         });
 
         formEl.addEventListener("submit", async (event) => {
@@ -353,6 +399,7 @@
             }
 
             setStatus("");
+            state.redirectAfterAuth = true;
             setBusy(emailBtnEl, true, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
 
             try {
@@ -362,6 +409,7 @@
                     await signInWithEmailAndPassword(auth, email, password);
                 }
             } catch (error) {
+                state.redirectAfterAuth = false;
                 setStatus(error?.message || "Something went wrong. Please try again.", true);
                 setBusy(emailBtnEl, false, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
             }
@@ -369,15 +417,39 @@
 
         googleBtnEl.addEventListener("click", async () => {
             setStatus("");
+            state.redirectAfterAuth = true;
             setBusy(emailBtnEl, true, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
 
             try {
                 await signInWithPopup(auth, googleProvider);
             } catch (error) {
+                state.redirectAfterAuth = false;
                 setStatus(error?.message || "Google sign-in did not complete.", true);
                 setBusy(emailBtnEl, false, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
             }
         });
+
+        switchAccountBtnEl.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+                setMode("signup");
+                setStatus("Signed out. Use a different account for developer access.");
+                emailEl.focus();
+            } catch (error) {
+                setStatus(error?.message || "Could not switch accounts right now.", true);
+            }
+        });
+
+        signOutBtnEl.addEventListener("click", async () => {
+            try {
+                await signOut(auth);
+                window.location.replace(developerPortalPath);
+            } catch (error) {
+                setStatus(error?.message || "Could not sign out right now.", true);
+            }
+        });
+
+        setMode("signup");
     </script>
     <script src="/analytics.js" defer></script>
 </body>
