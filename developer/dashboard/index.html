@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow Developer Dashboard</title>
-    <meta name="description" content="Manage developer access and build Hollow connectors from one dashboard." />
+    <meta name="description" content="Private dashboard for building and managing Hollow connectors." />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
@@ -202,6 +202,11 @@
             background: rgba(148, 163, 184, 0.16);
         }
 
+        .status-closed {
+            color: #475569;
+            background: rgba(148, 163, 184, 0.16);
+        }
+
         .list-card {
             border: 1px solid rgba(17, 24, 39, 0.08);
             background: rgba(248, 250, 252, 0.92);
@@ -269,7 +274,7 @@
                     <div class="max-w-3xl">
                         <div class="eyebrow">Developer Dashboard</div>
                         <h1 class="mt-4 text-4xl font-black tracking-[-0.05em] text-slate-900 sm:text-5xl">
-                            Manage access, build connectors, and keep the right account attached.
+                            Build and manage Hollow connectors.
                         </h1>
                         <p id="account-summary" class="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
                             Checking your Hollow developer account.
@@ -284,12 +289,12 @@
                 <div class="shell rounded-[1.5rem] p-5">
                     <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Access</p>
                     <p id="stat-access" class="mt-3 text-3xl font-black tracking-tight text-slate-900">...</p>
-                    <p id="stat-access-copy" class="mt-2 text-sm leading-7 text-slate-600">Checking approval state.</p>
+                    <p id="stat-access-copy" class="mt-2 text-sm leading-7 text-slate-600">Checking private access.</p>
                 </div>
                 <div class="shell rounded-[1.5rem] p-5">
                     <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Connectors</p>
                     <p id="stat-connectors" class="mt-3 text-3xl font-black tracking-tight text-slate-900">0</p>
-                    <p class="mt-2 text-sm leading-7 text-slate-600">Drafts and published connectors owned by this developer account.</p>
+                    <p class="mt-2 text-sm leading-7 text-slate-600">Drafts and published connectors attached to this developer account.</p>
                 </div>
                 <div class="shell rounded-[1.5rem] p-5">
                     <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Installs</p>
@@ -304,7 +309,7 @@
                         <div class="flex flex-wrap items-center justify-between gap-4">
                             <div>
                                 <div class="eyebrow">Access State</div>
-                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Developer approval</h2>
+                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Private access</h2>
                             </div>
                             <div id="developer-status-chip" class="status-chip status-not_applied">Pending</div>
                         </div>
@@ -313,38 +318,13 @@
                             Loading your developer access state.
                         </p>
 
-                        <div id="application-readout" class="mt-6 hidden-panel rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5"></div>
-
-                        <form id="application-form" class="mt-6 space-y-4 hidden-panel">
-                            <label class="field">
-                                Builder Name
-                                <input id="requested-name" type="text" placeholder="Studio name or your name" />
-                            </label>
-                            <label class="field">
-                                Website Or Docs
-                                <input id="application-website" type="url" placeholder="https://example.com" />
-                            </label>
-                            <label class="field">
-                                What Are You Building
-                                <textarea id="application-use-case" placeholder="Explain the API, workflow, or connector you want to build."></textarea>
-                            </label>
-                            <label class="field">
-                                Notes For Review
-                                <textarea id="application-notes" placeholder="Anything you want the Hollow team to know before approval."></textarea>
-                            </label>
-                            <button id="submit-application-btn" type="submit" class="primary-btn">Submit For Review</button>
-                        </form>
-                    </section>
-
-                    <section id="owner-review-card" class="shell hidden-panel rounded-[2rem] p-6 sm:p-8">
-                        <div class="flex flex-wrap items-center justify-between gap-4">
-                            <div>
-                                <div class="eyebrow">Owner Review</div>
-                                <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Pending developer requests</h2>
-                            </div>
-                            <div id="pending-count-chip" class="status-chip status-pending">0 Pending</div>
+                        <div id="closed-access-note" class="mt-6 hidden-panel rounded-[1.5rem] border border-slate-200 bg-slate-50 p-5">
+                            <div class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Closed Access</div>
+                            <div class="mt-3 text-lg font-black text-slate-900">Developer access is private right now.</div>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">
+                                Only the private internal account can open connector publishing tools today.
+                            </p>
                         </div>
-                        <div id="pending-applications" class="mt-6 space-y-4"></div>
                     </section>
                 </div>
 
@@ -355,7 +335,7 @@
                                 <div class="eyebrow">Connector Builder</div>
                                 <h2 class="mt-3 text-3xl font-black tracking-tight text-slate-900">Create or update a connector</h2>
                                 <p class="mt-3 text-sm leading-7 text-slate-600">
-                                    Define the listing, install experience, and runtime contract in one place. Guided setup and connect-account flows can live alongside the action manifest.
+                                    Define the listing, install experience, and runtime contract in one place.
                                 </p>
                             </div>
                             <button id="new-connector-btn" type="button" class="secondary-btn">New Draft</button>
@@ -520,16 +500,7 @@
         const statInstallsEl = document.getElementById("stat-installs");
         const developerStatusChipEl = document.getElementById("developer-status-chip");
         const accessSummaryEl = document.getElementById("access-summary");
-        const applicationReadoutEl = document.getElementById("application-readout");
-        const applicationFormEl = document.getElementById("application-form");
-        const requestedNameEl = document.getElementById("requested-name");
-        const applicationWebsiteEl = document.getElementById("application-website");
-        const applicationUseCaseEl = document.getElementById("application-use-case");
-        const applicationNotesEl = document.getElementById("application-notes");
-        const submitApplicationBtnEl = document.getElementById("submit-application-btn");
-        const ownerReviewCardEl = document.getElementById("owner-review-card");
-        const pendingCountChipEl = document.getElementById("pending-count-chip");
-        const pendingApplicationsEl = document.getElementById("pending-applications");
+        const closedAccessNoteEl = document.getElementById("closed-access-note");
         const builderCardEl = document.getElementById("builder-card");
         const connectorsCardEl = document.getElementById("connectors-card");
         const connectorListEl = document.getElementById("connector-list");
@@ -586,6 +557,7 @@
             if (normalized === "approved") return "status-approved";
             if (normalized === "pending") return "status-pending";
             if (normalized === "rejected") return "status-rejected";
+            if (normalized === "closed") return "status-closed";
             return "status-not_applied";
         }
 
@@ -669,8 +641,8 @@
             connectorSetupModeEl.value = "guided";
             connectorVisibilityEl.value = "private";
             connectorStatusEl.value = "draft";
-            connectorDeveloperNameEl.value = state.portalMe?.application?.requested_name || "";
-            connectorWebsiteUrlEl.value = state.portalMe?.application?.website_url || "";
+            connectorDeveloperNameEl.value = "";
+            connectorWebsiteUrlEl.value = "";
             connectorDocsUrlEl.value = "";
             connectorInstallCopyEl.value = "";
             connectorSettingsSchemaEl.value = "{\n  \"fields\": []\n}";
@@ -711,64 +683,6 @@
             return state.portalMe.connectors.find((connector) => String(connector.id) === String(state.activeConnectorId)) || null;
         }
 
-        function renderApplicationReadout(application) {
-            if (!application) {
-                showPanel(applicationReadoutEl, false);
-                return;
-            }
-
-            const decisionLine = application.decision_note
-                ? `<div class="mt-4 text-sm leading-7 text-slate-600"><strong>Review note:</strong> ${escapeHtml(application.decision_note)}</div>`
-                : "";
-
-            applicationReadoutEl.innerHTML = `
-                <div class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Current Application</div>
-                <div class="mt-3 text-xl font-black text-slate-900">${escapeHtml(application.requested_name || "Developer account")}</div>
-                <div class="mt-2 text-sm leading-7 text-slate-600">${escapeHtml(application.use_case || "")}</div>
-                <div class="mt-4 grid gap-2 text-sm text-slate-600">
-                    <div><strong>Status:</strong> ${escapeHtml(humanStatus(application.status))}</div>
-                    <div><strong>Email:</strong> ${escapeHtml(application.email || "")}</div>
-                    ${application.website_url ? `<div><strong>Website:</strong> ${escapeHtml(application.website_url)}</div>` : ""}
-                </div>
-                ${decisionLine}
-            `;
-            showPanel(applicationReadoutEl, true);
-        }
-
-        function renderPendingApplications(items) {
-            const pendingItems = items || [];
-            pendingCountChipEl.className = `status-chip ${statusClass(pendingItems.length ? "pending" : "not_applied")}`;
-            pendingCountChipEl.textContent = pendingItems.length ? `${pendingItems.length} Pending` : "No Queue";
-
-            if (!pendingItems.length) {
-                pendingApplicationsEl.innerHTML = `
-                    <div class="list-card">
-                        <div class="text-sm font-semibold text-slate-900">No developer applications are waiting right now.</div>
-                    </div>
-                `;
-                return;
-            }
-
-            pendingApplicationsEl.innerHTML = pendingItems.map((application) => `
-                <div class="list-card" data-application-card="${application.id}">
-                    <div class="flex flex-wrap items-start justify-between gap-3">
-                        <div>
-                            <div class="text-lg font-black text-slate-900">${escapeHtml(application.requested_name || application.email || "Developer account")}</div>
-                            <div class="mt-1 text-sm text-slate-500">${escapeHtml(application.email || "")}</div>
-                        </div>
-                        <div class="status-chip ${statusClass(application.status)}">${escapeHtml(humanStatus(application.status))}</div>
-                    </div>
-                    <div class="mt-4 text-sm leading-7 text-slate-600">${escapeHtml(application.use_case || "")}</div>
-                    ${application.website_url ? `<div class="mt-3 text-sm text-slate-600"><strong>Website:</strong> ${escapeHtml(application.website_url)}</div>` : ""}
-                    <textarea id="review-note-${application.id}" class="mt-4" placeholder="Optional approval or rejection note"></textarea>
-                    <div class="mt-4 flex flex-wrap gap-3">
-                        <button type="button" class="small-btn" data-review-action="approve" data-application-id="${application.id}">Approve</button>
-                        <button type="button" class="small-btn" data-review-action="reject" data-application-id="${application.id}">Reject</button>
-                    </div>
-                </div>
-            `).join("");
-        }
-
         function renderConnectorList(connectors) {
             const connectorItems = connectors || [];
             if (!connectorItems.length) {
@@ -805,59 +719,30 @@
             const portalMe = state.portalMe;
             if (!portalMe) return;
 
-            const developerStatus = portalMe.developer_status || "not_applied";
-            const application = portalMe.application || null;
+            const developerStatus = portalMe.developer_status || "closed";
             const canAccessDashboard = Boolean(portalMe.can_access_dashboard);
 
             accountSummaryEl.textContent = canAccessDashboard
-                ? `Signed in as ${portalMe.email || "this account"}. This developer account can publish and manage connectors.`
-                : `Signed in as ${portalMe.email || "this account"}. This account still needs developer approval before connector tools open up.`;
+                ? `Signed in as ${portalMe.email || "this account"}. Private developer access is active for this account.`
+                : `Signed in as ${portalMe.email || "this account"}. Developer access is currently closed for this account.`;
             accountBadgeEl.className = `status-chip ${statusClass(developerStatus)}`;
             accountBadgeEl.textContent = humanStatus(developerStatus);
 
             statAccessEl.textContent = humanStatus(developerStatus);
             statAccessCopyEl.textContent = canAccessDashboard
-                ? "This account can open the builder and manage connectors."
-                : "Use a dedicated developer account and submit it for review before building.";
+                ? "This account can open the connector builder and manage listings."
+                : "Developer tools are private and unavailable to this account.";
             statConnectorsEl.textContent = String(portalMe.connector_count || 0);
             statInstallsEl.textContent = String(portalMe.install_total || 0);
 
             developerStatusChipEl.className = `status-chip ${statusClass(developerStatus)}`;
             developerStatusChipEl.textContent = humanStatus(developerStatus);
 
-            if (portalMe.is_zero_owner) {
-                accessSummaryEl.textContent = "Owner access is active. You can review applications and manage connectors immediately.";
-            } else if (developerStatus === "approved") {
-                accessSummaryEl.textContent = "Developer access is approved for this account. You can now build and publish connectors.";
-            } else if (developerStatus === "pending") {
-                accessSummaryEl.textContent = "This developer account is waiting for approval. You can keep the account signed in, but connector tools stay locked until review.";
-            } else if (developerStatus === "rejected") {
-                accessSummaryEl.textContent = "This account was not approved yet. Update the details below and resubmit when you are ready.";
-            } else {
-                accessSummaryEl.textContent = "Developer access is separate from consumer access. Submit this account for review before you publish or manage connectors.";
-            }
+            accessSummaryEl.textContent = canAccessDashboard
+                ? "Private owner access is active. You can build, update, and publish connectors here."
+                : "Developer access is closed for this account. Switch accounts if you meant to use the private internal login.";
 
-            if (application) {
-                requestedNameEl.value = application.requested_name || "";
-                applicationWebsiteEl.value = application.website_url || "";
-                applicationUseCaseEl.value = application.use_case || "";
-                applicationNotesEl.value = application.notes || "";
-            } else {
-                requestedNameEl.value = "";
-                applicationWebsiteEl.value = "";
-                applicationUseCaseEl.value = "";
-                applicationNotesEl.value = "";
-            }
-
-            renderApplicationReadout(application);
-            showPanel(applicationFormEl, !portalMe.is_zero_owner && developerStatus !== "approved" && developerStatus !== "pending");
-            submitApplicationBtnEl.textContent = developerStatus === "rejected" ? "Resubmit For Review" : "Submit For Review";
-
-            showPanel(ownerReviewCardEl, Boolean(portalMe.is_zero_owner));
-            if (portalMe.is_zero_owner) {
-                renderPendingApplications(portalMe.pending_applications || []);
-            }
-
+            showPanel(closedAccessNoteEl, !canAccessDashboard);
             showPanel(builderCardEl, canAccessDashboard);
             showPanel(connectorsCardEl, canAccessDashboard);
 
@@ -873,6 +758,7 @@
                 populateConnectorForm(selectedConnector());
             } else {
                 state.activeConnectorId = null;
+                connectorListEl.innerHTML = "";
                 resetConnectorForm();
             }
         }
@@ -885,29 +771,6 @@
                 setPageStatus("");
             } catch (error) {
                 setPageStatus(error?.message || "Could not load the developer dashboard.", true);
-            }
-        }
-
-        async function submitDeveloperApplication(event) {
-            event.preventDefault();
-            try {
-                submitApplicationBtnEl.disabled = true;
-                setPageStatus("Submitting developer access request...");
-                await apiRequest("/v1/developer-portal/apply", {
-                    method: "POST",
-                    body: {
-                        requested_name: requestedNameEl.value.trim(),
-                        website_url: applicationWebsiteEl.value.trim(),
-                        use_case: applicationUseCaseEl.value.trim(),
-                        notes: applicationNotesEl.value.trim(),
-                    },
-                });
-                await loadPortalMe();
-                setPageStatus("Developer access request submitted.");
-            } catch (error) {
-                setPageStatus(error?.message || "Could not submit the developer access request.", true);
-            } finally {
-                submitApplicationBtnEl.disabled = false;
             }
         }
 
@@ -952,28 +815,6 @@
             }
         }
 
-        async function handleOwnerReviewClick(event) {
-            const button = event.target.closest("[data-review-action]");
-            if (!button) return;
-
-            const applicationId = button.getAttribute("data-application-id");
-            const action = button.getAttribute("data-review-action");
-            const noteEl = document.getElementById(`review-note-${applicationId}`);
-            const note = noteEl?.value?.trim() || "";
-
-            try {
-                setPageStatus(action === "approve" ? "Approving developer access..." : "Rejecting developer access...");
-                await apiRequest(`/v1/developer-portal/applications/${applicationId}/${action}`, {
-                    method: "POST",
-                    body: { note },
-                });
-                await loadPortalMe();
-                setPageStatus(action === "approve" ? "Developer access approved." : "Developer access rejected.");
-            } catch (error) {
-                setPageStatus(error?.message || "Could not review this application.", true);
-            }
-        }
-
         async function switchAccount() {
             try {
                 await signOut(auth);
@@ -992,9 +833,7 @@
             }
         }
 
-        applicationFormEl.addEventListener("submit", submitDeveloperApplication);
         connectorFormEl.addEventListener("submit", saveConnector);
-        pendingApplicationsEl.addEventListener("click", handleOwnerReviewClick);
 
         connectorListEl.addEventListener("click", (event) => {
             const button = event.target.closest("[data-connector-id]");

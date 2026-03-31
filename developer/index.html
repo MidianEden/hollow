@@ -6,20 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow Developer | Build Connections For Hollow</title>
     <meta name="description"
-        content="Build and publish Hollow connections. Create manifest-driven integrations, wire real APIs, and ship installable tools into the Hollow ecosystem." />
+        content="Build manifest-driven Hollow connectors, wire real APIs, and model account-owned connection flows." />
     <meta name="robots" content="index, follow" />
     <link id="canonical-url" rel="canonical" href="https://gethollow.com/developer/" />
     <meta property="og:type" content="website" />
     <meta id="og-url" property="og:url" content="https://gethollow.com/developer/" />
     <meta property="og:title" content="Hollow Developer | Build Connections For Hollow" />
     <meta property="og:description"
-        content="The Hollow developer portal for creators who want to publish connections, APIs, and installable capabilities." />
+        content="The Hollow developer portal for manifest-driven connectors and account-owned API connection flows." />
     <meta property="og:image" content="https://gethollow.com/0wproto.png" />
     <meta property="twitter:card" content="summary_large_image" />
     <meta id="twitter-url" property="twitter:url" content="https://gethollow.com/developer/" />
     <meta property="twitter:title" content="Hollow Developer | Build Connections For Hollow" />
     <meta property="twitter:description"
-        content="Build manifest-driven Hollow connections and publish them into the Hollow store." />
+        content="Build manifest-driven Hollow connectors and model user-owned account connections." />
     <meta property="twitter:image" content="https://gethollow.com/0wproto.png" />
     <link rel="icon" type="image/png" href="/favicon.png" />
 
@@ -357,14 +357,13 @@
             </a>
 
             <nav class="hidden items-center gap-6 text-sm md:flex">
-                <a href="/developer/dashboard/" data-dev-dashboard-link class="soft-link">Dashboard</a>
-                <a href="/developer/login/" data-dev-login-link class="soft-link">Switch Account</a>
+                <a href="/developer/login/" data-dev-login-link class="soft-link">Sign In</a>
                 <a href="#quickstart" class="soft-link">API</a>
                 <a href="#prompt" class="soft-link">Prompt</a>
-                <a href="#ownership" class="soft-link">Guide</a>
+                <a href="#ownership" class="soft-link">Platform</a>
             </nav>
 
-            <a href="/developer/dashboard/" data-dev-dashboard-link class="secondary-btn !px-5 !py-3 !text-xs">Open Dashboard</a>
+            <a href="/developer/login/" data-dev-login-link class="secondary-btn !px-5 !py-3 !text-xs">Private Sign In</a>
         </div>
     </header>
 
@@ -374,25 +373,25 @@
                 <div>
                     <div class="flex flex-wrap items-center gap-3">
                         <div class="rounded-full border border-blue-400/35 bg-blue-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-blue-200">
-                            Builder Beta
+                            Private Access
                         </div>
                         <div class="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-slate-300">
-                            Creator-published connections for Hollow
+                            Connectors for Hollow
                         </div>
                     </div>
 
                     <h1 class="mt-7 max-w-5xl text-5xl font-black leading-[0.95] tracking-[-0.06em] text-white sm:text-6xl xl:text-7xl">
-                        Build a Hollow connector, plug it into a real API, and let people install it.
+                        Turn any HTTP API into an installable Hollow connector.
                     </h1>
 
                     <p class="mt-6 max-w-2xl text-lg leading-8 text-slate-300 sm:text-xl">
-                        Hollow Developer gives approved builders a place to publish connectors, model install flows, and
-                        connect Hollow to real HTTP APIs.
+                        Hollow Developer is the connector layer behind installable API integrations for Hollow. The
+                        platform models install flows, permissions, and manifest-driven runtime actions in one place.
                     </p>
 
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/dashboard/" data-dev-dashboard-link class="primary-btn">
-                            Open Dashboard
+                        <a href="/developer/login/" data-dev-login-link class="primary-btn">
+                            Private Sign In
                             <span aria-hidden="true">→</span>
                         </a>
                         <a href="#quickstart" class="secondary-btn">
@@ -527,13 +526,14 @@
                     </p>
                     <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
                         <p class="text-sm leading-7 text-slate-300">
-                            Approved developer accounts can use these APIs to publish connectors, shape the install
-                            experience, and invoke actions through Hollow.
+                            Developer access is currently private while the connector platform is being tested and
+                            tightened up. The public-facing API shape is here so builders can see how Hollow
+                            connectors are structured.
                         </p>
                     </div>
                     <div class="mt-8 flex flex-wrap gap-4">
-                        <a href="/developer/dashboard/" data-dev-dashboard-link class="primary-btn">Open Dashboard</a>
-                        <a href="/developer/login/" data-dev-login-link class="secondary-btn">Create Developer Account</a>
+                        <a href="/developer/login/" data-dev-login-link class="primary-btn">Private Sign In</a>
+                        <a href="#prompt" class="secondary-btn">Copy Prompt</a>
                     </div>
                 </div>
 
@@ -621,6 +621,7 @@
                     </h2>
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
                         <div>Connector listings, installs, and direct slug lookup.</div>
+                        <div>OAuth-first, account-owned connection flows instead of forcing developers to subsidize usage.</div>
                         <div>Manifest-defined runtime execution for HTTP actions.</div>
                         <div>Per-user install settings and templated request rendering.</div>
                         <div>Clear permission copy and human-readable installs.</div>
@@ -636,7 +637,7 @@
                     <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
                         <div>A real use case with clear actions and outcomes.</div>
                         <div>API docs or endpoint notes for the service you want to connect.</div>
-                        <div>Explicit auth, scopes, and install settings.</div>
+                        <div>Explicit auth, scopes, and install settings, with user-owned account connections when possible.</div>
                         <div>Plain-English copy so users know what the connector does.</div>
                         <div>Structured outputs that Hollow can route cleanly.</div>
                         <div>A maintained integration someone actually owns.</div>
@@ -650,15 +651,15 @@
                 <div class="max-w-3xl">
                     <div class="eyebrow text-[#7bd8ff]">Starter Prompt</div>
                     <h2 class="mt-3 text-4xl font-black tracking-[-0.04em] text-white">
-                        A reusable prompt for generating connector drafts
+                        Prompt for drafting a connector
                     </h2>
                     <p class="mt-4 text-lg leading-8 text-slate-300">
-                        Use this prompt to turn an integration idea into a Hollow-ready draft with setup metadata,
-                        action schemas, request templates, install settings, and sample payloads.
+                        Paste this into Cursor or Claude Code to draft a Hollow connector with setup metadata, action
+                        schemas, request templates, install settings, and sample payloads.
                     </p>
                     <p class="mini-note mt-5">
-                        Replace the bracketed fields with the product, API docs, and use case details. The result should
-                        be a strong first draft, not a final production review.
+                        Replace the bracketed fields with the product, docs, and use case details, then refine the
+                        draft before publishing.
                     </p>
                 </div>
 
@@ -683,6 +684,7 @@ Context:
 - User job to solve: [WHAT THE USER WANTS TO DO]
 - API docs or endpoints: [PASTE DOCS OR URL NOTES]
 - Auth model: [api_key, bearer, basic, oauth2, webhook, query_param, custom header, signed request, or none]
+- Preferred account model: [prefer user-owned account connection / bring your own API key / creator-hosted]
 - Important scopes or permissions: [SCOPES]
 - Main actions I need: [ACTION 1], [ACTION 2], [ACTION 3]
 
@@ -721,6 +723,8 @@ Return:
 Important constraints:
 - Keep this manifest-driven. Do not invent arbitrary backend code execution.
 - Make the copy clear and non-hypey.
+- Prefer OAuth or other user-owned account connections when the upstream API supports them.
+- Do not assume the developer is paying third-party API costs for every end user unless that is explicitly requested.
 - Prefer simple action names and minimal required scopes.
 - If the docs are unclear, call that out and make the safest reasonable assumption.</pre>
                     </div>

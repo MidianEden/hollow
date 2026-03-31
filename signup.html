@@ -4,235 +4,37 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hollow | Sign Up to Purchase</title>
+    <title>Hollow Zero | Early Access</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content="0; url=/#contact" />
     <link rel="icon" type="image/png" href="/favicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --ui-white: #FFFFFF;
-            --ui-black: #000000;
-            --ui-gray-light: #F2F2F2;
-            --ui-gray-mid: #4A4A4A;
-            --ui-gray-border: #E0E0E0;
-            --ui-accent: #1976FF;
-            --ui-accent-alt: #00D1FF;
-            --panel-bg: rgba(242, 242, 242, 0.04);
-            --panel-border: rgba(224, 224, 224, 0.2);
-            --header-bg: rgba(0, 0, 0, 0.88);
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
         body {
-            background: #000;
-            color: white;
-            font-family: "Geist", sans-serif;
             margin: 0;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
             min-height: 100vh;
-        }
-
-        .rainbow-card-wrapper {
-            position: relative;
-            z-index: 0;
-            border-radius: 16px;
-            overflow: hidden;
-            padding: 1px;
-            background: rgba(25, 118, 255, 0.35);
-            box-shadow: 0 14px 36px rgba(0, 0, 0, 0.45);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .rainbow-card-wrapper:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 18px 42px rgba(25, 118, 255, 0.28);
-        }
-
-        .rainbow-card-wrapper::before {
-            content: none;
-        }
-
-        /* Inner card content matching the dark theme */
-        .rainbow-card-content {
-            background: #0f1115;
-            border-radius: 15px;
-            height: 100%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* Form Styles */
-        .primary-btn {
-            background: var(--ui-accent);
-            color: var(--ui-white);
-            padding: 1rem;
-            border-radius: 12px;
-            font-weight: 900;
-            text-transform: uppercase;
-            width: 100%;
-            transition: all 0.2s;
-        }
-
-        .primary-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(25, 118, 255, 0.35);
-        }
-
-        .secondary-btn {
-            background: var(--panel-bg);
-            border: 1px solid var(--panel-border);
-            color: white;
-            padding: 1rem;
-            border-radius: 12px;
-            font-weight: 600;
-            width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 0.75rem;
-            transition: all 0.2s;
-        }
-
-        .secondary-btn:hover {
-            border-color: rgba(0, 209, 255, 0.45);
-            background: rgba(20, 24, 30, 0.88);
-        }
-
-        input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            border: 1px solid var(--panel-border);
-            border-radius: 12px;
-            padding: 1rem;
-            color: white;
-            font-size: 1rem;
-            transition: border-color 0.2s;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: rgba(25, 118, 255, 0.5);
-        }
-
-        .top-header {
-            background: var(--header-bg);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--panel-border);
-            position: sticky;
-            top: 0;
-            z-index: 50;
+            background: #000;
+            color: #fff;
+            font-family: "Geist", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
     </style>
 </head>
 
 <body>
-
-    <header class="top-header py-6 px-6 w-full">
-        <a href="/" class="flex items-center gap-2 text-gray-400 hover:text-white transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18">
-                </path>
-            </svg>
-            <span class="text-sm font-bold uppercase tracking-widest">Back to Home</span>
-        </a>
-    </header>
-
-    <main class="flex-grow flex items-center justify-center p-6 relative">
-        <div class="w-full max-w-md rainbow-card-wrapper relative z-10">
-            <div class="rainbow-card-content p-8 sm:p-12">
-                <div class="text-center mb-8">
-                    <h1 class="text-3xl font-black tracking-tighter mb-2">Sign Up to Purchase</h1>
-                    <p class="text-gray-400">Create an account to buy your Hollow 0W.</p>
-                </div>
-
-                <div class="w-full space-y-4">
-                    <input type="email" id="email" placeholder="Email address" autocomplete="email">
-                    <input type="password" id="password" placeholder="Password" autocomplete="current-password">
-
-                    <button id="email-auth-btn" class="primary-btn mt-2">
-                        Continue
-                    </button>
-
-                    <div class="relative py-4">
-                        <div class="absolute inset-0 flex items-center">
-                            <div class="w-full border-t border-white/10"></div>
-                        </div>
-                        <div class="relative flex justify-center"><span
-                                class="bg-[#0f1115] px-4 text-xs text-gray-500 uppercase">Or</span></div>
-                    </div>
-
-                    <button id="google-auth-btn" class="secondary-btn">
-                        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20"
-                            alt="Google">
-                        <span>Continue with Google</span>
-                    </button>
-                </div>
-
-                <p class="text-xs text-center text-gray-600 mt-8">
-                    By confirming, you agree to our Terms of Service and Privacy Policy.
-                </p>
-            </div>
+    <main class="px-6">
+        <div class="max-w-xl rounded-[2rem] border border-white/10 bg-white/[0.03] p-10 text-center">
+            <div class="text-xs font-black uppercase tracking-[0.24em] text-slate-500">Redirecting</div>
+            <h1 class="mt-4 text-4xl font-black tracking-[-0.05em] text-white">Hollow Zero Early Access</h1>
+            <p class="mt-4 text-lg leading-8 text-slate-300">The old purchase flow has been replaced with an early access signup.</p>
+            <a href="/#contact" class="mt-8 inline-flex rounded-full bg-[#1976FF] px-6 py-3 text-sm font-black uppercase tracking-[0.14em] text-white no-underline">Go To Early Access</a>
         </div>
     </main>
-
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-            authDomain: "hollow-7ff49.firebaseapp.com",
-            projectId: "hollow-7ff49",
-            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        // Redirect if already logged in
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                window.location.replace('/dashboard');
-            }
-        });
-
-        document.getElementById('google-auth-btn').onclick = () => signInWithPopup(auth, googleProvider);
-
-        document.getElementById('email-auth-btn').onclick = async () => {
-            const email = document.getElementById('email').value.trim();
-            const pass = document.getElementById('password').value;
-            const btn = document.getElementById('email-auth-btn');
-
-            if (!email || !pass) return alert("Please enter email and password");
-
-            const originalText = btn.textContent;
-            btn.textContent = "Processing...";
-            btn.disabled = true;
-
-            try {
-                await signInWithEmailAndPassword(auth, email, pass);
-                // Redirect handled by onAuthStateChanged
-            } catch (e) {
-                try {
-                    await createUserWithEmailAndPassword(auth, email, pass);
-                    // Redirect handled by onAuthStateChanged
-                } catch (err) {
-                    alert(err.message);
-                    btn.textContent = originalText;
-                    btn.disabled = false;
-                }
-            }
-        };
-    </script>
     <script src="/analytics.js" defer></script>
 </body>
 

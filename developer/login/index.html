@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow Developer Login</title>
-    <meta name="description" content="Sign in to the Hollow developer experience and start building connectors." />
+    <meta name="description" content="Private sign-in for the Hollow developer dashboard." />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
@@ -165,47 +165,42 @@
                         Sign in to build on Hollow.
                     </h1>
                     <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                        Use a dedicated developer login for Hollow, apply for approval, and then manage connectors from
-                        the developer dashboard.
+                        Developer access is private right now. Sign in with the private developer account to open the Hollow
+                        connector dashboard.
                     </p>
 
                     <div class="mt-8 grid gap-4 sm:grid-cols-3">
                         <div class="shell rounded-[1.5rem] p-5">
                             <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Access</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Dedicated developer account</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">Keep developer access separate so approvals and connector ownership stay clean.</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Private developer access</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">Only the private internal account can open connector publishing tools right now.</p>
                         </div>
                         <div class="shell rounded-[1.5rem] p-5">
                             <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Build</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Approved dashboard</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">Once approved, create manifests, wire APIs, and manage connector drafts in one place.</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Connector dashboard</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">The private dashboard is where connectors are drafted, wired to APIs, and published.</p>
                         </div>
                         <div class="shell rounded-[1.5rem] p-5">
-                            <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Redirect</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Dashboard first</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">After auth, you land in the dashboard so you can see your approval state right away.</p>
+                            <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Session</p>
+                            <p class="mt-3 text-xl font-black text-slate-900">Switch or sign out</p>
+                            <p class="mt-2 text-sm leading-7 text-slate-600">If the wrong account is signed in, switch accounts or sign out before opening the dashboard.</p>
                         </div>
                     </div>
                 </section>
 
                 <section class="shell rounded-[2rem] p-6 sm:p-8">
-                    <div class="flex flex-wrap gap-3">
-                        <button id="mode-signin" class="mode-btn active" type="button">Sign In</button>
-                        <button id="mode-signup" class="mode-btn" type="button">Create Account</button>
-                    </div>
-
-                    <div class="mt-6">
-                        <h2 class="text-3xl font-black tracking-tight text-slate-900">Developer Access</h2>
+                    <div>
+                        <h2 class="text-3xl font-black tracking-tight text-slate-900">Private Developer Access</h2>
                         <p id="mode-copy" class="mt-3 text-sm leading-7 text-slate-600">
-                            Create a dedicated developer account, then continue to the dashboard and apply for approval.
+                            Sign in with the private developer account to open the Hollow connector dashboard.
                         </p>
                     </div>
 
                     <div id="signed-in-shell" class="mt-6 hidden rounded-[1.5rem] border border-blue-200 bg-blue-50 p-5">
                         <p class="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Already Signed In</p>
                         <p id="signed-in-email" class="mt-3 text-xl font-black text-slate-900"></p>
-                        <p class="mt-3 text-sm leading-7 text-slate-600">
-                            If this is your consumer account, switch accounts and create a separate developer login before you apply.
+                        <p id="signed-in-copy" class="mt-3 text-sm leading-7 text-slate-600">
+                            Continue if this is the private developer account. Otherwise switch accounts or sign out.
                         </p>
                         <div class="mt-5 flex flex-wrap gap-3">
                             <a id="continue-link" href="/developer/dashboard/" class="primary-btn no-underline">Continue To Dashboard</a>
@@ -218,10 +213,9 @@
                         <form id="auth-form" class="space-y-4">
                             <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
                             <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-                            <input type="password" id="confirm-password" placeholder="Confirm password" autocomplete="new-password" class="hidden" />
 
                             <button id="email-auth-btn" class="primary-btn w-full" type="submit">
-                                <span id="email-auth-text">Create Developer Account</span>
+                                <span id="email-auth-text">Sign In</span>
                             </button>
                         </form>
 
@@ -243,8 +237,8 @@
                     <div class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
                         <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">What this is</p>
                         <p class="mt-3 text-sm leading-7 text-slate-600">
-                            A dedicated entry point for approved connector builders. Developer access is reviewed before
-                            the dashboard opens up publishing tools.
+                            A private sign-in for the Hollow connector dashboard. Public developer signups are not open
+                            yet.
                         </p>
                     </div>
 
@@ -257,7 +251,6 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
         import {
-            createUserWithEmailAndPassword,
             getAuth,
             GoogleAuthProvider,
             onAuthStateChanged,
@@ -282,6 +275,7 @@
             projectId: "hollow-7ff49",
             appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
         };
+        const ALLOWED_DEVELOPER_EMAIL = "lukalip93@gmail.com";
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -291,25 +285,22 @@
 
         const emailEl = document.getElementById("email");
         const passwordEl = document.getElementById("password");
-        const confirmPasswordEl = document.getElementById("confirm-password");
         const formEl = document.getElementById("auth-form");
         const authControlsEl = document.getElementById("auth-controls");
         const googleBtnEl = document.getElementById("google-auth-btn");
         const emailBtnEl = document.getElementById("email-auth-btn");
         const emailBtnTextEl = document.getElementById("email-auth-text");
-        const modeCopyEl = document.getElementById("mode-copy");
         const statusMessageEl = document.getElementById("status-message");
-        const signInModeEl = document.getElementById("mode-signin");
-        const signUpModeEl = document.getElementById("mode-signup");
         const signedInShellEl = document.getElementById("signed-in-shell");
         const signedInEmailEl = document.getElementById("signed-in-email");
+        const signedInCopyEl = document.getElementById("signed-in-copy");
         const continueLinkEl = document.getElementById("continue-link");
         const switchAccountBtnEl = document.getElementById("switch-account-btn");
         const signOutBtnEl = document.getElementById("sign-out-btn");
 
         const state = {
-            mode: "signup",
-            redirectAfterAuth: false
+            redirectAfterAuth: false,
+            switchAccountRequested: new URLSearchParams(window.location.search).get("switch_account") === "1"
         };
 
         function resolveReturnTo() {
@@ -332,16 +323,20 @@
             button.disabled = busy;
             emailEl.disabled = busy;
             passwordEl.disabled = busy;
-            confirmPasswordEl.disabled = busy;
             googleBtnEl.disabled = busy;
-            signInModeEl.disabled = busy;
-            signUpModeEl.disabled = busy;
             emailBtnTextEl.textContent = busy ? busyText : idleText;
+        }
+
+        function isAllowedDeveloperEmail(email) {
+            return String(email || "").trim().toLowerCase() === ALLOWED_DEVELOPER_EMAIL;
         }
 
         function setSignedInView(user) {
             const email = user?.email || "Signed-in account";
             signedInEmailEl.textContent = email;
+            signedInCopyEl.textContent = isAllowedDeveloperEmail(user?.email)
+                ? "This account has private developer access. Continue to the dashboard or switch accounts."
+                : "This account does not have developer access. Switch accounts or sign out to continue.";
             signedInShellEl.classList.remove("hidden");
             authControlsEl.classList.add("hidden");
         }
@@ -351,24 +346,17 @@
             authControlsEl.classList.remove("hidden");
         }
 
-        function setMode(mode) {
-            state.mode = mode;
-            const isSignup = mode === "signup";
-            signInModeEl.classList.toggle("active", !isSignup);
-            signUpModeEl.classList.toggle("active", isSignup);
-            confirmPasswordEl.classList.toggle("hidden", !isSignup);
-            passwordEl.autocomplete = isSignup ? "new-password" : "current-password";
-            emailBtnTextEl.textContent = isSignup ? "Create Developer Account" : "Sign In";
-            modeCopyEl.textContent = isSignup
-                ? "Create a dedicated Hollow developer account, then continue to the dashboard and apply for access."
-                : "Sign in with your approved developer account to open the Hollow developer dashboard.";
-            setStatus("");
-        }
-
-        signInModeEl.addEventListener("click", () => setMode("signin"));
-        signUpModeEl.addEventListener("click", () => setMode("signup"));
-
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
+            if (state.switchAccountRequested && user) {
+                state.switchAccountRequested = false;
+                try {
+                    await signOut(auth);
+                    setStatus("Signed out. Use the private developer account to continue.");
+                } catch (error) {
+                    setStatus(error?.message || "Could not switch accounts right now.", true);
+                }
+                return;
+            }
             if (user) {
                 setSignedInView(user);
                 if (state.redirectAfterAuth) {
@@ -386,54 +374,43 @@
             event.preventDefault();
             const email = emailEl.value.trim();
             const password = passwordEl.value;
-            const confirmPassword = confirmPasswordEl.value;
 
             if (!email || !password) {
                 setStatus("Enter your email and password.", true);
                 return;
             }
 
-            if (state.mode === "signup" && password !== confirmPassword) {
-                setStatus("Passwords do not match.", true);
-                return;
-            }
-
             setStatus("");
             state.redirectAfterAuth = true;
-            setBusy(emailBtnEl, true, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
+            setBusy(emailBtnEl, true, "Sign In", "Working...");
 
             try {
-                if (state.mode === "signup") {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                } else {
-                    await signInWithEmailAndPassword(auth, email, password);
-                }
+                await signInWithEmailAndPassword(auth, email, password);
             } catch (error) {
                 state.redirectAfterAuth = false;
                 setStatus(error?.message || "Something went wrong. Please try again.", true);
-                setBusy(emailBtnEl, false, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
+                setBusy(emailBtnEl, false, "Sign In", "Working...");
             }
         });
 
         googleBtnEl.addEventListener("click", async () => {
             setStatus("");
             state.redirectAfterAuth = true;
-            setBusy(emailBtnEl, true, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
+            setBusy(emailBtnEl, true, "Sign In", "Working...");
 
             try {
                 await signInWithPopup(auth, googleProvider);
             } catch (error) {
                 state.redirectAfterAuth = false;
                 setStatus(error?.message || "Google sign-in did not complete.", true);
-                setBusy(emailBtnEl, false, state.mode === "signup" ? "Create Developer Account" : "Sign In", "Working...");
+                setBusy(emailBtnEl, false, "Sign In", "Working...");
             }
         });
 
         switchAccountBtnEl.addEventListener("click", async () => {
             try {
                 await signOut(auth);
-                setMode("signup");
-                setStatus("Signed out. Use a different account for developer access.");
+                setStatus("Signed out. Use the private developer account for developer access.");
                 emailEl.focus();
             } catch (error) {
                 setStatus(error?.message || "Could not switch accounts right now.", true);
@@ -448,8 +425,6 @@
                 setStatus(error?.message || "Could not sign out right now.", true);
             }
         });
-
-        setMode("signup");
     </script>
     <script src="/analytics.js" defer></script>
 </body>
