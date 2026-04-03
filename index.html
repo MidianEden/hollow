@@ -734,6 +734,12 @@
             overflow: visible;
         }
 
+        .hero-ribbon-path {
+            transform-box: fill-box;
+            transform-origin: center;
+            will-change: transform, opacity, filter;
+        }
+
         .hero-copy {
             position: relative;
             max-width: 54rem;
@@ -1743,6 +1749,11 @@
             border: 0;
         }
 
+        .intro-header,
+        .intro-nav {
+            will-change: opacity, transform, filter;
+        }
+
         [data-reveal] {
             opacity: 1;
             transform: none;
@@ -1759,6 +1770,87 @@
         .motion-ready [data-reveal].is-visible {
             opacity: 1;
             transform: translateY(0);
+            filter: blur(0);
+        }
+
+        .motion-ready .hero-ribbon-path {
+            opacity: 0;
+            filter: blur(14px);
+        }
+
+        .motion-ready .hero-ribbon-path--left {
+            transform: translate3d(-16%, 2%, 0) scaleX(0.82);
+        }
+
+        .motion-ready .hero-ribbon-path--right {
+            transform: translate3d(16%, -2%, 0) scaleX(0.82);
+        }
+
+        .motion-ready .hero-ribbon-path--top {
+            transform: translate3d(2%, -18%, 0) scale(0.84);
+        }
+
+        .motion-ready .hero-ribbon-path--bottom {
+            transform: translate3d(-2%, 16%, 0) scale(0.84);
+        }
+
+        .motion-ready .intro-header {
+            opacity: 0;
+            transform: translateY(1.6rem);
+            filter: blur(14px);
+        }
+
+        .motion-ready .intro-nav {
+            opacity: 0;
+            transform: translateY(-1.15rem);
+            filter: blur(14px);
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--left {
+            animation: ribbonSweepFromLeft 1.48s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--right {
+            animation: ribbonSweepFromRight 1.52s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--top {
+            animation: ribbonSweepFromTop 1.36s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--bottom {
+            animation: ribbonSweepFromBottom 1.56s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--delay-a {
+            animation-delay: 0.05s;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--delay-b {
+            animation-delay: 0.14s;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--delay-c {
+            animation-delay: 0.22s;
+        }
+
+        .motion-ready.intro-playing .hero-ribbon-path--delay-d {
+            animation-delay: 0.3s;
+        }
+
+        .motion-ready.intro-playing .intro-header {
+            animation: introFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.08s both;
+        }
+
+        .motion-ready.intro-playing .intro-nav {
+            animation: introFadeDown 0.82s cubic-bezier(0.16, 1, 0.3, 1) 1.52s both;
+        }
+
+        .motion-ready.intro-complete .hero-ribbon-path,
+        .motion-ready.intro-complete .intro-header,
+        .motion-ready.intro-complete .intro-nav {
+            opacity: 1;
+            transform: none;
             filter: blur(0);
         }
 
@@ -1883,6 +1975,106 @@
             100% {
                 transform: translate3d(2.5%, -2.5%, 0) rotate(-2deg) scaleX(1.04);
                 opacity: 0.36;
+            }
+        }
+
+        @keyframes ribbonSweepFromLeft {
+            0% {
+                opacity: 0;
+                transform: translate3d(-16%, 2%, 0) scaleX(0.82);
+                filter: blur(18px);
+            }
+
+            58% {
+                opacity: 0.94;
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scaleX(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes ribbonSweepFromRight {
+            0% {
+                opacity: 0;
+                transform: translate3d(16%, -2%, 0) scaleX(0.82);
+                filter: blur(18px);
+            }
+
+            58% {
+                opacity: 0.94;
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scaleX(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes ribbonSweepFromTop {
+            0% {
+                opacity: 0;
+                transform: translate3d(2%, -18%, 0) scale(0.84);
+                filter: blur(18px);
+            }
+
+            60% {
+                opacity: 0.96;
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes ribbonSweepFromBottom {
+            0% {
+                opacity: 0;
+                transform: translate3d(-2%, 16%, 0) scale(0.84);
+                filter: blur(18px);
+            }
+
+            60% {
+                opacity: 0.96;
+            }
+
+            100% {
+                opacity: 1;
+                transform: translate3d(0, 0, 0) scale(1);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes introFadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(1.6rem);
+                filter: blur(14px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
+            }
+        }
+
+        @keyframes introFadeDown {
+            0% {
+                opacity: 0;
+                transform: translateY(-1.15rem);
+                filter: blur(14px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+                filter: blur(0);
             }
         }
 
@@ -2121,7 +2313,7 @@
         <span class="atmo-particles"></span>
     </div>
 
-    <header class="site-header">
+    <header class="site-header intro-nav">
         <div class="nav">
             <a href="#top" class="brand" aria-label="Hollow home">
                 <span class="brand-mark" aria-hidden="true">
@@ -2172,48 +2364,48 @@
                                 <stop offset="1" stop-color="#7FE7FF" />
                             </linearGradient>
                         </defs>
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-a"
                             d="M-160 516C56 648 262 654 448 536C620 426 706 246 900 214C1086 184 1216 314 1396 322C1548 330 1662 248 1806 216C2010 170 2210 260 2500 416"
                             stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-b"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="rgba(121, 196, 255, 0.24)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-c"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="url(#heroRibbonCore)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-a"
                             d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
                             stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-b"
                             d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
                             stroke="rgba(121, 196, 255, 0.18)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-c"
                             d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
                             stroke="url(#heroRibbonCore)" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-b"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
                             stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-c"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
                             stroke="url(#heroRibbonCore)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-d"
                             d="M-160 934C86 850 314 852 512 918C676 972 818 1070 986 1080C1152 1090 1286 1032 1418 994C1584 948 1772 966 1948 1042C2112 1112 2276 1126 2490 1076"
                             stroke="rgba(140,204,255,0.12)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-b"
                             d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
                             stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-c"
                             d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
                             stroke="url(#heroRibbonCore)" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-c"
                             d="M-140 1394C108 1304 350 1310 566 1378C746 1434 878 1542 1062 1550C1228 1558 1368 1490 1518 1446C1710 1390 1914 1410 2104 1498C2240 1560 2388 1596 2512 1574"
                             stroke="rgba(133,198,255,0.14)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path
+                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-d"
                             d="M-140 1394C108 1304 350 1310 566 1378C746 1434 878 1542 1062 1550C1228 1558 1368 1490 1518 1446C1710 1390 1914 1410 2104 1498C2240 1560 2388 1596 2512 1574"
                             stroke="url(#heroRibbonCore)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
-                <div class="hero-copy" data-reveal>
+                <div class="hero-copy intro-header" data-reveal>
                     <h1><span>One assistant.</span><span>Everything handled.</span></h1>
                     <p class="hero-sub">
                         Ask once, have it done, anywhere, anytime, anything.
@@ -2520,11 +2712,21 @@
         const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const mobileBtn = document.getElementById("mobile-menu-btn");
         const mobileNav = document.getElementById("mobile-nav");
-        const revealTargets = document.querySelectorAll("[data-reveal]");
+        const revealTargets = document.querySelectorAll("[data-reveal]:not(.intro-header)");
         const rootStyle = document.documentElement;
+        let introTimer = 0;
 
         if (!prefersReducedMotion) {
             document.documentElement.classList.add("motion-ready");
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    document.documentElement.classList.add("intro-playing");
+                });
+            });
+            introTimer = window.setTimeout(() => {
+                document.documentElement.classList.remove("intro-playing");
+                document.documentElement.classList.add("intro-complete");
+            }, 2600);
         }
 
         mobileBtn.addEventListener("click", () => {
@@ -2585,6 +2787,11 @@
         queueSceneMotion();
         window.addEventListener("scroll", queueSceneMotion, { passive: true });
         window.addEventListener("resize", queueSceneMotion);
+        window.addEventListener("pagehide", () => {
+            if (introTimer) {
+                window.clearTimeout(introTimer);
+            }
+        });
     </script>
 
     <script src="analytics.js" defer></script>
