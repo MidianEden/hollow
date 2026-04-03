@@ -1,432 +1,867 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Hollow Developer Login</title>
-    <meta name="description" content="Private sign-in for the Hollow developer dashboard." />
+    <meta
+      name="description"
+      content="Private sign-in for the Hollow developer dashboard."
+    />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        :root {
-            --bg-0: #ffffff;
-            --bg-1: #f8fafc;
-            --panel: rgba(255, 255, 255, 0.92);
-            --panel-border: rgba(17, 24, 39, 0.08);
-            --text-muted: #6b7280;
-            --blue: #1976ff;
-            --ink: #111827;
-        }
+      :root {
+        --bg-0: #f7f9ff;
+        --bg-1: #eef3ff;
+        --panel: rgba(255, 255, 255, 0.72);
+        --panel-border: rgba(67, 88, 143, 0.14);
+        --text-muted: #61708f;
+        --blue: #2563ff;
+        --ink: #0c1222;
+        --scroll-depth: 0;
+      }
 
-        * {
-            box-sizing: border-box;
-        }
+      * {
+        box-sizing: border-box;
+      }
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Geist", sans-serif;
-            color: var(--ink);
-            background:
-                radial-gradient(circle at top left, rgba(25, 118, 255, 0.12), transparent 28%),
-                radial-gradient(circle at 90% 10%, rgba(0, 209, 255, 0.08), transparent 22%),
-                linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 100%);
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Geist", sans-serif;
+        color: var(--ink);
+        background: var(--bg-0);
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
 
-        .page-grid {
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(rgba(17, 24, 39, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(17, 24, 39, 0.05) 1px, transparent 1px);
-            background-size: 32px 32px;
-            mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.65), transparent 80%);
-            pointer-events: none;
-            opacity: 0.35;
-        }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          linear-gradient(
+            180deg,
+            rgba(248, 250, 255, 0.95) 0%,
+            rgba(236, 242, 255, calc(0.96 - 0.08 * var(--scroll-depth))) 18%,
+            rgba(224, 232, 255, calc(0.94 - 0.12 * var(--scroll-depth))) 42%,
+            rgba(238, 243, 255, calc(0.98 - 0.12 * var(--scroll-depth))) 72%,
+            rgba(245, 247, 255, 0.99) 100%
+          ),
+          radial-gradient(
+            82rem 42rem at 50% -4%,
+            rgba(76, 122, 255, calc(0.22 - 0.08 * var(--scroll-depth))),
+            rgba(111, 137, 219, calc(0.1 - 0.04 * var(--scroll-depth))) 38%,
+            transparent 76%
+          ),
+          radial-gradient(
+            58rem 32rem at 84% 14%,
+            rgba(126, 166, 255, calc(0.12 - 0.04 * var(--scroll-depth))),
+            transparent 72%
+          );
+      }
 
-        .shell {
-            background: var(--panel);
-            border: 1px solid var(--panel-border);
-            box-shadow: 0 28px 90px rgba(17, 24, 39, 0.12);
-            backdrop-filter: blur(18px);
-        }
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(
+            circle at center,
+            transparent 58%,
+            rgba(102, 122, 170, 0.08) 100%
+          ),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(108, 130, 185, calc(0.03 + 0.06 * var(--scroll-depth))) 58%,
+            rgba(34, 44, 78, calc(0.05 + 0.06 * var(--scroll-depth))) 100%
+          ),
+          url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.16'/%3E%3C/svg%3E");
+        background-size:
+          auto,
+          auto,
+          190px 190px;
+        opacity: 0.64;
+      }
 
-        .brand-chip {
-            color: #f8fafc;
-            border: 1px solid rgba(17, 24, 39, 0.08);
-            background: #111827;
-            box-shadow: 0 18px 48px rgba(17, 24, 39, 0.16);
-        }
+      .atmosphere {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+        opacity: calc(1 - 0.22 * var(--scroll-depth));
+      }
 
-        .primary-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            border-radius: 1rem;
-            padding: 1rem 1.2rem;
-            font-size: 0.95rem;
-            font-weight: 800;
-            color: #f8fafc;
-            background: linear-gradient(135deg, #111827, #1f2937);
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
+      .atmosphere::before,
+      .atmosphere::after,
+      .atmo-band,
+      .atmo-veil,
+      .atmo-grid,
+      .atmo-rail,
+      .atmo-particles {
+        position: absolute;
+        display: block;
+      }
 
-        .primary-btn:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 16px 32px rgba(17, 24, 39, 0.22);
-        }
+      .atmosphere::before {
+        content: "";
+        inset: -12% -16%;
+        background:
+          radial-gradient(
+            72rem 30rem at 50% 10%,
+            rgba(111, 146, 255, 0.16),
+            rgba(111, 146, 255, 0.06) 54%,
+            transparent 76%
+          ),
+          linear-gradient(
+            100deg,
+            transparent 0%,
+            rgba(96, 137, 255, 0.04) 24%,
+            rgba(96, 137, 255, 0.08) 50%,
+            rgba(96, 137, 255, 0.03) 72%,
+            transparent 100%
+          );
+        filter: blur(28px);
+        opacity: 0.68;
+      }
 
-        .secondary-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            border-radius: 1rem;
-            padding: 1rem 1.2rem;
-            font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--ink);
-            border: 1px solid rgba(17, 24, 39, 0.14);
-            background: rgba(255, 255, 255, 0.94);
-            cursor: pointer;
-        }
+      .atmosphere::after {
+        content: "";
+        inset: -14% -12%;
+        background:
+          radial-gradient(
+            60rem 22rem at 50% 32%,
+            rgba(158, 183, 255, 0.14),
+            transparent 72%
+          ),
+          linear-gradient(
+            112deg,
+            transparent 10%,
+            rgba(183, 201, 255, 0.05) 32%,
+            rgba(111, 146, 255, 0.08) 52%,
+            rgba(183, 201, 255, 0.04) 70%,
+            transparent 88%
+          );
+        filter: blur(38px);
+        opacity: 0.56;
+      }
 
-        .mode-btn {
-            border-radius: 9999px;
-            padding: 0.8rem 1rem;
-            font-size: 0.85rem;
-            font-weight: 700;
-            border: 1px solid rgba(17, 24, 39, 0.1);
-            background: transparent;
-            color: var(--text-muted);
-            transition: all 0.2s ease;
-        }
+      .atmo-band {
+        left: -18%;
+        width: 136%;
+        border-radius: 999px;
+        filter: blur(18px);
+        opacity: 0.44;
+      }
 
-        .mode-btn.active {
-            background: rgba(17, 24, 39, 0.94);
-            border-color: rgba(17, 24, 39, 0.94);
-            color: white;
-        }
+      .atmo-band-a {
+        top: 16%;
+        height: 11rem;
+        transform: rotate(-3deg);
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(135, 163, 255, 0.02) 16%,
+          rgba(108, 143, 255, 0.1) 44%,
+          rgba(108, 143, 255, 0.12) 54%,
+          rgba(135, 163, 255, 0.04) 72%,
+          transparent 100%
+        );
+      }
 
-        input {
-            width: 100%;
-            border-radius: 1rem;
-            border: 1px solid rgba(17, 24, 39, 0.12);
-            background: rgba(255, 255, 255, 0.92);
-            padding: 1rem;
-            color: var(--ink);
-            font-size: 1rem;
-        }
+      .atmo-band-b {
+        top: 56%;
+        height: 12rem;
+        transform: rotate(-2deg);
+        background: linear-gradient(
+          90deg,
+          transparent 4%,
+          rgba(108, 143, 255, 0.02) 22%,
+          rgba(96, 137, 255, 0.08) 48%,
+          rgba(96, 137, 255, 0.1) 58%,
+          rgba(108, 143, 255, 0.03) 76%,
+          transparent 100%
+        );
+      }
 
-        input:focus {
-            outline: none;
-            border-color: rgba(25, 118, 255, 0.38);
-            box-shadow: 0 0 0 3px rgba(25, 118, 255, 0.08);
-        }
+      .atmo-veil {
+        left: -22%;
+        width: 144%;
+        border-radius: 999px;
+        filter: blur(30px);
+        opacity: 0.24;
+      }
+
+      .atmo-veil-a {
+        top: 10%;
+        height: 17rem;
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(196, 211, 255, 0.05) 18%,
+          rgba(126, 166, 255, 0.12) 50%,
+          rgba(196, 211, 255, 0.05) 70%,
+          transparent 100%
+        );
+      }
+
+      .atmo-grid {
+        inset: 48% -10% -12%;
+        background-image:
+          linear-gradient(rgba(116, 147, 225, 0.08) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(116, 147, 225, 0.06) 1px, transparent 1px);
+        background-size:
+          170px 104px,
+          170px 104px;
+        background-position: center top;
+        opacity: 0.14;
+        transform: perspective(1200px) rotateX(74deg) translateY(12%);
+        transform-origin: top center;
+        mask-image: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.72) 0%,
+          rgba(0, 0, 0, 0.18) 64%,
+          transparent 84%
+        );
+      }
+
+      .atmo-rail {
+        left: 50%;
+        width: min(1560px, 132vw);
+        height: 1px;
+        transform: translateX(-50%);
+        background: linear-gradient(
+          90deg,
+          transparent 0%,
+          rgba(132, 166, 255, 0.06) 12%,
+          rgba(132, 166, 255, 0.16) 30%,
+          rgba(225, 236, 255, 0.5) 50%,
+          rgba(132, 166, 255, 0.16) 70%,
+          rgba(132, 166, 255, 0.06) 88%,
+          transparent 100%
+        );
+        box-shadow:
+          0 0 10px rgba(96, 137, 255, 0.1),
+          0 0 20px rgba(96, 137, 255, 0.06);
+        opacity: 0.36;
+      }
+
+      .atmo-rail-a {
+        top: 28%;
+      }
+
+      .atmo-particles {
+        inset: 0;
+        background-image:
+          radial-gradient(rgba(255, 255, 255, 0.92) 0.85px, transparent 0.95px),
+          radial-gradient(rgba(170, 192, 255, 0.44) 0.7px, transparent 0.82px);
+        background-size:
+          200px 200px,
+          320px 320px;
+        background-position:
+          0 0,
+          90px 34px;
+        opacity: 0.1;
+      }
+
+      .page-grid {
+        position: fixed;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(76, 97, 152, 0.05) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(76, 97, 152, 0.05) 1px, transparent 1px);
+        background-size: 32px 32px;
+        mask-image: linear-gradient(
+          to bottom,
+          rgba(0, 0, 0, 0.2),
+          transparent 80%
+        );
+        pointer-events: none;
+        opacity: 0.38;
+      }
+
+      main {
+        position: relative;
+        z-index: 1;
+      }
+
+      .shell {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.76),
+          rgba(248, 250, 255, 0.66)
+        );
+        border: 1px solid var(--panel-border);
+        box-shadow: 0 24px 70px rgba(86, 103, 146, 0.12);
+        backdrop-filter: blur(20px);
+      }
+
+      .brand-chip {
+        border: 1px solid rgba(93, 124, 198, 0.26);
+        background: linear-gradient(
+          180deg,
+          rgba(12, 18, 34, 0.96),
+          rgba(20, 28, 52, 0.94)
+        );
+        box-shadow:
+          0 16px 36px rgba(39, 51, 84, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.06);
+      }
+
+      .brand-chip img {
+        width: 1.05rem;
+        height: 1.05rem;
+        object-fit: contain;
+        filter: drop-shadow(0 0 10px rgba(37, 99, 255, 0.16));
+      }
+
+      .primary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        font-size: 0.95rem;
+        font-weight: 800;
+        color: #f8fbff;
+        background: linear-gradient(135deg, #2563ff, #3a7bff);
+        border: none;
+        cursor: pointer;
+        box-shadow:
+          0 18px 36px rgba(37, 99, 255, 0.2),
+          inset 0 1px 0 rgba(255, 255, 255, 0.18);
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .primary-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 22px 40px rgba(37, 99, 255, 0.24);
+      }
+
+      .secondary-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        border-radius: 1rem;
+        padding: 1rem 1.2rem;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--ink);
+        border: 1px solid rgba(91, 113, 168, 0.16);
+        background: rgba(255, 255, 255, 0.88);
+        cursor: pointer;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+      }
+
+      .mode-btn {
+        border-radius: 9999px;
+        padding: 0.8rem 1rem;
+        font-size: 0.85rem;
+        font-weight: 700;
+        border: 1px solid rgba(91, 113, 168, 0.14);
+        background: transparent;
+        color: var(--text-muted);
+        transition: all 0.2s ease;
+      }
+
+      .mode-btn.active {
+        background: rgba(12, 18, 34, 0.92);
+        border-color: rgba(12, 18, 34, 0.92);
+        color: white;
+      }
+
+      input {
+        width: 100%;
+        border-radius: 1rem;
+        border: 1px solid rgba(91, 113, 168, 0.14);
+        background: rgba(255, 255, 255, 0.9);
+        padding: 1rem;
+        color: var(--ink);
+        font-size: 1rem;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
+      }
+
+      input:focus {
+        outline: none;
+        border-color: rgba(37, 99, 255, 0.34);
+        box-shadow: 0 0 0 3px rgba(37, 99, 255, 0.08);
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="page-grid"></div>
+    <div class="atmosphere" aria-hidden="true">
+      <span class="atmo-band atmo-band-a"></span>
+      <span class="atmo-band atmo-band-b"></span>
+      <span class="atmo-veil atmo-veil-a"></span>
+      <span class="atmo-grid"></span>
+      <span class="atmo-rail atmo-rail-a"></span>
+      <span class="atmo-particles"></span>
+    </div>
 
     <main class="relative z-10 min-h-screen px-6 py-8">
-        <div class="mx-auto max-w-6xl">
-            <div class="flex flex-wrap items-center justify-between gap-4">
-                <a href="/developer/" data-dev-portal-link class="flex items-center gap-3 text-inherit no-underline">
-                    <div class="brand-chip flex h-11 w-11 items-center justify-center rounded-2xl">
-                        <span class="text-lg font-black tracking-[-0.08em]">H</span>
-                    </div>
-                    <div>
-                        <div class="text-sm font-semibold">Hollow Developer</div>
-                        <div class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500">Developer Access</div>
-                    </div>
-                </a>
-
-                <div class="flex flex-wrap gap-3">
-                    <a href="/developer/" data-dev-portal-link class="secondary-btn no-underline">Back To Portal</a>
-                </div>
+      <div class="mx-auto max-w-6xl">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a
+            href="/developer/"
+            data-dev-portal-link
+            class="flex items-center gap-3 text-inherit no-underline"
+          >
+            <div
+              class="brand-chip flex h-11 w-11 items-center justify-center rounded-2xl"
+            >
+              <img src="../../favicon.png" alt="" aria-hidden="true" />
             </div>
-
-            <div class="mt-10 grid gap-8 xl:grid-cols-[1fr_0.92fr] xl:items-center">
-                <section>
-                    <div class="rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-blue-700 w-fit">
-                        Developer Login
-                    </div>
-                    <h1 class="mt-6 max-w-4xl text-5xl font-black tracking-[-0.06em] text-slate-900 sm:text-6xl">
-                        Sign in to build on Hollow.
-                    </h1>
-                    <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-                        Developer access is private right now. Sign in with the private developer account to open the Hollow
-                        connector dashboard.
-                    </p>
-
-                    <div class="mt-8 grid gap-4 sm:grid-cols-3">
-                        <div class="shell rounded-[1.5rem] p-5">
-                            <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Access</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Private developer access</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">Only the private internal account can open connector publishing tools right now.</p>
-                        </div>
-                        <div class="shell rounded-[1.5rem] p-5">
-                            <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Build</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Connector dashboard</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">The private dashboard is where connectors are drafted, wired to APIs, and published.</p>
-                        </div>
-                        <div class="shell rounded-[1.5rem] p-5">
-                            <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">Session</p>
-                            <p class="mt-3 text-xl font-black text-slate-900">Switch or sign out</p>
-                            <p class="mt-2 text-sm leading-7 text-slate-600">If the wrong account is signed in, switch accounts or sign out before opening the dashboard.</p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="shell rounded-[2rem] p-6 sm:p-8">
-                    <div>
-                        <h2 class="text-3xl font-black tracking-tight text-slate-900">Private Developer Access</h2>
-                        <p id="mode-copy" class="mt-3 text-sm leading-7 text-slate-600">
-                            Sign in with the private developer account to open the Hollow connector dashboard.
-                        </p>
-                    </div>
-
-                    <div id="signed-in-shell" class="mt-6 hidden rounded-[1.5rem] border border-blue-200 bg-blue-50 p-5">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-blue-700">Already Signed In</p>
-                        <p id="signed-in-email" class="mt-3 text-xl font-black text-slate-900"></p>
-                        <p id="signed-in-copy" class="mt-3 text-sm leading-7 text-slate-600">
-                            Continue if this is the private developer account. Otherwise switch accounts or sign out.
-                        </p>
-                        <div class="mt-5 flex flex-wrap gap-3">
-                            <a id="continue-link" href="/developer/dashboard/" class="primary-btn no-underline">Continue To Dashboard</a>
-                            <button id="switch-account-btn" type="button" class="secondary-btn">Switch Account</button>
-                            <button id="sign-out-btn" type="button" class="secondary-btn">Sign Out</button>
-                        </div>
-                    </div>
-
-                    <div id="auth-controls" class="mt-6">
-                        <form id="auth-form" class="space-y-4">
-                            <input type="email" id="email" placeholder="Email address" autocomplete="email" required />
-                            <input type="password" id="password" placeholder="Password" autocomplete="current-password" required />
-
-                            <button id="email-auth-btn" class="primary-btn w-full" type="submit">
-                                <span id="email-auth-text">Sign In</span>
-                            </button>
-                        </form>
-
-                        <div class="relative py-6">
-                            <div class="absolute inset-0 flex items-center">
-                                <div class="w-full border-t border-slate-200"></div>
-                            </div>
-                            <div class="relative flex justify-center">
-                                <span class="bg-white px-4 text-xs uppercase tracking-[0.24em] text-slate-400">Or</span>
-                            </div>
-                        </div>
-
-                        <button id="google-auth-btn" class="secondary-btn w-full" type="button">
-                            <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="20" height="20" alt="Google" />
-                            <span>Continue with Google</span>
-                        </button>
-                    </div>
-
-                    <div class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4">
-                        <p class="text-xs font-black uppercase tracking-[0.2em] text-slate-500">What this is</p>
-                        <p class="mt-3 text-sm leading-7 text-slate-600">
-                            A private sign-in for the Hollow connector dashboard. Public developer signups are not open
-                            yet.
-                        </p>
-                    </div>
-
-                    <p id="status-message" class="mt-5 text-sm text-slate-500"></p>
-                </section>
+            <div>
+              <div class="text-sm font-semibold">Hollow Developer</div>
+              <div
+                class="text-[11px] font-bold uppercase tracking-[0.24em] text-slate-500"
+              >
+                Developer Access
+              </div>
             </div>
+          </a>
+
+          <div class="flex flex-wrap gap-3">
+            <a
+              href="/developer/"
+              data-dev-portal-link
+              class="secondary-btn no-underline"
+              >Back To Portal</a
+            >
+          </div>
         </div>
+
+        <div class="mt-10 grid gap-8 xl:grid-cols-[1fr_0.92fr] xl:items-center">
+          <section>
+            <div
+              class="rounded-full border border-blue-400/30 bg-blue-500/10 px-4 py-2 text-xs font-black uppercase tracking-[0.24em] text-blue-700 w-fit"
+            >
+              Developer Login
+            </div>
+            <h1
+              class="mt-6 max-w-4xl text-5xl font-black tracking-[-0.06em] text-slate-900 sm:text-6xl"
+            >
+              Sign in to build on Hollow.
+            </h1>
+            <p class="mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+              Developer access is private right now. Sign in with the private
+              developer account to open the Hollow connector dashboard.
+            </p>
+
+            <div class="mt-8 grid gap-4 sm:grid-cols-3">
+              <div class="shell rounded-[1.5rem] p-5">
+                <p
+                  class="text-xs font-black uppercase tracking-[0.2em] text-slate-500"
+                >
+                  Access
+                </p>
+                <p class="mt-3 text-xl font-black text-slate-900">
+                  Private developer access
+                </p>
+                <p class="mt-2 text-sm leading-7 text-slate-600">
+                  Only the private internal account can open connector
+                  publishing tools right now.
+                </p>
+              </div>
+              <div class="shell rounded-[1.5rem] p-5">
+                <p
+                  class="text-xs font-black uppercase tracking-[0.2em] text-slate-500"
+                >
+                  Build
+                </p>
+                <p class="mt-3 text-xl font-black text-slate-900">
+                  Connector dashboard
+                </p>
+                <p class="mt-2 text-sm leading-7 text-slate-600">
+                  The private dashboard is where connectors are drafted, wired
+                  to APIs, and published.
+                </p>
+              </div>
+              <div class="shell rounded-[1.5rem] p-5">
+                <p
+                  class="text-xs font-black uppercase tracking-[0.2em] text-slate-500"
+                >
+                  Session
+                </p>
+                <p class="mt-3 text-xl font-black text-slate-900">
+                  Switch or sign out
+                </p>
+                <p class="mt-2 text-sm leading-7 text-slate-600">
+                  If the wrong account is signed in, switch accounts or sign out
+                  before opening the dashboard.
+                </p>
+              </div>
+            </div>
+          </section>
+
+          <section class="shell rounded-[2rem] p-6 sm:p-8">
+            <div>
+              <h2 class="text-3xl font-black tracking-tight text-slate-900">
+                Private Developer Access
+              </h2>
+              <p id="mode-copy" class="mt-3 text-sm leading-7 text-slate-600">
+                Sign in with the private developer account to open the Hollow
+                connector dashboard.
+              </p>
+            </div>
+
+            <div
+              id="signed-in-shell"
+              class="mt-6 hidden rounded-[1.5rem] border border-blue-200 bg-blue-50 p-5"
+            >
+              <p
+                class="text-xs font-black uppercase tracking-[0.2em] text-blue-700"
+              >
+                Already Signed In
+              </p>
+              <p
+                id="signed-in-email"
+                class="mt-3 text-xl font-black text-slate-900"
+              ></p>
+              <p
+                id="signed-in-copy"
+                class="mt-3 text-sm leading-7 text-slate-600"
+              >
+                Continue if this is the private developer account. Otherwise
+                switch accounts or sign out.
+              </p>
+              <div class="mt-5 flex flex-wrap gap-3">
+                <a
+                  id="continue-link"
+                  href="/developer/dashboard/"
+                  class="primary-btn no-underline"
+                  >Continue To Dashboard</a
+                >
+                <button
+                  id="switch-account-btn"
+                  type="button"
+                  class="secondary-btn"
+                >
+                  Switch Account
+                </button>
+                <button id="sign-out-btn" type="button" class="secondary-btn">
+                  Sign Out
+                </button>
+              </div>
+            </div>
+
+            <div id="auth-controls" class="mt-6">
+              <form id="auth-form" class="space-y-4">
+                <input
+                  type="email"
+                  id="email"
+                  placeholder="Email address"
+                  autocomplete="email"
+                  required
+                />
+                <input
+                  type="password"
+                  id="password"
+                  placeholder="Password"
+                  autocomplete="current-password"
+                  required
+                />
+
+                <button
+                  id="email-auth-btn"
+                  class="primary-btn w-full"
+                  type="submit"
+                >
+                  <span id="email-auth-text">Sign In</span>
+                </button>
+              </form>
+
+              <div class="relative py-6">
+                <div class="absolute inset-0 flex items-center">
+                  <div class="w-full border-t border-slate-200"></div>
+                </div>
+                <div class="relative flex justify-center">
+                  <span
+                    class="bg-white px-4 text-xs uppercase tracking-[0.24em] text-slate-400"
+                    >Or</span
+                  >
+                </div>
+              </div>
+
+              <button
+                id="google-auth-btn"
+                class="secondary-btn w-full"
+                type="button"
+              >
+                <img
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+                  width="20"
+                  height="20"
+                  alt="Google"
+                />
+                <span>Continue with Google</span>
+              </button>
+            </div>
+
+            <div
+              class="mt-6 rounded-[1.5rem] border border-slate-200 bg-slate-50 p-4"
+            >
+              <p
+                class="text-xs font-black uppercase tracking-[0.2em] text-slate-500"
+              >
+                What this is
+              </p>
+              <p class="mt-3 text-sm leading-7 text-slate-600">
+                A private sign-in for the Hollow connector dashboard. Public
+                developer signups are not open yet.
+              </p>
+            </div>
+
+            <p id="status-message" class="mt-5 text-sm text-slate-500"></p>
+          </section>
+        </div>
+      </div>
     </main>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
-        import {
-            getAuth,
-            GoogleAuthProvider,
-            onAuthStateChanged,
-            setPersistence,
-            browserLocalPersistence,
-            signOut,
-            signInWithEmailAndPassword,
-            signInWithPopup
-        } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+      import {
+        getAuth,
+        GoogleAuthProvider,
+        onAuthStateChanged,
+        setPersistence,
+        browserLocalPersistence,
+        signOut,
+        signInWithEmailAndPassword,
+        signInWithPopup,
+      } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
-        const isDeveloperHost = window.location.hostname.toLowerCase() === "developer.gethollow.com";
-        const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
-        const developerDashboardPath = isDeveloperHost ? "/dashboard/" : "/developer/dashboard/";
+      const rootStyle = document.documentElement;
+      const isDeveloperHost =
+        window.location.hostname.toLowerCase() === "developer.gethollow.com";
+      const developerPortalPath = isDeveloperHost ? "/" : "/developer/";
+      const developerDashboardPath = isDeveloperHost
+        ? "/dashboard/"
+        : "/developer/dashboard/";
+      let scrollTick = 0;
 
-        document.querySelectorAll("[data-dev-portal-link]").forEach((linkEl) => {
-            linkEl.setAttribute("href", developerPortalPath);
-        });
+      const renderScrollDepth = () => {
+        scrollTick = 0;
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const viewportHeight = window.innerHeight || 1;
+        const maxScroll = Math.max(
+          1,
+          document.documentElement.scrollHeight - viewportHeight,
+        );
+        const scrollDepth = Math.min(Math.pow(scrollY / maxScroll, 0.82), 1);
+        rootStyle.style.setProperty("--scroll-depth", scrollDepth.toFixed(4));
+      };
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
-            authDomain: "hollow-7ff49.firebaseapp.com",
-            projectId: "hollow-7ff49",
-            appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a"
-        };
-        const ALLOWED_DEVELOPER_EMAIL = "lukalip93@gmail.com";
+      const queueScrollDepth = () => {
+        if (scrollTick) return;
+        scrollTick = window.requestAnimationFrame(renderScrollDepth);
+      };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        await setPersistence(auth, browserLocalPersistence).catch(() => {});
-        const googleProvider = new GoogleAuthProvider();
-        googleProvider.setCustomParameters({ prompt: "select_account" });
+      document.querySelectorAll("[data-dev-portal-link]").forEach((linkEl) => {
+        linkEl.setAttribute("href", developerPortalPath);
+      });
 
-        const emailEl = document.getElementById("email");
-        const passwordEl = document.getElementById("password");
-        const formEl = document.getElementById("auth-form");
-        const authControlsEl = document.getElementById("auth-controls");
-        const googleBtnEl = document.getElementById("google-auth-btn");
-        const emailBtnEl = document.getElementById("email-auth-btn");
-        const emailBtnTextEl = document.getElementById("email-auth-text");
-        const statusMessageEl = document.getElementById("status-message");
-        const signedInShellEl = document.getElementById("signed-in-shell");
-        const signedInEmailEl = document.getElementById("signed-in-email");
-        const signedInCopyEl = document.getElementById("signed-in-copy");
-        const continueLinkEl = document.getElementById("continue-link");
-        const switchAccountBtnEl = document.getElementById("switch-account-btn");
-        const signOutBtnEl = document.getElementById("sign-out-btn");
+      const firebaseConfig = {
+        apiKey: "AIzaSyApT_QCfVEqzECBqPMR3qgdCSWlksIPSgo",
+        authDomain: "hollow-7ff49.firebaseapp.com",
+        projectId: "hollow-7ff49",
+        appId: "1:536360139071:web:c0f481afd91cd3ce1f7b8a",
+      };
+      const ALLOWED_DEVELOPER_EMAIL = "luka@gethollow.com";
 
-        const state = {
-            redirectAfterAuth: false,
-            switchAccountRequested: new URLSearchParams(window.location.search).get("switch_account") === "1"
-        };
+      const app = initializeApp(firebaseConfig);
+      const auth = getAuth(app);
+      await setPersistence(auth, browserLocalPersistence).catch(() => {});
+      const googleProvider = new GoogleAuthProvider();
+      googleProvider.setCustomParameters({ prompt: "select_account" });
 
-        function resolveReturnTo() {
-            const params = new URLSearchParams(window.location.search);
-            const candidate = params.get("return_to") || developerDashboardPath;
-            if (!candidate.startsWith("/")) return developerDashboardPath;
-            if (candidate.startsWith("//")) return developerDashboardPath;
-            return candidate;
+      const emailEl = document.getElementById("email");
+      const passwordEl = document.getElementById("password");
+      const formEl = document.getElementById("auth-form");
+      const authControlsEl = document.getElementById("auth-controls");
+      const googleBtnEl = document.getElementById("google-auth-btn");
+      const emailBtnEl = document.getElementById("email-auth-btn");
+      const emailBtnTextEl = document.getElementById("email-auth-text");
+      const statusMessageEl = document.getElementById("status-message");
+      const signedInShellEl = document.getElementById("signed-in-shell");
+      const signedInEmailEl = document.getElementById("signed-in-email");
+      const signedInCopyEl = document.getElementById("signed-in-copy");
+      const continueLinkEl = document.getElementById("continue-link");
+      const switchAccountBtnEl = document.getElementById("switch-account-btn");
+      const signOutBtnEl = document.getElementById("sign-out-btn");
+
+      const state = {
+        redirectAfterAuth: false,
+        switchAccountRequested:
+          new URLSearchParams(window.location.search).get("switch_account") ===
+          "1",
+      };
+
+      function resolveReturnTo() {
+        const params = new URLSearchParams(window.location.search);
+        const candidate = params.get("return_to") || developerDashboardPath;
+        if (!candidate.startsWith("/")) return developerDashboardPath;
+        if (candidate.startsWith("//")) return developerDashboardPath;
+        return candidate;
+      }
+
+      const returnTo = resolveReturnTo();
+      continueLinkEl.setAttribute("href", returnTo);
+
+      function setStatus(message = "", isError = false) {
+        statusMessageEl.textContent = message;
+        statusMessageEl.style.color = isError ? "#dc2626" : "#6b7280";
+      }
+
+      function setBusy(button, busy, idleText, busyText) {
+        button.disabled = busy;
+        emailEl.disabled = busy;
+        passwordEl.disabled = busy;
+        googleBtnEl.disabled = busy;
+        emailBtnTextEl.textContent = busy ? busyText : idleText;
+      }
+
+      function isAllowedDeveloperEmail(email) {
+        return (
+          String(email || "")
+            .trim()
+            .toLowerCase() === ALLOWED_DEVELOPER_EMAIL
+        );
+      }
+
+      function setSignedInView(user) {
+        const email = user?.email || "Signed-in account";
+        signedInEmailEl.textContent = email;
+        signedInCopyEl.textContent = isAllowedDeveloperEmail(user?.email)
+          ? "This account has private developer access. Continue to the dashboard or switch accounts."
+          : "This account does not have developer access. Switch accounts or sign out to continue.";
+        signedInShellEl.classList.remove("hidden");
+        authControlsEl.classList.add("hidden");
+      }
+
+      function clearSignedInView() {
+        signedInShellEl.classList.add("hidden");
+        authControlsEl.classList.remove("hidden");
+      }
+
+      onAuthStateChanged(auth, async (user) => {
+        if (state.switchAccountRequested && user) {
+          state.switchAccountRequested = false;
+          try {
+            await signOut(auth);
+            setStatus(
+              "Signed out. Use the private developer account to continue.",
+            );
+          } catch (error) {
+            setStatus(
+              error?.message || "Could not switch accounts right now.",
+              true,
+            );
+          }
+          return;
+        }
+        if (user) {
+          setSignedInView(user);
+          if (state.redirectAfterAuth) {
+            window.location.replace(returnTo);
+            return;
+          }
+          setStatus(
+            `You're already signed in as ${user.email || "this account"}.`,
+            false,
+          );
+          return;
+        }
+        clearSignedInView();
+        state.redirectAfterAuth = false;
+      });
+
+      formEl.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const email = emailEl.value.trim();
+        const password = passwordEl.value;
+
+        if (!email || !password) {
+          setStatus("Enter your email and password.", true);
+          return;
         }
 
-        const returnTo = resolveReturnTo();
-        continueLinkEl.setAttribute("href", returnTo);
+        setStatus("");
+        state.redirectAfterAuth = true;
+        setBusy(emailBtnEl, true, "Sign In", "Working...");
 
-        function setStatus(message = "", isError = false) {
-            statusMessageEl.textContent = message;
-            statusMessageEl.style.color = isError ? "#dc2626" : "#6b7280";
+        try {
+          await signInWithEmailAndPassword(auth, email, password);
+        } catch (error) {
+          state.redirectAfterAuth = false;
+          setStatus(
+            error?.message || "Something went wrong. Please try again.",
+            true,
+          );
+          setBusy(emailBtnEl, false, "Sign In", "Working...");
         }
+      });
 
-        function setBusy(button, busy, idleText, busyText) {
-            button.disabled = busy;
-            emailEl.disabled = busy;
-            passwordEl.disabled = busy;
-            googleBtnEl.disabled = busy;
-            emailBtnTextEl.textContent = busy ? busyText : idleText;
+      googleBtnEl.addEventListener("click", async () => {
+        setStatus("");
+        state.redirectAfterAuth = true;
+        setBusy(emailBtnEl, true, "Sign In", "Working...");
+
+        try {
+          await signInWithPopup(auth, googleProvider);
+        } catch (error) {
+          state.redirectAfterAuth = false;
+          setStatus(error?.message || "Google sign-in did not complete.", true);
+          setBusy(emailBtnEl, false, "Sign In", "Working...");
         }
+      });
 
-        function isAllowedDeveloperEmail(email) {
-            return String(email || "").trim().toLowerCase() === ALLOWED_DEVELOPER_EMAIL;
+      switchAccountBtnEl.addEventListener("click", async () => {
+        try {
+          await signOut(auth);
+          setStatus(
+            "Signed out. Use the private developer account for developer access.",
+          );
+          emailEl.focus();
+        } catch (error) {
+          setStatus(
+            error?.message || "Could not switch accounts right now.",
+            true,
+          );
         }
+      });
 
-        function setSignedInView(user) {
-            const email = user?.email || "Signed-in account";
-            signedInEmailEl.textContent = email;
-            signedInCopyEl.textContent = isAllowedDeveloperEmail(user?.email)
-                ? "This account has private developer access. Continue to the dashboard or switch accounts."
-                : "This account does not have developer access. Switch accounts or sign out to continue.";
-            signedInShellEl.classList.remove("hidden");
-            authControlsEl.classList.add("hidden");
+      signOutBtnEl.addEventListener("click", async () => {
+        try {
+          await signOut(auth);
+          window.location.replace(developerPortalPath);
+        } catch (error) {
+          setStatus(error?.message || "Could not sign out right now.", true);
         }
+      });
 
-        function clearSignedInView() {
-            signedInShellEl.classList.add("hidden");
-            authControlsEl.classList.remove("hidden");
-        }
-
-        onAuthStateChanged(auth, async (user) => {
-            if (state.switchAccountRequested && user) {
-                state.switchAccountRequested = false;
-                try {
-                    await signOut(auth);
-                    setStatus("Signed out. Use the private developer account to continue.");
-                } catch (error) {
-                    setStatus(error?.message || "Could not switch accounts right now.", true);
-                }
-                return;
-            }
-            if (user) {
-                setSignedInView(user);
-                if (state.redirectAfterAuth) {
-                    window.location.replace(returnTo);
-                    return;
-                }
-                setStatus(`You're already signed in as ${user.email || "this account"}.`, false);
-                return;
-            }
-            clearSignedInView();
-            state.redirectAfterAuth = false;
-        });
-
-        formEl.addEventListener("submit", async (event) => {
-            event.preventDefault();
-            const email = emailEl.value.trim();
-            const password = passwordEl.value;
-
-            if (!email || !password) {
-                setStatus("Enter your email and password.", true);
-                return;
-            }
-
-            setStatus("");
-            state.redirectAfterAuth = true;
-            setBusy(emailBtnEl, true, "Sign In", "Working...");
-
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-            } catch (error) {
-                state.redirectAfterAuth = false;
-                setStatus(error?.message || "Something went wrong. Please try again.", true);
-                setBusy(emailBtnEl, false, "Sign In", "Working...");
-            }
-        });
-
-        googleBtnEl.addEventListener("click", async () => {
-            setStatus("");
-            state.redirectAfterAuth = true;
-            setBusy(emailBtnEl, true, "Sign In", "Working...");
-
-            try {
-                await signInWithPopup(auth, googleProvider);
-            } catch (error) {
-                state.redirectAfterAuth = false;
-                setStatus(error?.message || "Google sign-in did not complete.", true);
-                setBusy(emailBtnEl, false, "Sign In", "Working...");
-            }
-        });
-
-        switchAccountBtnEl.addEventListener("click", async () => {
-            try {
-                await signOut(auth);
-                setStatus("Signed out. Use the private developer account for developer access.");
-                emailEl.focus();
-            } catch (error) {
-                setStatus(error?.message || "Could not switch accounts right now.", true);
-            }
-        });
-
-        signOutBtnEl.addEventListener("click", async () => {
-            try {
-                await signOut(auth);
-                window.location.replace(developerPortalPath);
-            } catch (error) {
-                setStatus(error?.message || "Could not sign out right now.", true);
-            }
-        });
+      queueScrollDepth();
+      window.addEventListener("scroll", queueScrollDepth, { passive: true });
+      window.addEventListener("resize", queueScrollDepth);
     </script>
     <script src="/analytics.js" defer></script>
-</body>
-
+  </body>
 </html>

@@ -4,9 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hollow | FAQ</title>
-    <meta name="description"
-        content="Frequently asked questions about Hollow Zero, early access, cross-surface support, connectors, and privacy." />
+    <title>Hollow | Terms</title>
+    <meta name="description" content="Terms for access to Hollow and Hollow Zero." />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet" />
@@ -17,9 +16,8 @@
             --muted: rgba(227, 232, 243, 0.76);
             --subtle: rgba(163, 175, 193, 0.58);
             --scroll-depth: 0;
-            --shell: min(1120px, calc(100vw - 48px));
+            --shell: min(1100px, calc(100vw - 48px));
             --radius-xl: 2rem;
-            --radius-lg: 1.4rem;
         }
 
         * {
@@ -373,18 +371,18 @@
             font-weight: 600;
         }
 
-        .faq-page {
+        .doc-page {
             padding: clamp(7rem, 12vw, 9rem) 0 5rem;
         }
 
-        .faq-shell {
+        .doc-shell {
             width: var(--shell);
             margin: 0 auto;
         }
 
-        .faq-hero {
-            max-width: 48rem;
-            margin: 0 auto 2.8rem;
+        .doc-hero {
+            max-width: 46rem;
+            margin: 0 auto 2.6rem;
             text-align: center;
         }
 
@@ -408,30 +406,25 @@
             box-shadow: 0 0 14px rgba(37, 99, 255, 0.28);
         }
 
-        .faq-hero h1 {
+        .doc-hero h1 {
             margin: 1.25rem 0 0;
             font-size: clamp(3.4rem, 8vw, 5.8rem);
             line-height: 0.92;
             letter-spacing: -0.07em;
         }
 
-        .faq-hero p {
+        .doc-hero p {
             margin: 1.5rem auto 0;
-            max-width: 42rem;
+            max-width: 40rem;
             color: var(--muted);
             font-size: 1.08rem;
             line-height: 1.75;
         }
 
-        .faq-groups {
-            width: min(920px, 100%);
+        .doc-card {
+            width: min(860px, 100%);
             margin: 0 auto;
-            display: grid;
-            gap: 1.25rem;
-        }
-
-        .faq-group {
-            padding: 1.6rem 1.6rem 0.4rem;
+            padding: clamp(2rem, 4vw, 3rem);
             border-radius: var(--radius-xl);
             border: 1px solid rgba(255, 255, 255, 0.08);
             background: linear-gradient(180deg, rgba(10, 14, 24, 0.82), rgba(10, 14, 24, 0.6));
@@ -439,73 +432,33 @@
             backdrop-filter: blur(16px);
         }
 
-        .faq-group-label {
-            margin: 0 0 1rem;
-            color: #9ec0ff;
-            font-size: 0.78rem;
-            font-weight: 800;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
+        .doc-meta {
+            margin: 0 0 2rem;
+            color: var(--subtle);
+            font-size: 0.96rem;
         }
 
-        .faq-item + .faq-item {
+        .doc-section + .doc-section {
+            margin-top: 2.4rem;
+            padding-top: 2.4rem;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .faq-question {
-            width: 100%;
-            padding: 1.2rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            border: 0;
-            background: transparent;
-            color: var(--text);
-            text-align: left;
-            font: inherit;
-            font-size: 1.05rem;
-            font-weight: 600;
-            cursor: pointer;
+        .doc-section h2 {
+            margin: 0 0 0.9rem;
+            font-size: 1.6rem;
+            line-height: 1.05;
+            letter-spacing: -0.05em;
         }
 
-        .faq-question:hover {
-            color: #d8e5ff;
-        }
-
-        .faq-icon {
-            flex: none;
-            width: 2rem;
-            height: 2rem;
-            display: grid;
-            place-items: center;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: var(--subtle);
-            transition: transform 0.24s ease, color 0.24s ease, border-color 0.24s ease;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-            color: #d8e5ff;
-            border-color: rgba(124, 167, 255, 0.22);
-        }
-
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
+        .doc-section p {
+            margin: 0;
             color: var(--muted);
-            font-size: 0.98rem;
+            font-size: 1rem;
             line-height: 1.8;
-            transition: max-height 0.28s ease, padding-bottom 0.28s ease;
         }
 
-        .faq-item.active .faq-answer {
-            max-height: 420px;
-            padding-bottom: 1.2rem;
-        }
-
-        .faq-answer a {
+        .doc-card a {
             color: #9ec0ff;
         }
 
@@ -537,16 +490,12 @@
                 display: inline-flex;
             }
 
-            .faq-page {
+            .doc-page {
                 padding-top: 6rem;
             }
 
-            .faq-hero h1 {
+            .doc-hero h1 {
                 font-size: clamp(2.8rem, 14vw, 4.5rem);
-            }
-
-            .faq-group {
-                padding: 1.25rem 1.2rem 0.2rem;
             }
 
             .site-footer {
@@ -579,7 +528,7 @@
 
             <nav class="nav-links" aria-label="Primary">
                 <a href="/" class="nav-link">Home</a>
-                <a href="/faq.html" class="nav-link active">FAQ</a>
+                <a href="/faq.html" class="nav-link">FAQ</a>
                 <a href="/privacy.html" class="nav-link">Privacy</a>
                 <a href="/support.html" class="nav-link">Support</a>
                 <a href="/developer/" class="nav-link">Developers</a>
@@ -607,111 +556,43 @@
         </div>
     </nav>
 
-    <main class="faq-page">
-        <div class="faq-shell">
-            <section class="faq-hero">
-                <p class="section-label">FAQ</p>
-                <h1>Questions, answered.</h1>
-                <p>Everything you need to know about Hollow Zero, early access, cross-surface continuity, and the
-                    connector direction.</p>
+    <main class="doc-page">
+        <div class="doc-shell">
+            <section class="doc-hero">
+                <p class="section-label">Terms</p>
+                <h1>Terms for early access.</h1>
+                <p>These terms cover the current Hollow Zero limited-access phase while the product, surfaces, and
+                    connected actions continue to evolve.</p>
             </section>
 
-            <div class="faq-groups">
-                <section class="faq-group">
-                    <p class="faq-group-label">Surfaces &amp; Access</p>
+            <article class="doc-card">
+                <p class="doc-meta">Last updated April 2, 2026.</p>
 
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>What is Hollow Zero?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Hollow Zero is the move toward one assistant that can follow you across the app, watch,
-                                Telegram, and Mac instead of feeling trapped in one interface.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>Is the watch still the main product?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>No. The watch still matters, but it is now part of a broader Hollow Zero system. The goal
-                                is continuity across surfaces, not a watch-only experience.</p>
-                        </div>
-                    </article>
+                <section class="doc-section">
+                    <h2>Early access</h2>
+                    <p>Hollow Zero is currently offered as a limited-access product. Features, device support, action
+                        coverage, and availability may change without notice during onboarding and testing.</p>
                 </section>
 
-                <section class="faq-group">
-                    <p class="faq-group-label">Privacy &amp; Connectors</p>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>How do connectors handle authentication?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>The direction is user-owned account connections whenever the upstream API supports them.
-                                That means the user connects their own account instead of relying on a developer-funded
-                                shared API key.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>Will developers be paying for all user usage?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Not by default. Public connectors should move toward user-owned accounts, bring-your-own
-                                credentials, or clear creator-hosted pricing instead of quietly charging developers for
-                                every end-user action.</p>
-                        </div>
-                    </article>
+                <section class="doc-section">
+                    <h2>Using the service</h2>
+                    <p>You agree to use Hollow lawfully and only for tasks you are authorized to request. You are
+                        responsible for reviewing important actions, account connections, and outcomes produced on your
+                        behalf.</p>
                 </section>
 
-                <section class="faq-group">
-                    <p class="faq-group-label">Early Access</p>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>Can I get access now?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Access is opening in stages. The best current path is to join the early access list on the
-                                homepage so you can get rollout updates and access instructions.</p>
-                        </div>
-                    </article>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>Is the developer platform open?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>Not publicly. The developer platform is still private while the connector model, auth
-                                flows, and runtime are being tightened up.</p>
-                        </div>
-                    </article>
+                <section class="doc-section">
+                    <h2>Availability and limits</h2>
+                    <p>Because Hollow is evolving quickly, features may be delayed, interrupted, or unavailable. Hollow
+                        may limit access, pause features, or change product behavior to protect reliability, safety, or
+                        system capacity.</p>
                 </section>
 
-                <section class="faq-group">
-                    <p class="faq-group-label">Privacy &amp; Support</p>
-
-                    <article class="faq-item">
-                        <button class="faq-question" type="button">
-                            <span>Where can I read the privacy and support details?</span>
-                            <span class="faq-icon">+</span>
-                        </button>
-                        <div class="faq-answer">
-                            <p>The site now includes a public <a href="/privacy.html">privacy page</a> and <a
-                                    href="/support.html">support page</a> for the current early access phase.</p>
-                        </div>
-                    </article>
+                <section class="doc-section">
+                    <h2>Contact</h2>
+                    <p>Questions about these terms can be sent to <a href="mailto:luka@gethollow.com">luka@gethollow.com</a>.</p>
                 </section>
-            </div>
+            </article>
         </div>
     </main>
 
@@ -729,7 +610,6 @@
         const rootStyle = document.documentElement;
         const mobileBtn = document.getElementById("mobile-menu-btn");
         const mobileNav = document.getElementById("mobile-nav");
-        const faqButtons = document.querySelectorAll(".faq-question");
         let scrollTick = 0;
 
         const renderScrollDepth = () => {
@@ -750,12 +630,6 @@
             mobileBtn.classList.toggle("active");
             mobileNav.classList.toggle("active");
             document.body.style.overflow = mobileNav.classList.contains("active") ? "hidden" : "";
-        });
-
-        faqButtons.forEach((button) => {
-            button.addEventListener("click", () => {
-                button.parentElement.classList.toggle("active");
-            });
         });
 
         queueScrollDepth();
