@@ -370,9 +370,11 @@
         }
 
         .site-header {
-            position: sticky;
+            position: fixed;
             top: 0;
-            padding: 1rem 0;
+            left: 0;
+            right: 0;
+            padding: 0.6rem 0 0.9rem;
             z-index: 30;
         }
 
@@ -653,7 +655,7 @@
             isolation: isolate;
             overflow: hidden;
             min-height: 100svh;
-            padding-top: clamp(7.75rem, 11vw, 10rem);
+            padding-top: clamp(8.75rem, 12vw, 11rem);
             padding-bottom: clamp(11rem, 17vw, 14.5rem);
         }
 
@@ -704,24 +706,26 @@
         .hero-ribbon-shell {
             position: absolute;
             left: 50%;
-            top: -14rem;
+            top: -18rem;
             width: max(186vw, 190rem);
-            height: 96rem;
+            height: 104rem;
             transform: translateX(-50%);
             pointer-events: none;
             z-index: 0;
             opacity: calc(0.88 - 0.6 * var(--scroll-depth));
             -webkit-mask-image: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.9) 0%,
-                    rgba(0, 0, 0, 0.86) 28%,
-                    rgba(0, 0, 0, 0.7) 54%,
+                    rgba(0, 0, 0, 0.82) 0%,
+                    rgba(0, 0, 0, 1) 14%,
+                    rgba(0, 0, 0, 0.9) 34%,
+                    rgba(0, 0, 0, 0.72) 58%,
                     rgba(0, 0, 0, 0.54) 74%,
                     rgba(0, 0, 0, 0.28) 92%,
                     transparent 100%);
             mask-image: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.9) 0%,
-                    rgba(0, 0, 0, 0.86) 28%,
-                    rgba(0, 0, 0, 0.7) 54%,
+                    rgba(0, 0, 0, 0.82) 0%,
+                    rgba(0, 0, 0, 1) 14%,
+                    rgba(0, 0, 0, 0.9) 34%,
+                    rgba(0, 0, 0, 0.72) 58%,
                     rgba(0, 0, 0, 0.54) 74%,
                     rgba(0, 0, 0, 0.28) 92%,
                     transparent 100%);
@@ -743,7 +747,7 @@
         .hero-copy {
             position: relative;
             max-width: 54rem;
-            margin: -2.75rem auto 0;
+            margin: -4.95rem auto 0;
             z-index: 1;
         }
 
@@ -821,21 +825,15 @@
             border: 0;
         }
 
-        .hero-secondary-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 1.15rem;
-            color: var(--subtle);
-            text-decoration: none;
-            font-size: 0.86rem;
-            font-weight: 600;
-            transition: color 0.24s ease, text-shadow 0.24s ease;
+        .hero-form-wrap .form-status {
+            display: none;
+            min-height: 0;
+            margin-top: 0;
         }
 
-        .hero-secondary-link:hover {
-            color: var(--text);
-            text-shadow: 0 0 18px rgba(25, 118, 255, 0.12);
+        .hero-form-wrap .form-status.is-visible {
+            display: block;
+            margin-top: 0.75rem;
         }
 
         .hero-preview {
@@ -2153,7 +2151,7 @@
 
         @media (max-width: 820px) {
             .site-header {
-                padding-top: 0.8rem;
+                padding-top: 0.55rem;
             }
 
             .nav {
@@ -2182,7 +2180,11 @@
             }
 
             .hero {
-                padding-top: 6rem;
+                padding-top: 7.25rem;
+            }
+
+            .hero-copy {
+                margin-top: -3.95rem;
             }
 
             .hero-sub,
@@ -2374,13 +2376,13 @@
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="url(#heroRibbonCore)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-a"
-                            d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
+                            d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
                         <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-b"
-                            d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
+                            d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="rgba(121, 196, 255, 0.18)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
                         <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-c"
-                            d="M944 44C1128 84 1290 184 1370 328C1436 446 1424 554 1344 632C1280 696 1174 716 1086 774C968 852 942 994 1078 1110"
+                            d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="url(#heroRibbonCore)" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
                         <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-b"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
@@ -2418,7 +2420,6 @@
                             <button type="submit" class="button-primary">Join Early Access</button>
                         </form>
                         <div class="form-status" data-form-status aria-live="polite"></div>
-                        <a href="/developer/" class="hero-secondary-link">Developer Portal</a>
                     </div>
 
                     <div class="hero-preview">
