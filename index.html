@@ -31,6 +31,15 @@
 
     <link rel="canonical" href="https://gethollow.com/">
     <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <script>
+        (() => {
+            if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            document.documentElement.classList.add("hero-sequence-pending");
+        })();
+    </script>
 
     <script>
         (() => {
@@ -123,14 +132,14 @@
             pointer-events: none;
             background:
                 linear-gradient(180deg,
-                    rgba(0, 0, 0, calc(0.08 + 0.36 * var(--scroll-depth))) 0%,
-                    rgba(2, 6, 18, calc(0.14 + 0.34 * var(--scroll-depth))) 24%,
-                    rgba(0, 0, 0, calc(0.52 + 0.4 * var(--scroll-depth))) 64%,
-                    rgba(0, 0, 0, calc(0.92 + 0.06 * var(--scroll-depth))) 100%),
-                radial-gradient(92rem 54rem at 50% -2%, rgba(62, 110, 255, calc(0.34 - 0.3 * var(--scroll-depth))), rgba(28, 52, 144, calc(0.18 - 0.16 * var(--scroll-depth))) 40%, transparent 76%),
-                radial-gradient(82rem 48rem at 50% 26%, rgba(31, 66, 188, calc(0.24 - 0.22 * var(--scroll-depth))), transparent 72%),
-                radial-gradient(48rem 32rem at 16% 20%, rgba(41, 88, 255, calc(0.12 - 0.11 * var(--scroll-depth))), transparent 68%),
-                radial-gradient(44rem 28rem at 84% 22%, rgba(32, 74, 214, calc(0.1 - 0.09 * var(--scroll-depth))), transparent 70%),
+                    rgba(0, 0, 0, 0.08) 0%,
+                    rgba(2, 6, 18, 0.14) 24%,
+                    rgba(0, 0, 0, 0.52) 64%,
+                    rgba(0, 0, 0, 0.92) 100%),
+                radial-gradient(92rem 54rem at 50% -2%, rgba(62, 110, 255, 0.34), rgba(28, 52, 144, 0.18) 40%, transparent 76%),
+                radial-gradient(82rem 48rem at 50% 26%, rgba(31, 66, 188, 0.24), transparent 72%),
+                radial-gradient(48rem 32rem at 16% 20%, rgba(41, 88, 255, 0.12), transparent 68%),
+                radial-gradient(44rem 28rem at 84% 22%, rgba(32, 74, 214, 0.1), transparent 70%),
                 linear-gradient(180deg, rgba(35, 58, 150, 0.92) 0%, rgba(19, 34, 90, 0.92) 20%, rgba(11, 20, 52, 0.95) 54%, rgba(6, 10, 24, 0.99) 76%, rgba(0, 0, 0, 1) 100%);
         }
 
@@ -142,13 +151,14 @@
             pointer-events: none;
             background:
                 linear-gradient(180deg,
-                    rgba(0, 0, 0, calc(0.04 + 0.18 * var(--scroll-depth))) 0%,
-                    rgba(0, 0, 0, calc(0.08 + 0.34 * var(--scroll-depth))) 38%,
-                    rgba(0, 0, 0, calc(0.16 + 0.56 * var(--scroll-depth))) 100%),
+                    rgba(0, 0, 0, 0.04) 0%,
+                    rgba(0, 0, 0, 0.08) 38%,
+                    rgba(0, 0, 0, 0.16) 100%),
                 radial-gradient(circle at center, transparent 60%, rgba(1, 2, 10, 0.32) 100%),
                 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.18'/%3E%3C/svg%3E");
             background-size: auto, auto, 190px 190px;
-            opacity: calc(0.16 + 0.42 * var(--scroll-depth));
+            opacity: 0.16;
+            display: none;
         }
 
         .atmosphere {
@@ -157,7 +167,8 @@
             z-index: 0;
             pointer-events: none;
             overflow: hidden;
-            opacity: calc(1 - 0.82 * var(--scroll-depth));
+            opacity: 1;
+            display: none;
         }
 
         .atmosphere::before {
@@ -354,7 +365,6 @@
             background-position: 120px 80px, 640px 260px, 260px 980px, 1180px 720px;
             opacity: 0.16;
             filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.16));
-            animation: starTwinkle 10s ease-in-out infinite alternate;
         }
 
         main,
@@ -388,8 +398,7 @@
             padding: 0.92rem 1.2rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 999px;
-            background: linear-gradient(180deg, rgba(8, 12, 24, 0.7), rgba(8, 12, 24, 0.48));
-            backdrop-filter: blur(12px);
+            background: rgba(8, 12, 24, 0.86);
             box-shadow:
                 0 20px 54px rgba(0, 0, 0, 0.34),
                 inset 0 1px 0 rgba(255, 255, 255, 0.03);
@@ -679,6 +688,7 @@
             filter: blur(22px);
             opacity: calc(0.48 - 0.34 * var(--scroll-depth));
             transform: rotate(-2deg);
+            display: none;
         }
 
         .hero::after {
@@ -693,6 +703,7 @@
                     transparent 100%);
             filter: blur(24px);
             opacity: calc(0.42 - 0.3 * var(--scroll-depth));
+            display: none;
         }
 
         .hero-shell {
@@ -712,23 +723,7 @@
             transform: translateX(-50%);
             pointer-events: none;
             z-index: 0;
-            opacity: calc(0.88 - 0.6 * var(--scroll-depth));
-            -webkit-mask-image: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.82) 0%,
-                    rgba(0, 0, 0, 1) 14%,
-                    rgba(0, 0, 0, 0.9) 34%,
-                    rgba(0, 0, 0, 0.72) 58%,
-                    rgba(0, 0, 0, 0.54) 74%,
-                    rgba(0, 0, 0, 0.28) 92%,
-                    transparent 100%);
-            mask-image: linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.82) 0%,
-                    rgba(0, 0, 0, 1) 14%,
-                    rgba(0, 0, 0, 0.9) 34%,
-                    rgba(0, 0, 0, 0.72) 58%,
-                    rgba(0, 0, 0, 0.54) 74%,
-                    rgba(0, 0, 0, 0.28) 92%,
-                    transparent 100%);
+            opacity: 0.76;
         }
 
         .hero-ribbon-shell svg {
@@ -741,7 +736,16 @@
         .hero-ribbon-path {
             transform-box: fill-box;
             transform-origin: center;
-            will-change: transform, opacity, filter;
+            vector-effect: non-scaling-stroke;
+            shape-rendering: geometricPrecision;
+        }
+
+        .hero-ribbon-path--ambient {
+            opacity: 0.88;
+        }
+
+        .hero-ribbon-path--core {
+            will-change: opacity, stroke-dashoffset;
         }
 
         .hero-copy {
@@ -758,8 +762,9 @@
             height: 22rem;
             z-index: -1;
             background: radial-gradient(circle at center, rgba(67, 112, 255, 0.22), rgba(31, 59, 164, 0.12) 42%, transparent 76%);
-            filter: blur(48px);
+            filter: blur(32px);
             opacity: calc(0.82 - 0.58 * var(--scroll-depth));
+            display: none;
         }
 
         .hero h1 {
@@ -797,8 +802,7 @@
             padding: 0.55rem;
             border-radius: 999px;
             border: 1px solid rgba(157, 188, 255, 0.16);
-            background: linear-gradient(180deg, rgba(16, 25, 56, 0.84), rgba(18, 28, 68, 0.5));
-            backdrop-filter: blur(18px);
+            background: rgba(16, 25, 56, 0.88);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.04),
                 0 18px 44px rgba(12, 22, 66, 0.22),
@@ -856,9 +860,10 @@
             transform: translate(-50%, -50%);
             border-radius: 999px;
             background: radial-gradient(ellipse at center, rgba(37, 99, 255, 0.12), rgba(37, 99, 255, 0.04) 48%, transparent 74%);
-            filter: blur(28px);
+            filter: blur(18px);
             opacity: calc(0.7 - 0.42 * var(--scroll-depth));
             z-index: -1;
+            display: none;
         }
 
         .preview-pill {
@@ -870,14 +875,13 @@
             padding: 0 1rem;
             border-radius: 999px;
             border: 1px solid rgba(144, 178, 255, 0.1);
-            background: linear-gradient(180deg, rgba(18, 27, 58, 0.72), rgba(18, 28, 68, 0.34));
+            background: rgba(18, 27, 58, 0.76);
             color: rgba(236, 242, 252, 0.88);
             font-size: 0.86rem;
             line-height: 1;
-            backdrop-filter: blur(14px);
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.03),
-                0 8px 26px rgba(15, 23, 54, 0.14);
+                0 6px 18px rgba(15, 23, 54, 0.14);
             transition:
                 transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
                 border-color 0.35s ease,
@@ -895,18 +899,18 @@
             opacity: 0;
             z-index: -1;
             transition: opacity 0.45s ease;
+            display: none;
         }
 
         .preview-pill--active {
             border-color: rgba(124, 167, 255, 0.18);
             background: linear-gradient(180deg, rgba(20, 33, 79, 0.86), rgba(14, 22, 54, 0.62));
             transform: translateY(-1px) scale(1.03);
-            animation: actionFocus 5.8s ease-in-out infinite;
+            will-change: transform, opacity;
             box-shadow:
                 inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                0 14px 34px rgba(8, 14, 32, 0.28),
-                0 0 20px rgba(37, 99, 255, 0.16),
-                0 0 36px rgba(37, 99, 255, 0.08);
+                0 12px 24px rgba(8, 14, 32, 0.24),
+                0 0 14px rgba(37, 99, 255, 0.14);
             opacity: calc(1 - 0.2 * var(--scroll-depth));
         }
 
@@ -920,6 +924,7 @@
             margin: clamp(8.4rem, 14vw, 11.5rem) auto 0;
             min-height: clamp(24rem, 41vw, 34rem);
             padding: 0 0 2rem;
+            isolation: isolate;
             z-index: 1;
         }
 
@@ -930,11 +935,12 @@
             top: 42%;
             width: 54rem;
             height: 30rem;
-            transform: translate(-50%, calc(-50% + var(--hero-core-parallax)));
+            transform: translate(-50%, -50%);
             border-radius: 50%;
             background: radial-gradient(circle at center, rgba(66, 112, 255, 0.2), rgba(33, 61, 166, 0.1) 46%, transparent 78%);
-            filter: blur(60px);
-            opacity: calc(0.78 - 0.5 * var(--scroll-depth));
+            filter: blur(28px);
+            opacity: 0.78;
+            display: none;
         }
 
         .hero-visual::after {
@@ -946,9 +952,10 @@
             height: 24%;
             border-radius: 50%;
             background: radial-gradient(ellipse at center, rgba(67, 112, 255, 0.12), rgba(31, 59, 164, 0.04) 56%, transparent 78%);
-            filter: blur(40px);
-            transform: translate3d(0, calc(var(--hero-core-parallax) * 0.65), 0);
-            opacity: calc(0.7 - 0.46 * var(--scroll-depth));
+            filter: blur(18px);
+            transform: translate3d(0, 0, 0);
+            opacity: 0.7;
+            display: none;
         }
 
         .hero-floor-grid {
@@ -971,6 +978,7 @@
                     rgba(0, 0, 0, 0.64) 22%,
                     rgba(0, 0, 0, 0.22) 58%,
                     transparent 100%);
+            display: none;
         }
 
         .hero-floor-grid::before,
@@ -1000,14 +1008,14 @@
             border-radius: 50%;
             background:
                 radial-gradient(ellipse at center, rgba(67, 112, 255, 0.16), transparent 58%);
-            filter: blur(24px);
+            filter: blur(14px);
             opacity: calc(0.76 - 0.5 * var(--scroll-depth));
         }
 
         .device-system {
             position: relative;
             min-height: inherit;
-            transform: translate3d(0, var(--hero-system-shift), 0) scale(var(--hero-system-scale));
+            transform: none;
             transform-origin: 50% 58%;
         }
 
@@ -1023,15 +1031,16 @@
             top: 56%;
             width: 44rem;
             height: 20rem;
-            transform: translate(-50%, calc(-50% + (var(--hero-core-parallax) * 0.7)));
+            transform: translate(-50%, -50%);
             border-radius: 50%;
             background: radial-gradient(circle at center,
                     rgba(67, 112, 255, 0.12) 0%,
                     rgba(67, 112, 255, 0.09) 18%,
                     rgba(31, 59, 164, 0.05) 52%,
                     transparent 82%);
-            filter: blur(42px);
-            opacity: calc(0.5 - 0.34 * var(--scroll-depth));
+            filter: blur(20px);
+            opacity: 0.5;
+            display: none;
         }
 
         .device-system::after {
@@ -1064,10 +1073,7 @@
             stroke-width: 8.5;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter:
-                drop-shadow(0 0 8px rgba(37, 99, 255, 0.14))
-                drop-shadow(0 0 18px rgba(37, 99, 255, 0.08));
-            opacity: calc(1 - 0.42 * var(--scroll-depth));
+            display: none;
         }
 
         .device-link-stroke {
@@ -1076,28 +1082,17 @@
             stroke-width: 2.8;
             stroke-linecap: round;
             stroke-linejoin: round;
-            filter:
-                drop-shadow(0 0 6px rgba(37, 99, 255, 0.24))
-                drop-shadow(0 0 12px rgba(37, 99, 255, 0.1));
-            opacity: calc(1 - 0.34 * var(--scroll-depth));
+            opacity: 0.88;
         }
 
         .device-link-pulse-halo {
             fill: rgba(154, 197, 255, 0.22);
-            filter:
-                drop-shadow(0 0 8px rgba(37, 99, 255, 0.14))
-                drop-shadow(0 0 16px rgba(37, 99, 255, 0.08));
-            opacity: calc(1 - 0.46 * var(--scroll-depth));
+            display: none;
         }
 
         .device-link-pulse {
             fill: #dce9ff;
-            filter:
-                drop-shadow(0 0 6px rgba(37, 99, 255, 0.4))
-                drop-shadow(0 0 12px rgba(124, 58, 237, 0.08))
-                drop-shadow(0 0 16px rgba(34, 211, 238, 0.06));
-            animation: spectralPulse 6.8s ease-in-out infinite;
-            opacity: calc(1 - 0.3 * var(--scroll-depth));
+            display: none;
         }
 
         .device {
@@ -1112,8 +1107,9 @@
             z-index: -1;
             border-radius: 50%;
             background: radial-gradient(circle at center, rgba(25, 118, 255, 0.12), rgba(91, 33, 182, 0.05) 56%, transparent 78%);
-            filter: blur(52px);
-            opacity: calc(0.62 - 0.34 * var(--scroll-depth));
+            filter: blur(26px);
+            opacity: 0.62;
+            display: none;
         }
 
         .device-frame {
@@ -1145,6 +1141,7 @@
         .device-screen {
             position: absolute;
             overflow: hidden;
+            isolation: isolate;
             background:
                 radial-gradient(circle at center, rgba(14, 20, 44, 0.92), rgba(5, 8, 18, 0.98) 68%),
                 linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
@@ -1157,7 +1154,8 @@
             inset: 20% 18%;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(72, 122, 255, 0.2), rgba(91, 33, 182, 0.07) 54%, transparent 76%);
-            filter: blur(32px);
+            filter: blur(24px);
+            display: none;
         }
 
         .device-screen::after {
@@ -1170,24 +1168,24 @@
             filter: blur(14px);
             opacity: 0.56;
             pointer-events: none;
+            display: none;
         }
 
         .device-logo {
             position: absolute;
             top: 50%;
             left: 50%;
+            z-index: 1;
+            display: block;
             width: 30%;
             aspect-ratio: 1;
             transform: translate(-50%, -50%);
             object-fit: contain;
             filter:
-                brightness(1.14)
-                drop-shadow(0 0 8px rgba(115, 164, 255, 0.28))
-                drop-shadow(0 0 14px rgba(25, 118, 255, 0.18))
-                drop-shadow(0 0 20px rgba(124, 58, 237, 0.08))
-                drop-shadow(0 0 26px rgba(34, 211, 238, 0.06));
-            animation: logoHalo 16s ease-in-out infinite alternate;
-            opacity: calc(1 - 0.18 * var(--scroll-depth));
+                brightness(1.08)
+                drop-shadow(0 0 8px rgba(115, 164, 255, 0.24))
+                drop-shadow(0 0 14px rgba(25, 118, 255, 0.12));
+            opacity: 0.94;
         }
 
         .device-laptop {
@@ -1382,8 +1380,8 @@
         }
 
         .section:not(.hero) {
-            content-visibility: auto;
-            contain-intrinsic-size: 960px;
+            content-visibility: visible;
+            contain-intrinsic-size: auto;
         }
 
         .why-copy {
@@ -1749,107 +1747,13 @@
 
         .intro-header,
         .intro-nav {
-            will-change: opacity, transform, filter;
+            will-change: opacity, transform;
         }
 
         [data-reveal] {
             opacity: 1;
             transform: none;
             filter: none;
-        }
-
-        .motion-ready [data-reveal] {
-            transition:
-                opacity 0.8s ease,
-                transform 1s cubic-bezier(0.16, 1, 0.3, 1),
-                filter 1s ease;
-        }
-
-        .motion-ready [data-reveal].is-visible {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        .motion-ready .hero-ribbon-path {
-            opacity: 0;
-            filter: blur(14px);
-        }
-
-        .motion-ready .hero-ribbon-path--left {
-            transform: translate3d(-16%, 2%, 0) scaleX(0.82);
-        }
-
-        .motion-ready .hero-ribbon-path--right {
-            transform: translate3d(16%, -2%, 0) scaleX(0.82);
-        }
-
-        .motion-ready .hero-ribbon-path--top {
-            transform: translate3d(2%, -18%, 0) scale(0.84);
-        }
-
-        .motion-ready .hero-ribbon-path--bottom {
-            transform: translate3d(-2%, 16%, 0) scale(0.84);
-        }
-
-        .motion-ready .intro-header {
-            opacity: 0;
-            transform: translateY(1.6rem);
-            filter: blur(14px);
-        }
-
-        .motion-ready .intro-nav {
-            opacity: 0;
-            transform: translateY(-1.15rem);
-            filter: blur(14px);
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--left {
-            animation: ribbonSweepFromLeft 1.48s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--right {
-            animation: ribbonSweepFromRight 1.52s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--top {
-            animation: ribbonSweepFromTop 1.36s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--bottom {
-            animation: ribbonSweepFromBottom 1.56s cubic-bezier(0.16, 1, 0.3, 1) both;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--delay-a {
-            animation-delay: 0.05s;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--delay-b {
-            animation-delay: 0.14s;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--delay-c {
-            animation-delay: 0.22s;
-        }
-
-        .motion-ready.intro-playing .hero-ribbon-path--delay-d {
-            animation-delay: 0.3s;
-        }
-
-        .motion-ready.intro-playing .intro-header {
-            animation: introFadeUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) 1.08s both;
-        }
-
-        .motion-ready.intro-playing .intro-nav {
-            animation: introFadeDown 0.82s cubic-bezier(0.16, 1, 0.3, 1) 1.52s both;
-        }
-
-        .motion-ready.intro-complete .hero-ribbon-path,
-        .motion-ready.intro-complete .intro-header,
-        .motion-ready.intro-complete .intro-nav {
-            opacity: 1;
-            transform: none;
-            filter: blur(0);
         }
 
         @keyframes glowFloat {
@@ -1976,124 +1880,16 @@
             }
         }
 
-        @keyframes ribbonSweepFromLeft {
-            0% {
-                opacity: 0;
-                transform: translate3d(-16%, 2%, 0) scaleX(0.82);
-                filter: blur(18px);
-            }
-
-            58% {
-                opacity: 0.94;
-            }
-
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scaleX(1);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes ribbonSweepFromRight {
-            0% {
-                opacity: 0;
-                transform: translate3d(16%, -2%, 0) scaleX(0.82);
-                filter: blur(18px);
-            }
-
-            58% {
-                opacity: 0.94;
-            }
-
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scaleX(1);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes ribbonSweepFromTop {
-            0% {
-                opacity: 0;
-                transform: translate3d(2%, -18%, 0) scale(0.84);
-                filter: blur(18px);
-            }
-
-            60% {
-                opacity: 0.96;
-            }
-
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes ribbonSweepFromBottom {
-            0% {
-                opacity: 0;
-                transform: translate3d(-2%, 16%, 0) scale(0.84);
-                filter: blur(18px);
-            }
-
-            60% {
-                opacity: 0.96;
-            }
-
-            100% {
-                opacity: 1;
-                transform: translate3d(0, 0, 0) scale(1);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes introFadeUp {
-            0% {
-                opacity: 0;
-                transform: translateY(1.6rem);
-                filter: blur(14px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
-        }
-
-        @keyframes introFadeDown {
-            0% {
-                opacity: 0;
-                transform: translateY(-1.15rem);
-                filter: blur(14px);
-            }
-
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
-        }
-
         @keyframes actionFocus {
             0%,
             100% {
                 transform: translateY(-1px) scale(1.03);
-                box-shadow:
-                    inset 0 1px 0 rgba(255, 255, 255, 0.08),
-                    0 14px 34px rgba(8, 14, 32, 0.28),
-                    0 0 20px rgba(37, 99, 255, 0.16),
-                    0 0 36px rgba(37, 99, 255, 0.08);
+                opacity: 1;
             }
 
             50% {
-                transform: translateY(-3px) scale(1.045);
-                box-shadow:
-                    inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                    0 20px 42px rgba(8, 14, 32, 0.32),
-                    0 0 28px rgba(37, 99, 255, 0.2),
-                    0 0 46px rgba(37, 99, 255, 0.1);
+                transform: translateY(-2px) scale(1.04);
+                opacity: 0.94;
             }
         }
 
@@ -2110,24 +1906,6 @@
             }
         }
 
-        @keyframes spectralPulse {
-            0%,
-            100% {
-                fill: #dce9ff;
-                filter: drop-shadow(0 0 8px rgba(37, 99, 255, 0.48)) drop-shadow(0 0 16px rgba(124, 58, 237, 0.12)) drop-shadow(0 0 22px rgba(34, 211, 238, 0.08));
-            }
-
-            35% {
-                fill: #cadcff;
-                filter: drop-shadow(0 0 8px rgba(37, 99, 255, 0.52)) drop-shadow(0 0 17px rgba(124, 58, 237, 0.16)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
-            }
-
-            65% {
-                fill: #dff7ff;
-                filter: drop-shadow(0 0 8px rgba(37, 99, 255, 0.46)) drop-shadow(0 0 15px rgba(124, 58, 237, 0.11)) drop-shadow(0 0 22px rgba(34, 211, 238, 0.12));
-            }
-        }
-
         @keyframes logoHalo {
             0% {
                 opacity: 0.5;
@@ -2138,7 +1916,218 @@
             }
         }
 
+        @keyframes heroNavFadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes heroTextFadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes ribbonTraceForward {
+            0% {
+                opacity: 0;
+                stroke-dashoffset: 1.04;
+            }
+
+            14% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes ribbonTraceReverse {
+            0% {
+                opacity: 0;
+                stroke-dashoffset: -1.04;
+            }
+
+            14% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 1;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes ribbonAmbientForward {
+            0% {
+                opacity: 0.16;
+                stroke-dashoffset: 0.46;
+            }
+
+            100% {
+                opacity: 0.88;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @keyframes ribbonAmbientReverse {
+            0% {
+                opacity: 0.16;
+                stroke-dashoffset: -0.46;
+            }
+
+            100% {
+                opacity: 0.88;
+                stroke-dashoffset: 0;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            html.hero-sequence-pending .hero-copy,
+            html.hero-sequence-pending .site-header {
+                opacity: 0;
+            }
+
+            html.hero-sequence-start .hero-copy {
+                will-change: opacity;
+                animation: heroTextFadeIn 0.82s ease 1.34s both;
+            }
+
+            html.hero-sequence-start .site-header {
+                will-change: opacity;
+                animation: heroNavFadeIn 0.62s ease 2.28s both;
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) and (min-width: 961px) {
+            html.hero-sequence-pending .hero-ribbon-path--ambient {
+                stroke-dasharray: 1.04;
+                opacity: 0.16;
+            }
+
+            html.hero-sequence-pending .hero-ribbon-path--ambient.hero-ribbon-path--left,
+            html.hero-sequence-pending .hero-ribbon-path--ambient.hero-ribbon-path--right {
+                stroke-dashoffset: 0.46;
+            }
+
+            html.hero-sequence-pending .hero-ribbon-path--ambient.hero-ribbon-path--top,
+            html.hero-sequence-pending .hero-ribbon-path--ambient.hero-ribbon-path--bottom {
+                stroke-dashoffset: -0.46;
+            }
+
+            html.hero-sequence-pending .hero-ribbon-path--core {
+                opacity: 0;
+                stroke-dasharray: 1.04;
+            }
+
+            html.hero-sequence-pending .hero-ribbon-path--core.hero-ribbon-path--left,
+            html.hero-sequence-pending .hero-ribbon-path--core.hero-ribbon-path--right {
+                stroke-dashoffset: 1.04;
+            }
+
+            html.hero-sequence-pending .hero-ribbon-path--core.hero-ribbon-path--top,
+            html.hero-sequence-pending .hero-ribbon-path--core.hero-ribbon-path--bottom {
+                stroke-dashoffset: -1.04;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient {
+                will-change: opacity, stroke-dashoffset;
+                stroke-dasharray: 1.04;
+                animation-duration: 1.42s;
+                animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                animation-fill-mode: both;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--left,
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--right {
+                animation-name: ribbonAmbientForward;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--top,
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--bottom {
+                animation-name: ribbonAmbientReverse;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core {
+                will-change: opacity, stroke-dashoffset;
+                stroke-dasharray: 1.04;
+                animation-duration: 1.34s;
+                animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+                animation-fill-mode: both;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--left,
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--right {
+                animation-name: ribbonTraceForward;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--top,
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--bottom {
+                animation-name: ribbonTraceReverse;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--delay-a {
+                animation-delay: 0.06s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--delay-b {
+                animation-delay: 0.2s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--delay-c {
+                animation-delay: 0.34s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--ambient.hero-ribbon-path--delay-d {
+                animation-delay: 0.48s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--delay-a {
+                animation-delay: 0.12s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--delay-b {
+                animation-delay: 0.28s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--delay-c {
+                animation-delay: 0.44s;
+            }
+
+            html.hero-sequence-start .hero-ribbon-path--core.hero-ribbon-path--delay-d {
+                animation-delay: 0.6s;
+            }
+        }
+
         @media (max-width: 960px) {
+            .hero-ribbon-shell,
+            .device-link-shell {
+                display: none;
+            }
+
+            .hero-copy::before,
+            .hero-preview::before,
+            .hero-visual::before,
+            .hero-visual::after,
+            .device-system::before,
+            .device::before {
+                filter: blur(18px);
+            }
+
+            .preview-pill--active {
+                animation: none;
+            }
+
             .compare-strip {
                 grid-template-columns: 1fr;
             }
@@ -2366,43 +2355,43 @@
                                 <stop offset="1" stop-color="#7FE7FF" />
                             </linearGradient>
                         </defs>
-                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-a"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--left hero-ribbon-path--delay-a"
                             d="M-160 516C56 648 262 654 448 536C620 426 706 246 900 214C1086 184 1216 314 1396 322C1548 330 1662 248 1806 216C2010 170 2210 260 2500 416"
                             stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-b"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--left hero-ribbon-path--delay-b"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="rgba(121, 196, 255, 0.24)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--left hero-ribbon-path--delay-c"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--left hero-ribbon-path--delay-c"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="url(#heroRibbonCore)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-a"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--top hero-ribbon-path--delay-a"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-b"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--top hero-ribbon-path--delay-b"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="rgba(121, 196, 255, 0.18)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--top hero-ribbon-path--delay-c"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--top hero-ribbon-path--delay-c"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="url(#heroRibbonCore)" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-b"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--right hero-ribbon-path--delay-b"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
                             stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-c"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--right hero-ribbon-path--delay-c"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
                             stroke="url(#heroRibbonCore)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--right hero-ribbon-path--delay-d"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--right hero-ribbon-path--delay-d"
                             d="M-160 934C86 850 314 852 512 918C676 972 818 1070 986 1080C1152 1090 1286 1032 1418 994C1584 948 1772 966 1948 1042C2112 1112 2276 1126 2490 1076"
                             stroke="rgba(140,204,255,0.12)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-b"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--bottom hero-ribbon-path--delay-b"
                             d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
                             stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-c"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--bottom hero-ribbon-path--delay-c"
                             d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
                             stroke="url(#heroRibbonCore)" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-c"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--bottom hero-ribbon-path--delay-c"
                             d="M-140 1394C108 1304 350 1310 566 1378C746 1434 878 1542 1062 1550C1228 1558 1368 1490 1518 1446C1710 1390 1914 1410 2104 1498C2240 1560 2388 1596 2512 1574"
                             stroke="rgba(133,198,255,0.14)" stroke-width="8.5" stroke-linecap="round" stroke-linejoin="round" />
-                        <path class="hero-ribbon-path hero-ribbon-path--bottom hero-ribbon-path--delay-d"
+                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--bottom hero-ribbon-path--delay-d"
                             d="M-140 1394C108 1304 350 1310 566 1378C746 1434 878 1542 1062 1550C1228 1558 1368 1490 1518 1446C1710 1390 1914 1410 2104 1498C2240 1560 2388 1596 2512 1574"
                             stroke="url(#heroRibbonCore)" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
@@ -2454,7 +2443,7 @@
                             <div class="device device-phone" aria-hidden="true">
                                 <div class="device-frame">
                                     <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" />
+                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
                                     </div>
                                 </div>
                             </div>
@@ -2462,7 +2451,7 @@
                             <div class="device device-laptop" aria-hidden="true">
                                 <div class="device-frame">
                                     <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" />
+                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
                                     </div>
                                 </div>
                                 <div class="device-base"></div>
@@ -2472,7 +2461,7 @@
                                 <span class="watch-strap watch-strap--top"></span>
                                 <div class="device-frame">
                                     <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" />
+                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
                                     </div>
                                 </div>
                                 <span class="watch-strap watch-strap--bottom"></span>
@@ -2715,20 +2704,7 @@
         const mobileNav = document.getElementById("mobile-nav");
         const revealTargets = document.querySelectorAll("[data-reveal]:not(.intro-header)");
         const rootStyle = document.documentElement;
-        let introTimer = 0;
-
-        if (!prefersReducedMotion) {
-            document.documentElement.classList.add("motion-ready");
-            window.requestAnimationFrame(() => {
-                window.requestAnimationFrame(() => {
-                    document.documentElement.classList.add("intro-playing");
-                });
-            });
-            introTimer = window.setTimeout(() => {
-                document.documentElement.classList.remove("intro-playing");
-                document.documentElement.classList.add("intro-complete");
-            }, 2600);
-        }
+        let lastSceneSignature = "";
 
         mobileBtn.addEventListener("click", () => {
             mobileBtn.classList.toggle("active");
@@ -2743,6 +2719,31 @@
         }
 
         window.closeMobileMenu = closeMobileMenu;
+
+        function startHeroSequence() {
+            if (prefersReducedMotion) return;
+            if (!rootStyle.classList.contains("hero-sequence-pending")) return;
+
+            window.requestAnimationFrame(() => {
+                window.requestAnimationFrame(() => {
+                    rootStyle.classList.add("hero-sequence-start");
+                    rootStyle.classList.remove("hero-sequence-pending");
+                });
+            });
+        }
+
+        const sequenceReady = document.readyState === "loading"
+            ? new Promise((resolve) => document.addEventListener("DOMContentLoaded", resolve, { once: true }))
+            : Promise.resolve();
+
+        const fontReady = document.fonts && "ready" in document.fonts
+            ? Promise.race([
+                document.fonts.ready.catch(() => undefined),
+                new Promise((resolve) => window.setTimeout(resolve, 320))
+            ])
+            : Promise.resolve();
+
+        Promise.all([sequenceReady, fontReady]).then(startHeroSequence);
 
         if ("IntersectionObserver" in window && !prefersReducedMotion) {
             const observer = new IntersectionObserver((entries, obs) => {
@@ -2762,18 +2763,20 @@
 
         const renderSceneMotion = () => {
             sceneMotionTick = 0;
-            const scrollY = window.scrollY || window.pageYOffset || 0;
-            const viewportHeight = window.innerHeight || 1;
-            const maxScroll = Math.max(1, document.documentElement.scrollHeight - viewportHeight);
-            const scrollDepth = Math.min(Math.pow(scrollY / maxScroll, 0.82), 1);
-            const heroScroll = Math.min(scrollY, viewportHeight * 1.4);
-            const heroProgress = prefersReducedMotion ? 0 : Math.min(heroScroll / (viewportHeight * 1.05), 1);
-            const coreShift = prefersReducedMotion ? 0 : heroScroll * 0.02;
-            const previewShift = prefersReducedMotion ? 0 : heroProgress * -6;
-            const systemShift = prefersReducedMotion ? 0 : heroProgress * 12;
-            const systemScale = prefersReducedMotion ? 1 : 1 - heroProgress * 0.03;
+            const coreShift = 0;
+            const previewShift = 0;
+            const systemShift = 0;
+            const systemScale = 1;
+            const nextSceneSignature = [
+                coreShift.toFixed(2),
+                previewShift.toFixed(2),
+                systemShift.toFixed(2),
+                systemScale.toFixed(4)
+            ].join("|");
 
-            rootStyle.style.setProperty("--scroll-depth", scrollDepth.toFixed(4));
+            if (nextSceneSignature === lastSceneSignature) return;
+            lastSceneSignature = nextSceneSignature;
+
             rootStyle.style.setProperty("--hero-core-parallax", `${coreShift.toFixed(2)}px`);
             rootStyle.style.setProperty("--hero-preview-shift", `${previewShift.toFixed(2)}px`);
             rootStyle.style.setProperty("--hero-system-shift", `${systemShift.toFixed(2)}px`);
@@ -2786,13 +2789,6 @@
         };
 
         queueSceneMotion();
-        window.addEventListener("scroll", queueSceneMotion, { passive: true });
-        window.addEventListener("resize", queueSceneMotion);
-        window.addEventListener("pagehide", () => {
-            if (introTimer) {
-                window.clearTimeout(introTimer);
-            }
-        });
     </script>
 
     <script src="analytics.js" defer></script>
