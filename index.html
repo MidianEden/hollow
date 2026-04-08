@@ -132,15 +132,8 @@
             pointer-events: none;
             background:
                 linear-gradient(180deg,
-                    rgba(0, 0, 0, 0.08) 0%,
-                    rgba(2, 6, 18, 0.14) 24%,
-                    rgba(0, 0, 0, 0.52) 64%,
-                    rgba(0, 0, 0, 0.92) 100%),
-                radial-gradient(92rem 54rem at 50% -2%, rgba(62, 110, 255, 0.34), rgba(28, 52, 144, 0.18) 40%, transparent 76%),
-                radial-gradient(82rem 48rem at 50% 26%, rgba(31, 66, 188, 0.24), transparent 72%),
-                radial-gradient(48rem 32rem at 16% 20%, rgba(41, 88, 255, 0.12), transparent 68%),
-                radial-gradient(44rem 28rem at 84% 22%, rgba(32, 74, 214, 0.1), transparent 70%),
-                linear-gradient(180deg, rgba(35, 58, 150, 0.92) 0%, rgba(19, 34, 90, 0.92) 20%, rgba(11, 20, 52, 0.95) 54%, rgba(6, 10, 24, 0.99) 76%, rgba(0, 0, 0, 1) 100%);
+                    rgba(0, 0, 0, 0.98) 0%,
+                    rgba(0, 0, 0, 1) 100%);
         }
 
         body::after {
@@ -396,12 +389,14 @@
             justify-content: space-between;
             gap: 1rem;
             padding: 0.92rem 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(126, 167, 255, 0.22);
             border-radius: 999px;
-            background: rgba(8, 12, 24, 0.86);
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(16px);
             box-shadow:
-                0 20px 54px rgba(0, 0, 0, 0.34),
-                inset 0 1px 0 rgba(255, 255, 255, 0.03);
+                0 20px 54px rgba(0, 0, 0, 0.52),
+                0 0 24px rgba(37, 99, 255, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.06);
         }
 
         .brand {
@@ -744,7 +739,7 @@
         }
 
         .hero-ribbon-path--ambient {
-            opacity: 0.88;
+            opacity: 1;
         }
 
         .hero-ribbon-path--core {
@@ -993,15 +988,19 @@
             content: "";
             position: absolute;
             left: 50%;
-            top: 42%;
-            width: 54rem;
-            height: 30rem;
+            top: 50%;
+            width: 68rem;
+            height: 38rem;
             transform: translate(-50%, -50%);
             border-radius: 50%;
-            background: radial-gradient(circle at center, rgba(66, 112, 255, 0.2), rgba(33, 61, 166, 0.1) 46%, transparent 78%);
-            filter: blur(28px);
-            opacity: 0.78;
-            display: none;
+            background: radial-gradient(circle at center,
+                    rgba(82, 154, 255, 0.38) 0%,
+                    rgba(45, 102, 255, 0.24) 32%,
+                    rgba(18, 52, 150, 0.12) 56%,
+                    transparent 84%);
+            filter: blur(42px);
+            opacity: 1;
+            display: block;
         }
 
         .hero-visual::after {
@@ -1012,10 +1011,10 @@
             bottom: 4%;
             height: 24%;
             border-radius: 50%;
-            background: radial-gradient(ellipse at center, rgba(67, 112, 255, 0.12), rgba(31, 59, 164, 0.04) 56%, transparent 78%);
-            filter: blur(18px);
+            background: radial-gradient(ellipse at center, rgba(82, 154, 255, 0.24), rgba(31, 72, 196, 0.1) 56%, transparent 80%);
+            filter: blur(24px);
             transform: translate3d(0, 0, 0);
-            opacity: 0.7;
+            opacity: 0.98;
             display: none;
         }
 
@@ -1090,18 +1089,18 @@
         .device-system::before {
             left: 50%;
             top: 56%;
-            width: 44rem;
-            height: 20rem;
+            width: 52rem;
+            height: 25rem;
             transform: translate(-50%, -50%);
             border-radius: 50%;
             background: radial-gradient(circle at center,
-                    rgba(67, 112, 255, 0.12) 0%,
-                    rgba(67, 112, 255, 0.09) 18%,
-                    rgba(31, 59, 164, 0.05) 52%,
+                    rgba(110, 178, 255, 0.3) 0%,
+                    rgba(72, 140, 255, 0.18) 20%,
+                    rgba(31, 59, 164, 0.1) 54%,
                     transparent 82%);
-            filter: blur(20px);
-            opacity: 0.5;
-            display: none;
+            filter: blur(30px);
+            opacity: 0.96;
+            display: block;
         }
 
         .device-system::after {
@@ -1204,8 +1203,8 @@
             overflow: hidden;
             isolation: isolate;
             background:
-                radial-gradient(circle at center, rgba(14, 20, 44, 0.92), rgba(5, 8, 18, 0.98) 68%),
-                linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0));
+                radial-gradient(circle at center, rgba(8, 12, 24, 0.84), rgba(1, 2, 6, 0.995) 74%),
+                linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0));
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
@@ -1242,10 +1241,7 @@
             aspect-ratio: 1;
             transform: translate(-50%, -50%);
             object-fit: contain;
-            filter:
-                brightness(1.08)
-                drop-shadow(0 0 8px rgba(115, 164, 255, 0.24))
-                drop-shadow(0 0 14px rgba(25, 118, 255, 0.12));
+            filter: brightness(1.04);
             opacity: 0.94;
         }
 
@@ -1281,6 +1277,8 @@
         .device-laptop .device-screen {
             inset: 3.5% 3.2% 8%;
             border-radius: 1rem 1rem 0.55rem 0.55rem;
+            background:
+                linear-gradient(180deg, rgba(4, 6, 12, 0.98), rgba(0, 0, 0, 1));
         }
 
         .device-laptop .device-base {
@@ -1360,6 +1358,8 @@
         .device-phone .device-screen {
             inset: 3.6%;
             border-radius: 1.4rem;
+            background:
+                linear-gradient(180deg, rgba(4, 6, 12, 0.98), rgba(0, 0, 0, 1));
         }
 
         .device-watch {
@@ -1421,6 +1421,8 @@
         .device-watch .device-screen {
             inset: 4.3%;
             border-radius: 1.42rem;
+            background:
+                linear-gradient(180deg, rgba(4, 6, 12, 0.98), rgba(0, 0, 0, 1));
         }
 
         .device-watch .device-logo {
@@ -2285,13 +2287,8 @@
                 padding: 0.74rem 0.88rem;
             }
 
-            .nav-links,
-            .nav-actions .nav-cta {
-                display: none;
-            }
-
             .mobile-menu-btn {
-                display: inline-flex;
+                display: none;
             }
 
             h1 {
@@ -2717,10 +2714,6 @@
                 <span class="brand-word">Hollow</span>
             </a>
 
-            <nav class="nav-links" aria-label="Primary">
-                <a href="#why" class="nav-link">How Hollow Works</a>
-            </nav>
-
             <div class="nav-actions">
                 <a href="#contact" class="nav-cta">Join Early Access</a>
                 <div id="profile-icon" title="Account">?</div>
@@ -2732,13 +2725,6 @@
             </div>
         </div>
     </header>
-
-    <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
-        <div class="mobile-nav__inner">
-            <a href="#why" onclick="closeMobileMenu()">How Hollow Works</a>
-            <a href="#contact" onclick="closeMobileMenu()">Early Access</a>
-        </div>
-    </nav>
 
     <main>
         <section class="hero" id="top">
@@ -2755,37 +2741,28 @@
                         </defs>
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--left hero-ribbon-path--delay-a"
                             d="M-160 516C56 648 262 654 448 536C620 426 706 246 900 214C1086 184 1216 314 1396 322C1548 330 1662 248 1806 216C2010 170 2210 260 2500 416"
-                            stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="rgba(86, 156, 255, 0.34)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--left hero-ribbon-path--delay-b"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
-                            stroke="rgba(121, 196, 255, 0.24)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="rgba(118, 186, 255, 0.78)" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--left hero-ribbon-path--delay-c"
                             d="M-120 550C86 678 288 684 470 566C640 454 726 276 914 240C1084 208 1208 332 1398 344C1550 354 1678 280 1816 242C2020 184 2210 280 2480 458"
                             stroke="url(#heroRibbonCore)" stroke-width="5.5" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--top hero-ribbon-path--delay-a"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
-                            stroke="rgba(123, 191, 255, 0.1)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="rgba(86, 156, 255, 0.34)" stroke-width="34" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--top hero-ribbon-path--delay-b"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
-                            stroke="rgba(121, 196, 255, 0.18)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="rgba(118, 186, 255, 0.74)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--top hero-ribbon-path--delay-c"
                             d="M-220 172C44 222 276 252 504 226C700 202 852 106 1046 114C1238 122 1372 238 1422 390C1466 524 1434 620 1344 690C1266 750 1168 742 1086 786C970 848 942 994 1078 1110"
                             stroke="url(#heroRibbonCore)" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--right hero-ribbon-path--delay-b"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
-                            stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+                            stroke="rgba(118, 186, 255, 0.74)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
                         <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--right hero-ribbon-path--delay-c"
                             d="M-240 784C14 706 236 714 424 790C576 852 714 946 874 942C1044 938 1154 820 1314 778C1492 732 1658 798 1770 914C1862 1010 1960 1048 2144 1028C2276 1014 2382 968 2488 896"
                             stroke="url(#heroRibbonCore)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round" />
-                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--right hero-ribbon-path--delay-d"
-                            d="M-160 934C86 850 314 852 512 918C676 972 818 1070 986 1080C1152 1090 1286 1032 1418 994C1584 948 1772 966 1948 1042C2112 1112 2276 1126 2490 1076"
-                            stroke="rgba(140,204,255,0.12)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" />
-                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--ambient hero-ribbon-path--bottom hero-ribbon-path--delay-b"
-                            d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
-                            stroke="rgba(121, 196, 255, 0.16)" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
-                        <path pathLength="1" class="hero-ribbon-path hero-ribbon-path--core hero-ribbon-path--bottom hero-ribbon-path--delay-c"
-                            d="M-220 1118C34 1028 280 1038 494 1110C684 1174 814 1278 986 1276C1166 1274 1298 1164 1472 1118C1674 1064 1876 1120 2052 1240C2208 1346 2356 1378 2508 1354"
-                            stroke="url(#heroRibbonCore)" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                 </div>
                 <div class="hero-copy intro-header" data-reveal>
@@ -2806,12 +2783,6 @@
                                     <button type="submit" class="button-primary">Join Early Access</button>
                                 </form>
                                 <div class="form-status" data-form-status aria-live="polite"></div>
-                            </div>
-
-                            <div class="hero-preview">
-                                <span class="preview-pill">Important email flagged</span>
-                                <span class="preview-pill preview-pill--active">Draft ready</span>
-                                <span class="preview-pill">Follow-up scheduled</span>
                             </div>
                         </div>
                     </div>
@@ -3058,13 +3029,16 @@
         const rootStyle = document.documentElement;
         let lastSceneSignature = "";
 
-        mobileBtn.addEventListener("click", () => {
-            mobileBtn.classList.toggle("active");
-            mobileNav.classList.toggle("active");
-            document.body.style.overflow = mobileNav.classList.contains("active") ? "hidden" : "";
-        });
+        if (mobileBtn && mobileNav) {
+            mobileBtn.addEventListener("click", () => {
+                mobileBtn.classList.toggle("active");
+                mobileNav.classList.toggle("active");
+                document.body.style.overflow = mobileNav.classList.contains("active") ? "hidden" : "";
+            });
+        }
 
         function closeMobileMenu() {
+            if (!mobileBtn || !mobileNav) return;
             mobileBtn.classList.remove("active");
             mobileNav.classList.remove("active");
             document.body.style.overflow = "";
