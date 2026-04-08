@@ -5,28 +5,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Hollow Zero | Personal Assistant Across Your Devices</title>
-    <meta name="title" content="Hollow Zero | Personal Assistant Across Your Devices">
+    <title>Hollow Zero | The Assistant That Helps You Follow Through</title>
+    <meta name="title" content="Hollow Zero | The Assistant That Helps You Follow Through">
     <meta name="description"
-        content="Hollow Zero is your personal assistant across iPhone, Mac, Telegram, and watch, helping with emails, follow-ups, scheduling, reminders, and connected tools.">
+        content="Hollow Zero helps you stay on top of emails, follow-ups, and scheduling so important things do not slip through.">
     <meta name="keywords"
-        content="Hollow Zero, Hollow, cross-surface assistant, AI assistant, watch assistant, Telegram assistant, Mac assistant, iPhone assistant, connectors, developer platform, early access">
+        content="Hollow Zero, Hollow, personal assistant, follow-ups, scheduling, email assistant, reminders, productivity assistant, early access">
     <meta name="author" content="Hollow">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gethollow.com/">
-    <meta property="og:title" content="Hollow Zero | Personal Assistant Across Your Devices">
+    <meta property="og:title" content="Hollow Zero | The Assistant That Helps You Follow Through">
     <meta property="og:description"
-        content="A personal assistant across your surfaces, with real help for emails, follow-ups, scheduling, reminders, and connected tools.">
+        content="Hollow Zero helps you stay on top of emails, follow-ups, and scheduling so important things do not slip through.">
     <meta property="og:image" content="https://gethollow.com/0wproto.png">
     <meta property="og:site_name" content="Hollow">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://gethollow.com/">
-    <meta property="twitter:title" content="Hollow Zero | Personal Assistant Across Your Devices">
+    <meta property="twitter:title" content="Hollow Zero | The Assistant That Helps You Follow Through">
     <meta property="twitter:description"
-        content="Your personal assistant across your surfaces, with real help for email, follow-ups, scheduling, reminders, and connected tools.">
+        content="The assistant that helps you stay on top of emails, follow-ups, and scheduling.">
     <meta property="twitter:image" content="https://gethollow.com/0wproto.png">
 
     <link rel="canonical" href="https://gethollow.com/">
@@ -68,7 +68,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Hollow Zero",
-        "description": "Hollow Zero is a personal assistant across iPhone, watch, Telegram, and Mac, with shared memory, connected tools, and real help for email, scheduling, follow-ups, reminders, and daily work.",
+        "description": "Hollow Zero is a personal assistant that helps you stay on top of emails, follow-ups, scheduling, and reminders across your devices.",
         "image": "https://gethollow.com/0wproto.png",
         "brand": {
             "@type": "Brand",
@@ -1449,7 +1449,7 @@
 
         .compare-strip {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
             gap: 1.35rem;
             align-items: stretch;
         }
@@ -1459,7 +1459,7 @@
             flex-direction: column;
             justify-content: flex-start;
             padding: 2.3rem 2rem 2.6rem;
-            min-height: 24.5rem;
+            min-height: 21.5rem;
             height: 100%;
             position: relative;
             overflow: hidden;
@@ -2795,10 +2795,8 @@
             </a>
 
             <nav class="nav-links" aria-label="Primary">
-                <a href="#why" class="nav-link">Why Hollow</a>
+                <a href="#why" class="nav-link">How It Works</a>
                 <a href="#demo" class="nav-link">See The Loop</a>
-                <a href="#platform" class="nav-link">Platform</a>
-                <a href="/developer/" class="nav-link">Developers</a>
             </nav>
 
             <div class="nav-actions">
@@ -2815,10 +2813,8 @@
 
     <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile">
         <div class="mobile-nav__inner">
-            <a href="#why" onclick="closeMobileMenu()">Why Hollow</a>
+            <a href="#why" onclick="closeMobileMenu()">How It Works</a>
             <a href="#demo" onclick="closeMobileMenu()">See The Loop</a>
-            <a href="#platform" onclick="closeMobileMenu()">Platform</a>
-            <a href="/developer/" onclick="closeMobileMenu()">Developers</a>
             <a href="#contact" onclick="closeMobileMenu()">Early Access</a>
         </div>
     </nav>
@@ -2880,11 +2876,11 @@
                 <div class="hero-copy intro-header" data-reveal>
                     <div class="hero-copy-grid">
                         <div class="hero-copy-main">
-                            <h1><span>Your personal assistant.</span><span>For the stuff you forget, avoid, or miss.</span></h1>
+                            <h1><span>For the stuff you</span><span>forget, avoid, or miss.</span></h1>
                         </div>
                         <div class="hero-copy-side">
                             <p class="hero-sub">
-                                Hollow Zero helps with emails, follow-ups, scheduling, reminders, and connected actions across your iPhone, Mac, Telegram, and watch.
+                                Hollow keeps track of your emails, follow-ups, and schedule, then helps you act before things slip through.
                             </p>
 
                             <div class="hero-form-wrap">
@@ -2898,8 +2894,8 @@
 
                             <div class="hero-preview">
                                 <span class="preview-pill">Important email flagged</span>
-                                <span class="preview-pill preview-pill--active">Reply drafted</span>
-                                <span class="preview-pill">Task created</span>
+                                <span class="preview-pill preview-pill--active">Draft ready</span>
+                                <span class="preview-pill">Follow-up scheduled</span>
                             </div>
                         </div>
                     </div>
@@ -2955,84 +2951,73 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hero-device-caption">Phone / Mac / Watch</div>
+                    <div class="hero-device-caption">Flags / Drafts / Follows up</div>
             </div>
         </section>
 
         <section class="section section-divider why" id="why">
             <div class="container">
                 <div class="why-copy" data-reveal>
-                    <h2>Why Hollow?</h2>
+                    <h2>Don&apos;t drop the ball.</h2>
                     <p class="section-sub">
-                        Most assistants live in one app, one tab, or one device. Hollow Zero is being built as a real
-                        personal assistant that keeps context across your surfaces and gets more useful as you connect the tools you already use.
+                        Hollow is built around one job: notice what matters, bring it back to you, and help you follow through before it becomes another thing hanging over you.
                     </p>
                 </div>
 
                 <div class="compare-strip" data-reveal>
-                    <article class="compare-card compare-card--negative">
-                        <h3 class="compare-kicker">General Chat Assistants</h3>
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">1. Something important lands</h3>
                         <ul class="compare-list">
                             <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Great at answers, weaker at acting like a real assistant</span>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>An email, request, follow-up, or calendar change comes in.</span>
                             </li>
                             <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Usually trapped in one app or tab</span>
-                            </li>
-                            <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Real work often stops at suggestions instead of moving forward</span>
-                            </li>
-                            <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Easy to lose context when switching surfaces</span>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Normally this is where it gets buried, delayed, or forgotten.</span>
                             </li>
                         </ul>
                     </article>
 
-                    <article class="compare-card compare-card--negative">
-                        <h3 class="compare-kicker">Device-Only Wearables</h3>
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">2. Hollow notices</h3>
                         <ul class="compare-list">
                             <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Too narrow to act like a full assistant</span>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>It flags what matters instead of waiting for you to remember it later.</span>
                             </li>
                             <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Weak continuity with desktop workflows</span>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>You get the nudge where you are instead of discovering it too late.</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">3. Hollow helps you act</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Draft the reply, suggest the next step, or tee up the follow-up.</span>
                             </li>
                             <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Limited integrations</span>
-                            </li>
-                            <li>
-                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
-                                <span>Feels like a side tool, not a system</span>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Move faster with a guided action instead of starting from a blank chat.</span>
                             </li>
                         </ul>
                     </article>
 
                     <article class="compare-card compare-card--featured">
-                        <span class="compare-badge">HOLLOW</span>
-                        <h3 class="compare-kicker">Hollow Zero</h3>
+                        <span class="compare-badge">OUTCOME</span>
+                        <h3 class="compare-kicker">4. You stay on top of it</h3>
                         <ul class="compare-list">
                             <li>
                                 <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>A personal assistant that follows you across phone, Mac, Telegram, and watch</span>
+                                <span>Less mental overhead. Fewer dropped replies. Less stuff lingering in the background.</span>
                             </li>
                             <li>
                                 <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>One shared memory across phone, watch, and desktop</span>
-                            </li>
-                            <li>
-                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>Useful for real work like email, scheduling, follow-ups, and reminders</span>
-                            </li>
-                            <li>
-                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>Connected accounts and connectors let it go beyond one app</span>
+                                <span>That is the job: make sure important things do not slip through.</span>
                             </li>
                         </ul>
                     </article>
@@ -3042,9 +3027,9 @@
 
         <section class="section section-divider demo" id="demo">
             <div class="container demo-shell" data-reveal>
-                <h2>See the system move.</h2>
+                <h2>See the loop in motion.</h2>
                 <p class="section-sub">
-                    A short look at Hollow Zero as the early experience comes into focus.
+                    A quick look at how Hollow notices something, brings it back to you, and helps you follow through.
                 </p>
 
                 <div class="video-frame" data-video-parallax>
@@ -3061,18 +3046,18 @@
 
         <section class="section section-divider statement" id="platform">
             <div class="container statement-shell" data-reveal>
-                <h2>One assistant. Across your surfaces. Connected to your tools.</h2>
+                <h2>A personal assistant first. More powerful as you connect more of your life.</h2>
                 <p class="statement-sub">
-                    Hollow Zero starts with concrete daily work like email, scheduling, follow-ups, and reminders, then gets stronger as you connect the tools and accounts you already rely on.
+                    Hollow starts with the core things people actually drop: emails, follow-ups, scheduling, reminders, and actions. Connected tools and accounts make it stronger later, without being the whole pitch.
                 </p>
             </div>
         </section>
 
         <section class="section section-divider cta" id="contact">
             <div class="container cta-shell" data-reveal>
-                <h2>Get access before the wider rollout.</h2>
+                <h2>Get access before things start slipping through again.</h2>
                 <p class="section-sub">
-                    Join the list for early access to Hollow Zero as it grows into a fuller personal assistant across your devices and connected tools.
+                    Join the list for early access to Hollow as it grows into a fuller personal assistant that helps you stay on top of what matters.
                 </p>
 
                 <div class="cta-form-wrap">
