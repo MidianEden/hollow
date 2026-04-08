@@ -750,8 +750,9 @@
 
         .hero-copy {
             position: relative;
-            max-width: 54rem;
+            max-width: 68rem;
             margin: -4.95rem auto 0;
+            text-align: left;
             z-index: 1;
         }
 
@@ -767,16 +768,34 @@
             display: none;
         }
 
+        .hero-copy-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(19rem, 0.92fr);
+            align-items: end;
+            gap: clamp(2rem, 4vw, 4.25rem);
+        }
+
+        .hero-copy-side {
+            width: 100%;
+            max-width: 28rem;
+            justify-self: end;
+        }
+
         .hero h1 {
             max-width: 7.9ch;
-            margin: 0 auto;
-            font-size: clamp(4.2rem, 10vw, 7.8rem);
-            line-height: 0.86;
+            margin: 0;
+            font-size: clamp(3.65rem, 7.6vw, 6.3rem);
+            line-height: 0.89;
             letter-spacing: -0.078em;
         }
 
         .hero h1 span {
             display: block;
+        }
+
+        .hero-copy-side .hero-sub {
+            max-width: 28rem;
+            margin: 0;
         }
 
         .hero-sub,
@@ -793,6 +812,11 @@
         .hero-form-wrap {
             max-width: 34rem;
             margin: 3.35rem auto 0;
+        }
+
+        .hero-copy-side .hero-form-wrap {
+            max-width: 28rem;
+            margin: 2rem 0 0;
         }
 
         .hero-form {
@@ -848,6 +872,11 @@
             gap: 0.7rem;
             margin-top: 2.45rem;
             transform: translate3d(0, var(--hero-preview-shift), 0);
+        }
+
+        .hero-copy-side .hero-preview {
+            justify-content: flex-start;
+            margin-top: 1.7rem;
         }
 
         .hero-preview::before {
@@ -2196,6 +2225,34 @@
                 display: none;
             }
 
+            .hero-copy {
+                text-align: center;
+            }
+
+            .hero-copy-grid {
+                grid-template-columns: 1fr;
+                gap: 1.75rem;
+            }
+
+            .hero-copy-side {
+                max-width: 34rem;
+                justify-self: center;
+            }
+
+            .hero h1 {
+                margin: 0 auto;
+            }
+
+            .hero-copy-side .hero-sub,
+            .hero-copy-side .hero-form-wrap {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-copy-side .hero-preview {
+                justify-content: center;
+            }
+
             .hero-copy::before,
             .hero-preview::before,
             .hero-visual::before,
@@ -2757,24 +2814,30 @@
                     </svg>
                 </div>
                 <div class="hero-copy intro-header" data-reveal>
-                    <h1><span>Your personal assistant.</span><span>For the stuff you forget, avoid, or miss.</span></h1>
-                    <p class="hero-sub">
-                        Hollow Zero helps with emails, follow-ups, scheduling, reminders, and connected actions across your iPhone, Mac, Telegram, and watch.
-                    </p>
+                    <div class="hero-copy-grid">
+                        <div class="hero-copy-main">
+                            <h1><span>Your personal assistant.</span><span>For the stuff you forget, avoid, or miss.</span></h1>
+                        </div>
+                        <div class="hero-copy-side">
+                            <p class="hero-sub">
+                                Hollow Zero helps with emails, follow-ups, scheduling, reminders, and connected actions across your iPhone, Mac, Telegram, and watch.
+                            </p>
 
-                    <div class="hero-form-wrap">
-                        <form class="hero-form" data-newsletter-form novalidate>
-                            <label for="hero-email" class="sr-only">Email</label>
-                            <input id="hero-email" type="email" placeholder="Email for updates" required />
-                            <button type="submit" class="button-primary">Join Early Access</button>
-                        </form>
-                        <div class="form-status" data-form-status aria-live="polite"></div>
-                    </div>
+                            <div class="hero-form-wrap">
+                                <form class="hero-form" data-newsletter-form novalidate>
+                                    <label for="hero-email" class="sr-only">Email</label>
+                                    <input id="hero-email" type="email" placeholder="Email for updates" required />
+                                    <button type="submit" class="button-primary">Join Early Access</button>
+                                </form>
+                                <div class="form-status" data-form-status aria-live="polite"></div>
+                            </div>
 
-                    <div class="hero-preview">
-                        <span class="preview-pill">Important email flagged</span>
-                        <span class="preview-pill preview-pill--active">Reply drafted</span>
-                        <span class="preview-pill">Task created</span>
+                            <div class="hero-preview">
+                                <span class="preview-pill">Important email flagged</span>
+                                <span class="preview-pill preview-pill--active">Reply drafted</span>
+                                <span class="preview-pill">Task created</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
