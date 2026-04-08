@@ -495,6 +495,43 @@
         line-height: 1.6;
       }
 
+      .field-help {
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
+        line-height: 1.65;
+        color: #64748b;
+      }
+
+      .helper-card {
+        border-radius: 1.35rem;
+        border: 1px solid rgba(91, 113, 168, 0.14);
+        background: rgba(255, 255, 255, 0.72);
+        padding: 1rem 1.1rem;
+      }
+
+      .helper-list {
+        margin: 0.9rem 0 0;
+        padding-left: 1rem;
+        color: #475569;
+        font-size: 0.92rem;
+        line-height: 1.7;
+      }
+
+      .helper-code {
+        margin-top: 0.65rem;
+        display: block;
+        overflow-wrap: anywhere;
+        border-radius: 0.95rem;
+        border: 1px solid rgba(91, 113, 168, 0.14);
+        background: rgba(248, 250, 252, 0.95);
+        padding: 0.8rem 0.95rem;
+        font-size: 0.78rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+
       input:focus,
       select:focus,
       textarea:focus {
@@ -926,6 +963,14 @@
                   ></textarea>
                 </label>
                 <label class="field md:col-span-2">
+                  Identifiers
+                  <textarea
+                    id="connector-identifiers"
+                    placeholder="incident, oncall, triage, pager, severity"
+                  ></textarea>
+                  <span class="field-help">Add at least 5 intent keywords or phrases Hollow can use later to decide whether this connector is relevant.</span>
+                </label>
+                <label class="field md:col-span-2">
                   Settings Schema Json
                   <textarea
                     id="connector-settings-schema"
@@ -936,8 +981,9 @@
                   Auth Schema Json
                   <textarea
                     id="connector-auth-schema"
-                    placeholder='{"flow":"oauth","connect_label":"Connect account","authorize_url":"https://example.com/oauth/authorize"}'
+                    placeholder='{"flow":"oauth","connect_label":"Connect account","authorize_url":"https://example.com/oauth/authorize","token_url":"https://example.com/oauth/token","client_id":"client_123","client_secret":"secret_abc","pkce":true,"authorize_params":{"access_type":"offline"}}'
                   ></textarea>
+                  <span class="field-help">Supported keys now include <code>authorize_url</code>, <code>token_url</code>, <code>client_id</code>, <code>client_secret</code>, <code>pkce</code>, <code>authorize_params</code>, <code>token_params</code>, and token extraction paths like <code>access_token_path</code>.</span>
                 </label>
                 <label class="field md:col-span-2">
                   Scopes
@@ -960,6 +1006,63 @@
                     placeholder='{"version":"1.0"}'
                   ></textarea>
                 </label>
+                <div class="md:col-span-2 grid gap-4 xl:grid-cols-2">
+                  <div class="helper-card">
+                    <div class="eyebrow">Backend Contract</div>
+                    <div class="mt-3 text-lg font-black text-slate-900">
+                      Developers do not need access to Hollow backend.
+                    </div>
+                    <p class="mt-3 text-sm leading-7 text-slate-600">
+                      Hollow stores installs, runs outbound HTTP actions, and
+                      hosts the generic OAuth callback. Developers only need a
+                      dashboard account plus access to the upstream API or
+                      their own service.
+                    </p>
+                    <div class="mt-4 text-xs font-black uppercase tracking-[0.18em] text-slate-500">
+                      OAuth callback URL
+                    </div>
+                    <code id="oauth-callback-url" class="helper-code"></code>
+                    <p class="mt-3 text-xs leading-6 text-slate-500">
+                      Register this URL with the upstream provider if the
+                      connector uses OAuth.
+                    </p>
+                    <div class="mt-4 flex flex-wrap gap-3">
+                      <select id="connector-preset" class="rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700">
+                        <option value="">Starter preset</option>
+                        <option value="github-issues">GitHub Issues (OAuth)</option>
+                        <option value="notion-search">Notion Search (OAuth)</option>
+                        <option value="service-proxy">Custom Service Proxy</option>
+                      </select>
+                      <button
+                        id="apply-connector-preset-btn"
+                        type="button"
+                        class="secondary-btn"
+                      >
+                        Apply Starter Preset
+                      </button>
+                      <button
+                        id="apply-connector-template-btn"
+                        type="button"
+                        class="secondary-btn"
+                      >
+                        Apply Recommended Template
+                      </button>
+                    </div>
+                  </div>
+                  <div class="helper-card">
+                    <div class="eyebrow">What This Connector Needs</div>
+                    <div
+                      id="connector-requirements-title"
+                      class="mt-3 text-lg font-black text-slate-900"
+                    >
+                      Pick an auth type and setup mode.
+                    </div>
+                    <ul
+                      id="connector-requirements-list"
+                      class="helper-list"
+                    ></ul>
+                  </div>
+                </div>
                 <div class="md:col-span-2 flex flex-wrap gap-3">
                   <button
                     id="save-connector-btn"
@@ -1103,6 +1206,9 @@
       const connectorInstallCopyEl = document.getElementById(
         "connector-install-copy",
       );
+      const connectorIdentifiersEl = document.getElementById(
+        "connector-identifiers",
+      );
       const connectorSettingsSchemaEl = document.getElementById(
         "connector-settings-schema",
       );
@@ -1114,6 +1220,20 @@
       const connectorManifestEl = document.getElementById("connector-manifest");
       const resetConnectorBtnEl = document.getElementById(
         "reset-connector-btn",
+      );
+      const applyConnectorTemplateBtnEl = document.getElementById(
+        "apply-connector-template-btn",
+      );
+      const connectorPresetEl = document.getElementById("connector-preset");
+      const applyConnectorPresetBtnEl = document.getElementById(
+        "apply-connector-preset-btn",
+      );
+      const oauthCallbackUrlEl = document.getElementById("oauth-callback-url");
+      const connectorRequirementsTitleEl = document.getElementById(
+        "connector-requirements-title",
+      );
+      const connectorRequirementsListEl = document.getElementById(
+        "connector-requirements-list",
       );
       const headerSwitchAccountBtnEl = document.getElementById(
         "header-switch-account",
@@ -1226,6 +1346,739 @@
         }
       }
 
+      function normalizeAuthType(value) {
+        return String(value || "none").trim().toLowerCase() || "none";
+      }
+
+      function normalizeSetupMode(value, authType) {
+        const normalized = String(value || "").trim().toLowerCase();
+        if (normalized) return normalized;
+        if (normalizeAuthType(authType) === "oauth2") return "oauth";
+        if (["api_key", "bearer", "basic"].includes(normalizeAuthType(authType)))
+          return "api_key";
+        return "guided";
+      }
+
+      function recommendedSettingsSchema(authType, setupMode) {
+        const normalizedAuthType = normalizeAuthType(authType);
+        const normalizedSetupMode = normalizeSetupMode(setupMode, authType);
+
+        if (normalizedAuthType === "api_key") {
+          return {
+            fields: [
+              {
+                key: "api_key",
+                label: "API key",
+                type: "password",
+                required: true,
+                secret: true,
+                placeholder: "Paste your API key",
+              },
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "bearer") {
+          return {
+            fields: [
+              {
+                key: "access_token",
+                label: "Access token",
+                type: "password",
+                required: true,
+                secret: true,
+                placeholder: "Paste your access token",
+              },
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "basic") {
+          return {
+            fields: [
+              {
+                key: "username",
+                label: "Username",
+                type: "text",
+                required: true,
+                placeholder: "Enter username",
+              },
+              {
+                key: "password",
+                label: "Password",
+                type: "password",
+                required: true,
+                secret: true,
+                placeholder: "Enter password",
+              },
+            ],
+          };
+        }
+
+        if (normalizedSetupMode === "manual") {
+          return {
+            fields: [
+              {
+                key: "account_id",
+                label: "Account or workspace ID",
+                type: "text",
+                required: true,
+                placeholder: "Replace with the identifier your connector needs",
+              },
+            ],
+          };
+        }
+
+        return { fields: [] };
+      }
+
+      function recommendedAuthSchema(authType, setupMode) {
+        const normalizedAuthType = normalizeAuthType(authType);
+        const normalizedSetupMode = normalizeSetupMode(setupMode, authType);
+
+        if (normalizedAuthType === "oauth2" || normalizedSetupMode === "oauth") {
+          return {
+            flow: "oauth",
+            connect_label: "Connect account",
+            authorize_url: "https://example.com/oauth/authorize",
+            token_url: "https://example.com/oauth/token",
+            client_id: "client_123",
+            client_secret: "secret_abc",
+            pkce: true,
+            authorize_params: {
+              access_type: "offline",
+            },
+          };
+        }
+
+        if (normalizedAuthType === "webhook") {
+          return {
+            flow: "none",
+            note: "If the upstream product needs inbound webhooks, host that on your own service and expose an HTTP API to Hollow.",
+          };
+        }
+
+        if (normalizedAuthType === "custom") {
+          return {
+            flow: "none",
+            note: "Use settings_schema for user-supplied fields and actions.request.headers/query/body for custom auth wiring.",
+          };
+        }
+
+        return {
+          flow: "none",
+        };
+      }
+
+      function recommendedInstallCopy(authType, setupMode) {
+        const normalizedAuthType = normalizeAuthType(authType);
+        const normalizedSetupMode = normalizeSetupMode(setupMode, authType);
+        if (normalizedAuthType === "oauth2" || normalizedSetupMode === "oauth") {
+          return "Connect your account, approve the requested scopes, and return to Hollow to finish setup.";
+        }
+        if (["api_key", "bearer", "basic"].includes(normalizedAuthType)) {
+          return "Paste your account credentials and save the connector setup.";
+        }
+        if (normalizedSetupMode === "manual") {
+          return "Fill in the account-specific setup fields required by this connector.";
+        }
+        if (normalizedAuthType === "webhook") {
+          return "Connect this connector to your own service, then let Hollow call that service over HTTP.";
+        }
+        return "";
+      }
+
+      function recommendedIdentifiers(authType, setupMode) {
+        const normalizedAuthType = normalizeAuthType(authType);
+        const normalizedSetupMode = normalizeSetupMode(setupMode, authType);
+        if (normalizedAuthType === "oauth2" || normalizedSetupMode === "oauth") {
+          return [
+            "connect account",
+            "oauth login",
+            "authorize app",
+            "sync account",
+            "linked account",
+          ];
+        }
+        if (["api_key", "bearer", "basic"].includes(normalizedAuthType)) {
+          return [
+            "api access",
+            "personal token",
+            "developer token",
+            "account credential",
+            "workspace access",
+          ];
+        }
+        return [
+          "automation",
+          "integration",
+          "workflow",
+          "sync",
+          "assistant action",
+        ];
+      }
+
+      function connectorPresetDefinitions() {
+        return {
+          "github-issues": {
+            name: "GitHub Issue Copilot",
+            slug: "github-issue-copilot",
+            tagline: "Search issues, inspect repos, and open tickets in GitHub.",
+            description:
+              "OAuth connector for triage, issue search, and issue creation in a chosen GitHub repository.",
+            category: "developer_tools",
+            auth_type: "oauth2",
+            setup_mode: "oauth",
+            visibility: "private",
+            status: "draft",
+            website_url: "https://github.com/",
+            docs_url: "https://docs.github.com/en/rest",
+            install_copy:
+              "Connect GitHub, approve repo scopes, then choose the repo owner and repo Hollow should work in.",
+            identifiers: [
+              "github issue",
+              "bug triage",
+              "repository task",
+              "open ticket",
+              "engineering backlog",
+            ],
+            settings_schema: {
+              fields: [
+                { key: "repo_owner", label: "Repo Owner", type: "text", required: true },
+                { key: "repo_name", label: "Repo Name", type: "text", required: true },
+              ],
+            },
+            auth_schema: {
+              flow: "oauth",
+              connect_label: "Connect GitHub",
+              authorize_url: "https://github.com/login/oauth/authorize",
+              token_url: "https://github.com/login/oauth/access_token",
+              client_id: "github_oauth_client_id",
+              client_secret: "github_oauth_client_secret",
+              token_request_auth: "body",
+              authorize_params: {
+                allow_signup: "false",
+              },
+            },
+            scopes: ["repo", "read:user"],
+            actions: [
+              {
+                key: "search_issues",
+                name: "Search Issues",
+                description: "Search GitHub issues and pull the best matching tickets.",
+                input_schema: {
+                  query: "string",
+                },
+                request: {
+                  method: "GET",
+                  url: "https://api.github.com/search/issues",
+                  headers: {
+                    Authorization: "Bearer {{settings.access_token}}",
+                    Accept: "application/vnd.github+json",
+                  },
+                  query: {
+                    q: "{{input.query}} repo:{{settings.repo_owner}}/{{settings.repo_name}}",
+                    per_page: "5",
+                  },
+                  response_path: "items",
+                  success_status_codes: [200],
+                },
+              },
+              {
+                key: "create_issue",
+                name: "Create Issue",
+                description: "Open a new GitHub issue in the connected repository.",
+                input_schema: {
+                  title: "string",
+                  body: "string",
+                },
+                request: {
+                  method: "POST",
+                  url: "https://api.github.com/repos/{{settings.repo_owner}}/{{settings.repo_name}}/issues",
+                  body_mode: "json",
+                  headers: {
+                    Authorization: "Bearer {{settings.access_token}}",
+                    Accept: "application/vnd.github+json",
+                  },
+                  body: {
+                    title: "{{input.title}}",
+                    body: "{{input.body}}",
+                  },
+                  success_status_codes: [201],
+                },
+              },
+            ],
+            manifest: {
+              version: "1.0",
+              provider: "github",
+              surface: "developer",
+            },
+          },
+          "notion-search": {
+            name: "Notion Workspace Search",
+            slug: "notion-workspace-search",
+            tagline: "Search pages and create drafts in Notion.",
+            description:
+              "OAuth connector for searching a user's Notion workspace and creating quick notes or draft pages.",
+            category: "knowledge",
+            auth_type: "oauth2",
+            setup_mode: "oauth",
+            visibility: "private",
+            status: "draft",
+            website_url: "https://www.notion.so/",
+            docs_url: "https://developers.notion.com/reference/intro",
+            install_copy:
+              "Connect Notion, approve workspace access, and optionally set a default parent page for drafts.",
+            identifiers: [
+              "notion page",
+              "workspace search",
+              "knowledge base",
+              "team wiki",
+              "draft note",
+            ],
+            settings_schema: {
+              fields: [
+                {
+                  key: "parent_page_id",
+                  label: "Default Parent Page ID",
+                  type: "text",
+                  required: false,
+                },
+              ],
+            },
+            auth_schema: {
+              flow: "oauth",
+              connect_label: "Connect Notion",
+              authorize_url: "https://api.notion.com/v1/oauth/authorize",
+              token_url: "https://api.notion.com/v1/oauth/token",
+              client_id: "notion_oauth_client_id",
+              client_secret: "notion_oauth_client_secret",
+              token_request_auth: "basic",
+            },
+            scopes: [],
+            actions: [
+              {
+                key: "search_pages",
+                name: "Search Pages",
+                description: "Search pages in the connected Notion workspace.",
+                input_schema: {
+                  query: "string",
+                },
+                request: {
+                  method: "POST",
+                  url: "https://api.notion.com/v1/search",
+                  body_mode: "json",
+                  headers: {
+                    Authorization: "Bearer {{settings.access_token}}",
+                    "Notion-Version": "2022-06-28",
+                    "Content-Type": "application/json",
+                  },
+                  body: {
+                    query: "{{input.query}}",
+                    page_size: 5,
+                  },
+                  response_path: "results",
+                  success_status_codes: [200],
+                },
+              },
+              {
+                key: "create_note_page",
+                name: "Create Note Page",
+                description: "Create a simple note page in Notion under the configured parent.",
+                input_schema: {
+                  title: "string",
+                  content: "string",
+                },
+                request: {
+                  method: "POST",
+                  url: "https://api.notion.com/v1/pages",
+                  body_mode: "json",
+                  headers: {
+                    Authorization: "Bearer {{settings.access_token}}",
+                    "Notion-Version": "2022-06-28",
+                    "Content-Type": "application/json",
+                  },
+                  body: {
+                    parent: {
+                      page_id: "{{settings.parent_page_id}}",
+                    },
+                    properties: {
+                      title: {
+                        title: [
+                          {
+                            text: {
+                              content: "{{input.title}}",
+                            },
+                          },
+                        ],
+                      },
+                    },
+                    children: [
+                      {
+                        object: "block",
+                        type: "paragraph",
+                        paragraph: {
+                          rich_text: [
+                            {
+                              type: "text",
+                              text: {
+                                content: "{{input.content}}",
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                  success_status_codes: [200],
+                },
+              },
+            ],
+            manifest: {
+              version: "1.0",
+              provider: "notion",
+              surface: "knowledge",
+            },
+          },
+          "service-proxy": {
+            name: "Custom Service Proxy",
+            slug: "custom-service-proxy",
+            tagline: "Forward Hollow actions to your own service when you need custom logic.",
+            description:
+              "Template for a developer-hosted HTTPS service that handles signatures, webhooks, and multi-step logic outside Hollow.",
+            category: "automation",
+            auth_type: "webhook",
+            setup_mode: "manual",
+            visibility: "private",
+            status: "draft",
+            website_url: "https://example.com/",
+            docs_url: "https://docs.example.com/",
+            install_copy:
+              "Paste your service base URL and any shared secret needed so Hollow can call your connector service.",
+            identifiers: [
+              "custom workflow",
+              "webhook relay",
+              "service action",
+              "signed request",
+              "multi step automation",
+            ],
+            settings_schema: {
+              fields: [
+                { key: "base_url", label: "Service Base URL", type: "url", required: true },
+                { key: "shared_secret", label: "Shared Secret", type: "password", required: false },
+              ],
+            },
+            auth_schema: {
+              flow: "service",
+              connect_label: "Connect Service",
+            },
+            scopes: ["service:invoke"],
+            actions: [
+              {
+                key: "run_workflow",
+                name: "Run Workflow",
+                description: "Forward a generic workflow request to your hosted service.",
+                input_schema: {
+                  request: "string",
+                  payload: "object",
+                },
+                request: {
+                  method: "POST",
+                  url: "{{settings.base_url}}/hollow/run",
+                  body_mode: "json",
+                  headers: {
+                    "Content-Type": "application/json",
+                    "X-Hollow-Secret": "{{settings.shared_secret}}",
+                  },
+                  body: {
+                    request: "{{input.request}}",
+                    payload: "{{input.payload}}",
+                  },
+                  success_status_codes: [200, 202],
+                },
+              },
+            ],
+            manifest: {
+              version: "1.0",
+              provider: "custom",
+              surface: "automation",
+            },
+          },
+        };
+      }
+
+      function applyConnectorPreset(presetKey) {
+        const presets = connectorPresetDefinitions();
+        const preset = presets[presetKey];
+        if (!preset) return;
+
+        connectorIdEl.value = "";
+        connectorNameEl.value = preset.name || "";
+        connectorSlugEl.value = preset.slug || "";
+        connectorTaglineEl.value = preset.tagline || "";
+        connectorDescriptionEl.value = preset.description || "";
+        connectorCategoryEl.value = preset.category || "automation";
+        connectorAuthTypeEl.value = preset.auth_type || "none";
+        connectorSetupModeEl.value = preset.setup_mode || "guided";
+        connectorVisibilityEl.value = preset.visibility || "private";
+        connectorStatusEl.value = preset.status || "draft";
+        connectorDeveloperNameEl.value = preset.developer_name || "";
+        connectorWebsiteUrlEl.value = preset.website_url || "";
+        connectorDocsUrlEl.value = preset.docs_url || "";
+        connectorInstallCopyEl.value = preset.install_copy || "";
+        connectorIdentifiersEl.value = (preset.identifiers || []).join(", ");
+        connectorSettingsSchemaEl.value = formatJson(
+          preset.settings_schema || { fields: [] },
+          {},
+        );
+        connectorAuthSchemaEl.value = formatJson(
+          preset.auth_schema || { flow: "none" },
+          {},
+        );
+        connectorScopesEl.value = (preset.scopes || []).join(", ");
+        connectorActionsEl.value = formatJson(preset.actions || [], []);
+        connectorManifestEl.value = formatJson(
+          preset.manifest || { version: "1.0" },
+          {},
+        );
+        renderConnectorGuidance();
+      }
+
+      function connectorFieldKeys(settingsSchema) {
+        const fields = Array.isArray(settingsSchema?.fields)
+          ? settingsSchema.fields
+          : [];
+        return fields
+          .map((field) =>
+            String(field?.key || field?.name || field?.id || "").trim(),
+          )
+          .filter(Boolean);
+      }
+
+      function connectorRequirements(authType, setupMode) {
+        const normalizedAuthType = normalizeAuthType(authType);
+        const normalizedSetupMode = normalizeSetupMode(setupMode, authType);
+
+        if (normalizedAuthType === "oauth2" || normalizedSetupMode === "oauth") {
+          return {
+            title: "OAuth connector requirements",
+            items: [
+              "No backend access is needed. Hollow hosts the OAuth callback and stores install state.",
+              "Register the Hollow callback URL with the upstream provider.",
+              "Provide auth_schema.authorize_url, token_url, client_id, and client_secret when required by the provider.",
+              "Add scopes in the Scopes field and use {{settings.access_token}} in action headers.",
+              "Add at least 5 identifiers that describe when Hollow should reach for this connector.",
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "api_key") {
+          return {
+            title: "API key connector requirements",
+            items: [
+              "No backend access is needed. Hollow stores the user API key in the connector install.",
+              'Include a settings_schema field with key "api_key".',
+              "Use {{settings.api_key}} in headers, query params, or body templates as needed.",
+              "If the upstream API needs extra account IDs, add those as additional settings fields.",
+              "Add at least 5 identifiers that describe the jobs this connector is good at.",
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "bearer") {
+          return {
+            title: "Bearer token connector requirements",
+            items: [
+              "No backend access is needed. Hollow stores the user token in the connector install.",
+              'Include a settings_schema field with key "access_token".',
+              "Use Authorization: Bearer {{settings.access_token}} in the action request.",
+              "Add any extra tenant or workspace fields to settings_schema when the vendor requires them.",
+              "Add at least 5 identifiers that tell Hollow what this token unlocks.",
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "basic") {
+          return {
+            title: "Basic auth connector requirements",
+            items: [
+              "No backend access is needed. Hollow stores the user credentials in the install record.",
+              'Include settings_schema fields for "username" and "password".',
+              "Build the vendor-specific auth header or body in the request definition.",
+              "Use this only when the upstream product does not support OAuth or personal tokens.",
+              "Add at least 5 identifiers so Hollow can match the connector to the right intent later.",
+            ],
+          };
+        }
+
+        if (normalizedAuthType === "webhook") {
+          return {
+            title: "Webhook or custom-service connector requirements",
+            items: [
+              "Hollow only runs outbound HTTP actions today. It does not host your custom webhook receiver logic.",
+              "If the product needs inbound webhooks or custom signatures, host that on your own service.",
+              "Point the Hollow action at your service URL and keep the connector manifest declarative.",
+              "Developers still do not need direct access to Hollow backend infrastructure.",
+              "Add at least 5 identifiers that describe the workflows your service handles.",
+            ],
+          };
+        }
+
+        if (normalizedSetupMode === "manual") {
+          return {
+            title: "Manual setup connector requirements",
+            items: [
+              "Add settings_schema.fields for every value the user must enter.",
+              "Keep install_copy explicit so users know exactly what to paste or connect.",
+              "Use those saved fields via {{settings.*}} in your action requests.",
+              "If setup becomes more than static fields, expose your own API and let Hollow call it.",
+              "Add at least 5 identifiers so Hollow has matching signals even before full auto-routing is live.",
+            ],
+          };
+        }
+
+        return {
+          title: "General connector requirements",
+          items: [
+            "Developers do not need access to Hollow backend to publish connectors.",
+            "Provide at least one action with a concrete request.url.",
+            "Use install_copy and settings_schema so users understand setup.",
+            "If the connector needs complex backend logic, host that logic yourself and have Hollow call it over HTTP.",
+            "Published connectors need at least 5 identifiers so Hollow can recognize when they are relevant.",
+          ],
+        };
+      }
+
+      function renderConnectorGuidance() {
+        const authType = connectorAuthTypeEl.value;
+        const setupMode = connectorSetupModeEl.value;
+        const guidance = connectorRequirements(authType, setupMode);
+        connectorRequirementsTitleEl.textContent = guidance.title;
+        connectorRequirementsListEl.innerHTML = guidance.items
+          .map((item) => `<li>${escapeHtml(item)}</li>`)
+          .join("");
+        oauthCallbackUrlEl.textContent = `${BACKEND_BASE_URL}/v1/connectors/oauth/callback`;
+      }
+
+      function applyRecommendedConnectorTemplates({ force = false } = {}) {
+        const authType = connectorAuthTypeEl.value;
+        const setupMode = connectorSetupModeEl.value;
+        const nextSettingsSchema = recommendedSettingsSchema(authType, setupMode);
+        const nextAuthSchema = recommendedAuthSchema(authType, setupMode);
+        const nextInstallCopy = recommendedInstallCopy(authType, setupMode);
+        const nextIdentifiers = recommendedIdentifiers(authType, setupMode);
+
+        if (force || !String(connectorSettingsSchemaEl.value || "").trim()) {
+          connectorSettingsSchemaEl.value = formatJson(nextSettingsSchema, {});
+        }
+        if (force || !String(connectorAuthSchemaEl.value || "").trim()) {
+          connectorAuthSchemaEl.value = formatJson(nextAuthSchema, {});
+        }
+        if (force || !String(connectorInstallCopyEl.value || "").trim()) {
+          connectorInstallCopyEl.value = nextInstallCopy;
+        }
+        if (force || !String(connectorIdentifiersEl.value || "").trim()) {
+          connectorIdentifiersEl.value = nextIdentifiers.join(", ");
+        }
+      }
+
+      function collectConnectorValidationErrors(payload) {
+        const errors = [];
+        const authType = normalizeAuthType(payload.auth_type);
+        const setupMode = normalizeSetupMode(payload.setup_mode, authType);
+        const authSchema =
+          payload.auth_schema && typeof payload.auth_schema === "object"
+            ? payload.auth_schema
+            : {};
+        const settingsSchema =
+          payload.settings_schema && typeof payload.settings_schema === "object"
+            ? payload.settings_schema
+            : {};
+        const authFlow = String(authSchema.flow || "").trim().toLowerCase();
+        const requiresOauth =
+          authType === "oauth2" ||
+          setupMode === "oauth" ||
+          ["oauth", "oauth2", "account", "account_connection", "connect"].includes(
+            authFlow,
+          );
+        const fieldKeys = new Set(connectorFieldKeys(settingsSchema));
+
+        if (requiresOauth) {
+          if (!String(authSchema.authorize_url || "").trim()) {
+            errors.push("OAuth connectors need auth_schema.authorize_url.");
+          }
+          if (!String(authSchema.token_url || "").trim()) {
+            errors.push("OAuth connectors need auth_schema.token_url.");
+          }
+          if (!String(authSchema.client_id || "").trim()) {
+            errors.push("OAuth connectors need auth_schema.client_id.");
+          }
+          const tokenRequestAuth = String(
+            authSchema.token_request_auth || authSchema.client_auth || "body",
+          )
+            .trim()
+            .toLowerCase();
+          if (
+            tokenRequestAuth === "basic" &&
+            !String(authSchema.client_secret || "").trim()
+          ) {
+            errors.push(
+              "OAuth connectors using basic token auth need auth_schema.client_secret.",
+            );
+          }
+        }
+
+        if (
+          setupMode === "api_key" ||
+          setupMode === "manual" ||
+          ["api_key", "bearer", "basic"].includes(authType)
+        ) {
+          if (!fieldKeys.size) {
+            errors.push(
+              "This connector type needs settings_schema.fields so users know what to enter.",
+            );
+          }
+        }
+
+        if (authType === "api_key" && !fieldKeys.has("api_key")) {
+          errors.push(
+            'API key connectors should include a settings_schema field with key "api_key".',
+          );
+        }
+        if (authType === "bearer" && !fieldKeys.has("access_token")) {
+          errors.push(
+            'Bearer connectors should include a settings_schema field with key "access_token".',
+          );
+        }
+        if (
+          authType === "basic" &&
+          (!fieldKeys.has("username") || !fieldKeys.has("password"))
+        ) {
+          errors.push(
+            'Basic auth connectors should include settings_schema fields for "username" and "password".',
+          );
+        }
+
+        if (String(payload.status || "").trim().toLowerCase() === "published") {
+          if (!Array.isArray(payload.actions) || !payload.actions.length) {
+            errors.push("Published connectors need at least one action.");
+          }
+          if (!Array.isArray(payload.identifiers) || payload.identifiers.length < 5) {
+            errors.push("Published connectors need at least 5 identifiers.");
+          }
+        }
+
+        (payload.actions || []).forEach((action) => {
+          if (!String(action?.request?.url || "").trim()) {
+            errors.push(
+              `Action ${action?.key || action?.name || "unknown"} needs request.url.`,
+            );
+          }
+        });
+
+        return errors;
+      }
+
       function resetConnectorForm() {
         connectorIdEl.value = "";
         connectorNameEl.value = "";
@@ -1241,12 +2094,17 @@
         connectorWebsiteUrlEl.value = "";
         connectorDocsUrlEl.value = "";
         connectorInstallCopyEl.value = "";
-        connectorSettingsSchemaEl.value = '{\n  "fields": []\n}';
-        connectorAuthSchemaEl.value =
-          '{\n  "flow": "oauth",\n  "connect_label": "Connect account"\n}';
+        connectorIdentifiersEl.value = "";
+        connectorSettingsSchemaEl.value = "";
+        connectorAuthSchemaEl.value = "";
         connectorScopesEl.value = "";
         connectorActionsEl.value = "[]";
         connectorManifestEl.value = '{\n  "version": "1.0"\n}';
+        if (connectorPresetEl) {
+          connectorPresetEl.value = "";
+        }
+        applyRecommendedConnectorTemplates({ force: true });
+        renderConnectorGuidance();
       }
 
       function populateConnectorForm(connector) {
@@ -1268,6 +2126,7 @@
         connectorWebsiteUrlEl.value = connector.website_url || "";
         connectorDocsUrlEl.value = connector.docs_url || "";
         connectorInstallCopyEl.value = connector.install_copy || "";
+        connectorIdentifiersEl.value = (connector.identifiers || []).join(", ");
         connectorSettingsSchemaEl.value = formatJson(
           connector.settings_schema || { fields: [] },
           {},
@@ -1276,6 +2135,8 @@
           connector.auth_schema || {
             flow: "oauth",
             connect_label: "Connect account",
+            authorize_url: "https://example.com/oauth/authorize",
+            token_url: "https://example.com/oauth/token",
           },
           {},
         );
@@ -1285,6 +2146,10 @@
           connector.manifest || { version: "1.0" },
           {},
         );
+        if (connectorPresetEl) {
+          connectorPresetEl.value = "";
+        }
+        renderConnectorGuidance();
       }
 
       function selectedConnector() {
@@ -1419,6 +2284,7 @@
             auth_type: connectorAuthTypeEl.value,
             setup_mode: connectorSetupModeEl.value,
             install_copy: connectorInstallCopyEl.value.trim() || null,
+            identifiers: readScopes(connectorIdentifiersEl.value),
             settings_schema: parseJsonField(
               connectorSettingsSchemaEl.value,
               {},
@@ -1441,6 +2307,11 @@
               "Manifest JSON",
             ),
           };
+
+          const validationErrors = collectConnectorValidationErrors(payload);
+          if (validationErrors.length) {
+            throw new Error(validationErrors[0]);
+          }
 
           const method = connectorId ? "PUT" : "POST";
           const path = connectorId
@@ -1504,6 +2375,36 @@
         setPageStatus("Form reset.");
       });
 
+      applyConnectorTemplateBtnEl.addEventListener("click", () => {
+        applyRecommendedConnectorTemplates({ force: true });
+        renderConnectorGuidance();
+        setPageStatus("Recommended template applied.");
+      });
+
+      applyConnectorPresetBtnEl?.addEventListener("click", () => {
+        const presetKey = connectorPresetEl?.value || "";
+        if (!presetKey) {
+          setPageStatus("Pick a starter preset first.", true);
+          return;
+        }
+        applyConnectorPreset(presetKey);
+        setPageStatus("Starter preset applied.");
+      });
+
+      connectorAuthTypeEl.addEventListener("change", () => {
+        if (!connectorIdEl.value.trim()) {
+          applyRecommendedConnectorTemplates({ force: true });
+        }
+        renderConnectorGuidance();
+      });
+
+      connectorSetupModeEl.addEventListener("change", () => {
+        if (!connectorIdEl.value.trim()) {
+          applyRecommendedConnectorTemplates({ force: true });
+        }
+        renderConnectorGuidance();
+      });
+
       headerSwitchAccountBtnEl.addEventListener("click", switchAccount);
       headerSignOutBtnEl.addEventListener("click", signOutToPortal);
 
@@ -1512,6 +2413,7 @@
           redirectToLogin();
           return;
         }
+        renderConnectorGuidance();
         await loadPortalMe();
       });
 

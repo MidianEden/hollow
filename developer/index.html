@@ -908,6 +908,7 @@
 	  "auth_type": "oauth2",
 	  "setup_mode": "oauth",
 	  "install_copy": "Connect Linear and approve scopes.",
+	  "identifiers": ["incident", "oncall", "triage", "severity", "pager"],
 	  "auth_schema": {
 	    "flow": "oauth",
 	    "connect_label": "Connect Linear"
@@ -1016,6 +1017,7 @@ POST /v1/connectors
   "auth_type": "oauth2",
   "setup_mode": "oauth",
   "install_copy": "Connect Linear, approve the requested scopes, and finish setup.",
+  "identifiers": ["incident", "oncall", "triage", "severity", "pager"],
   "settings_schema": {
     "fields": [
       {
@@ -1056,6 +1058,16 @@ POST /v1/connectors
             </div>
 
             <div class="code-shell">
+              <div class="eyebrow text-[#ffcb6b]">Start OAuth Setup</div>
+              <pre>
+POST /v1/connectors/linear-incident-runner/connection/start
+{
+  "app_redirect_uri": "com.hollow.watch://connector-oauth?connector=linear-incident-runner"
+}</pre
+              >
+            </div>
+
+            <div class="code-shell">
               <div class="eyebrow text-[#68f0b2]">Install Connector</div>
               <pre>
 POST /v1/connectors/linear-incident-runner/install
@@ -1079,6 +1091,45 @@ POST /v1/connectors/linear-incident-runner/actions/search_incidents/invoke
   }
 }</pre
               >
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="backend-contract" class="mx-auto max-w-7xl px-6 py-14">
+        <div class="grid gap-6 xl:grid-cols-2">
+          <div class="panel-strong rounded-[2rem] p-6 md:p-8">
+            <div class="eyebrow text-[#7bd8ff]">Backend Access</div>
+            <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
+              Developers do not need access to Hollow backend.
+            </h2>
+            <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
+              <div>Hollow stores installs, user settings, and granted scopes.</div>
+              <div>Hollow hosts the generic OAuth callback endpoint for connector logins.</div>
+              <div>Hollow executes the outbound HTTP requests declared in the manifest.</div>
+              <div>Developers only need dashboard access plus access to their upstream API or their own service.</div>
+            </div>
+            <div class="mt-8 rounded-[1.5rem] border border-white/10 bg-white/5 p-5">
+              <div class="eyebrow text-[#ffcb6b]">OAuth callback</div>
+              <p class="mt-3 text-sm leading-7 text-slate-300">
+                Register your Hollow backend callback with the upstream provider:
+              </p>
+              <pre class="mt-4 text-sm text-white">https://hollow-backend.fly.dev/v1/connectors/oauth/callback</pre>
+            </div>
+          </div>
+
+          <div class="panel rounded-[2rem] p-6 md:p-8">
+            <div class="eyebrow text-[#ffcb6b]">Connection Modes</div>
+            <h2 class="mt-4 text-4xl font-black tracking-[-0.04em] text-white">
+              What developers should provide
+            </h2>
+            <div class="mt-8 space-y-4 text-sm leading-7 text-slate-300">
+              <div><strong>OAuth:</strong> <code>authorize_url</code>, <code>token_url</code>, <code>client_id</code>, scopes, and any provider-specific params.</div>
+              <div><strong>API key:</strong> a <code>settings_schema</code> field for <code>api_key</code> plus request templates that use <code>{{settings.api_key}}</code>.</div>
+              <div><strong>Bearer/basic:</strong> guided fields for the saved token or username/password.</div>
+              <div><strong>Manual/custom:</strong> every user-entered field in <code>settings_schema</code> plus clear <code>install_copy</code>.</div>
+              <div><strong>Identifiers:</strong> add at least 5 keywords or phrases that tell Hollow when this connector should be considered.</div>
+              <div><strong>Webhook/custom backend:</strong> if the connector needs inbound webhooks, signatures, or custom code, the developer should host that themselves and let Hollow call it over HTTP.</div>
             </div>
           </div>
         </div>
@@ -1121,10 +1172,55 @@ POST /v1/connectors/linear-incident-runner/actions/search_incidents/invoke
                 account connections when possible.
               </div>
               <div>
+                At least 5 identifiers so Hollow can later match the connector
+                to the right user intent.
+              </div>
+              <div>
                 Plain-English copy so users know what the connector does.
               </div>
               <div>Structured outputs that Hollow can route cleanly.</div>
               <div>A maintained integration someone actually owns.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="starter-patterns" class="mx-auto max-w-7xl px-6 py-14">
+        <div class="grid gap-6 lg:grid-cols-3">
+          <div class="panel rounded-[2rem] p-6">
+            <div class="eyebrow text-[#7bd8ff]">Starter Preset</div>
+            <h3 class="mt-4 text-2xl font-black tracking-tight text-white">
+              GitHub issue workflows
+            </h3>
+            <div class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+              <div><strong>Mode:</strong> OAuth</div>
+              <div><strong>Good for:</strong> bug triage, backlog lookup, opening tickets</div>
+              <div><strong>What to ask for:</strong> repo owner, repo name, repo scopes</div>
+              <div><strong>Actions:</strong> search issues, create issue</div>
+            </div>
+          </div>
+          <div class="panel rounded-[2rem] p-6">
+            <div class="eyebrow text-[#ffcb6b]">Starter Preset</div>
+            <h3 class="mt-4 text-2xl font-black tracking-tight text-white">
+              Notion workspace search
+            </h3>
+            <div class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+              <div><strong>Mode:</strong> OAuth</div>
+              <div><strong>Good for:</strong> docs lookup, notes, quick draft pages</div>
+              <div><strong>What to ask for:</strong> default parent page when creating notes</div>
+              <div><strong>Actions:</strong> search pages, create note page</div>
+            </div>
+          </div>
+          <div class="panel rounded-[2rem] p-6">
+            <div class="eyebrow text-[#68f0b2]">Starter Preset</div>
+            <h3 class="mt-4 text-2xl font-black tracking-tight text-white">
+              Custom service proxy
+            </h3>
+            <div class="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+              <div><strong>Mode:</strong> developer-hosted HTTPS service</div>
+              <div><strong>Good for:</strong> signatures, webhooks, multi-step orchestration</div>
+              <div><strong>What to ask for:</strong> base URL and optional shared secret</div>
+              <div><strong>Actions:</strong> run workflow, relay to your own backend</div>
             </div>
           </div>
         </div>
@@ -1190,6 +1286,7 @@ Return:
    - auth_type
    - setup_mode
    - install_copy
+   - identifiers (minimum 5)
    - settings_schema
    - auth_schema
    - scopes
@@ -1203,11 +1300,12 @@ Return:
    - output_schema
    - request with method, url, headers, query, body, body_mode, content_type, response_format, response_path, and success_status_codes when needed
 4. Include setup_mode, install_copy, settings_schema, and auth_schema when the install experience should feel guided or OAuth-first.
-5. Use {{settings.*}} for secrets or saved install values.
-6. Use {{input.*}} for runtime values from the user.
-7. Include a sample install payload with settings.
-8. Include a sample invoke payload for each action.
-9. If the API needs custom auth headers, form encoding, XML/text payloads, or non-2xx success semantics, model that explicitly in the request definition.
+5. Include at least 5 identifiers that tell Hollow when this connector should be considered.
+6. Use {{settings.*}} for secrets or saved install values.
+7. Use {{input.*}} for runtime values from the user.
+8. Include a sample install payload with settings.
+9. Include a sample invoke payload for each action.
+10. If the API needs custom auth headers, form encoding, XML/text payloads, or non-2xx success semantics, model that explicitly in the request definition.
 
 Important constraints:
 - Keep this manifest-driven. Do not invent arbitrary backend code execution.
