@@ -5,28 +5,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Hollow Zero | The Assistant That Helps You Follow Through</title>
-    <meta name="title" content="Hollow Zero | The Assistant That Helps You Follow Through">
+    <title>Hollow for Developers | Make your product work through an AI assistant</title>
+    <meta name="title" content="Hollow for Developers | Make your product work through an AI assistant">
     <meta name="description"
-        content="Hollow Zero helps you stay on top of emails, follow-ups, and scheduling so important things do not slip through.">
+        content="Connect your product to Hollow so users can take action through a personal AI assistant across email, scheduling, and more.">
     <meta name="keywords"
-        content="Hollow Zero, Hollow, personal assistant, follow-ups, scheduling, email assistant, reminders, productivity assistant, early access">
+        content="Hollow developers, Hollow connectors, AI assistant integrations, developer platform, product integrations, early access">
     <meta name="author" content="Hollow">
     <meta name="robots" content="index, follow">
 
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://gethollow.com/">
-    <meta property="og:title" content="Hollow Zero | The Assistant That Helps You Follow Through">
+    <meta property="og:title" content="Hollow for Developers | Make your product work through an AI assistant">
     <meta property="og:description"
-        content="Hollow Zero helps you stay on top of emails, follow-ups, and scheduling so important things do not slip through.">
+        content="Connect your product to Hollow so users can take action through a personal AI assistant across email, scheduling, and more.">
     <meta property="og:image" content="https://gethollow.com/0wproto.png">
     <meta property="og:site_name" content="Hollow">
 
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://gethollow.com/">
-    <meta property="twitter:title" content="Hollow Zero | The Assistant That Helps You Follow Through">
+    <meta property="twitter:title" content="Hollow for Developers | Make your product work through an AI assistant">
     <meta property="twitter:description"
-        content="The assistant that helps you stay on top of emails, follow-ups, and scheduling.">
+        content="Connect your product to Hollow so users can take action through a personal AI assistant across email, scheduling, and more.">
     <meta property="twitter:image" content="https://gethollow.com/0wproto.png">
 
     <link rel="canonical" href="https://gethollow.com/">
@@ -68,7 +68,7 @@
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
         "name": "Hollow Zero",
-        "description": "Hollow Zero is a personal assistant that helps you stay on top of emails, follow-ups, scheduling, and reminders across your devices.",
+        "description": "Hollow lets developers connect their product into a personal AI assistant so users can take action across email, scheduling, and more.",
         "image": "https://gethollow.com/0wproto.png",
         "brand": {
             "@type": "Brand",
@@ -750,7 +750,7 @@
             position: relative;
             width: 100%;
             max-width: 68rem;
-            margin: clamp(1.4rem, 6vh, 4rem) auto 0;
+            margin: clamp(0.25rem, 3.5vh, 2.25rem) auto 0;
             text-align: left;
             z-index: 1;
         }
@@ -770,7 +770,7 @@
         .hero-copy-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.08fr) minmax(19rem, 0.92fr);
-            align-items: end;
+            align-items: start;
             gap: clamp(2rem, 4vw, 4.25rem);
         }
 
@@ -778,6 +778,7 @@
             width: 100%;
             max-width: 28rem;
             justify-self: end;
+            padding-top: 2.3rem;
         }
 
         .hero-copy-main,
@@ -1439,8 +1440,102 @@
             text-transform: uppercase;
         }
 
+        .hero-context {
+            width: 100%;
+            max-width: 68rem;
+            margin: 6.25rem auto 0;
+        }
+
+        .hero-context-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.35rem;
+        }
+
+        .hero-context-card {
+            padding: 1.55rem 1.55rem 1.7rem;
+            border-radius: 1.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(10, 14, 24, 0.62);
+            box-shadow:
+                inset 0 1px 0 rgba(255, 255, 255, 0.04),
+                0 22px 52px rgba(0, 0, 0, 0.22);
+            text-align: left;
+        }
+
+        .hero-context-card h3 {
+            margin: 0;
+            color: rgba(241, 246, 255, 0.94);
+            font-size: 1.2rem;
+            line-height: 1.1;
+        }
+
+        .hero-context-card p {
+            margin-top: 0.85rem;
+            color: var(--muted);
+            font-size: 0.97rem;
+            line-height: 1.65;
+        }
+
+        .hero-context-list,
+        .hero-context-flow {
+            list-style: none;
+            margin: 1rem 0 0;
+            padding: 0;
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .hero-context-list li,
+        .hero-context-flow li {
+            color: var(--muted);
+            font-size: 0.95rem;
+            line-height: 1.58;
+        }
+
+        .hero-context-list li {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.75rem;
+            align-items: start;
+        }
+
+        .hero-context-flow li {
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 0.8rem;
+            align-items: start;
+        }
+
+        .hero-context-dot,
+        .hero-step {
+            width: 1.35rem;
+            height: 1.35rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.05rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            line-height: 1;
+            flex-shrink: 0;
+        }
+
+        .hero-context-dot {
+            border: 1px solid rgba(134, 239, 172, 0.28);
+            background: rgba(34, 197, 94, 0.12);
+            color: #bbf7d0;
+        }
+
+        .hero-step {
+            border: 1px solid rgba(134, 239, 172, 0.24);
+            background: rgba(34, 197, 94, 0.1);
+            color: #dcfce7;
+        }
+
         .why {
-            padding-top: clamp(11rem, 19vw, 16rem);
+            padding-top: clamp(7.4rem, 12vw, 10rem);
         }
 
         .section:not(.hero) {
@@ -1619,6 +1714,10 @@
         .statement-shell {
             max-width: 58rem;
             margin: 0 auto;
+        }
+
+        .statement .compare-strip {
+            margin-top: 2.4rem;
         }
 
         .statement h2 {
@@ -2243,6 +2342,7 @@
             .hero-copy-side {
                 max-width: 34rem;
                 justify-self: center;
+                padding-top: 0;
             }
 
             .hero h1 {
@@ -2269,6 +2369,10 @@
             }
 
             .compare-strip {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-context-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -2308,7 +2412,7 @@
             }
 
             .hero-copy {
-                margin-top: 1.2rem;
+                margin-top: 0.45rem;
             }
 
             .hero-sub,
@@ -2330,6 +2434,10 @@
 
             .hero-preview {
                 gap: 0.5rem;
+            }
+
+            .hero-context-card {
+                padding: 1.35rem 1.3rem 1.45rem;
             }
 
             .preview-pill {
@@ -2492,6 +2600,14 @@
                 min-height: 2.08rem;
                 padding: 0 0.85rem;
                 font-size: 0.77rem;
+            }
+
+            .hero-context {
+                margin-top: 2.4rem;
+            }
+
+            .hero-context-card h3 {
+                font-size: 1.08rem;
             }
 
             .hero-visual {
@@ -2715,7 +2831,7 @@
             </a>
 
             <div class="nav-actions">
-                <a href="#contact" class="nav-cta">Join Early Access</a>
+                <a href="/developer/login/" class="nav-cta">Private Sign In</a>
                 <div id="profile-icon" title="Account">?</div>
                 <button class="mobile-menu-btn" id="mobile-menu-btn" aria-label="Toggle menu">
                     <span></span>
@@ -2768,126 +2884,107 @@
                 <div class="hero-copy intro-header" data-reveal>
                     <div class="hero-copy-grid">
                         <div class="hero-copy-main">
-                            <h1><span>For the stuff you</span><span>forget, avoid, or miss.</span></h1>
+                            <h1><span>Make your product</span><span>work through</span><span>an AI assistant</span></h1>
                         </div>
                         <div class="hero-copy-side">
                             <p class="hero-sub">
-                                <span class="hero-sub-lead">Hollow is an AI assistant that tracks what matters and helps you follow through.</span>
-                                Hollow keeps you on top of your emails, follow-ups, and schedule, and helps you act before things slip through.
+                                <span class="hero-sub-lead">Connect your product to Hollow so users can take action through a single assistant.</span>
+                                Hollow is a personal AI that helps people stay on top of emails, follow-ups, and their schedule. Your connector makes your product part of that workflow.
                             </p>
 
                             <div class="hero-form-wrap">
-                                <form class="hero-form" data-newsletter-form novalidate>
-                                    <label for="hero-email" class="sr-only">Email</label>
-                                    <input id="hero-email" type="email" placeholder="Email for updates" required />
-                                    <button type="submit" class="button-primary">Join Early Access</button>
-                                </form>
-                                <div class="form-status" data-form-status aria-live="polite"></div>
+                                <div class="hero-form" role="group" aria-label="Developer actions">
+                                    <a href="/developer/login/" class="button-primary">Private Sign In</a>
+                                    <a href="/developer/documentation/" class="button-secondary">Read Documentation</a>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                    <div class="hero-visual" data-reveal>
-                        <div class="hero-floor-grid" aria-hidden="true"></div>
-                        <div class="device-system" aria-label="Hollow Zero across phone, laptop, and watch">
-                            <div class="device-link-shell" aria-hidden="true">
-                                <svg class="device-link-svg" viewBox="0 0 1200 520" preserveAspectRatio="none">
-                                    <path class="device-link-glow"
-                                        d="M156 350 C 256 338, 360 348, 468 352 C 540 352, 588 352, 660 352 C 782 352, 896 342, 1042 350"></path>
-                                    <path id="hero-device-path" class="device-link-stroke"
-                                        d="M156 350 C 256 338, 360 348, 468 352 C 540 352, 588 352, 660 352 C 782 352, 896 342, 1042 350"></path>
-                                    <circle class="device-link-pulse-halo" r="9">
-                                        <animateMotion dur="6.8s" repeatCount="indefinite" rotate="auto">
-                                            <mpath href="#hero-device-path"></mpath>
-                                        </animateMotion>
-                                    </circle>
-                                    <circle class="device-link-pulse" r="4.8">
-                                        <animateMotion dur="6.8s" repeatCount="indefinite" rotate="auto">
-                                            <mpath href="#hero-device-path"></mpath>
-                                        </animateMotion>
-                                    </circle>
-                                </svg>
-                            </div>
+                <div class="hero-context" data-reveal>
+                    <div class="hero-context-grid">
+                        <article class="hero-context-card">
+                            <h3>What connecting your product means</h3>
+                            <ul class="hero-context-list">
+                                <li>
+                                    <span class="hero-context-dot" aria-hidden="true">+</span>
+                                    <span>Users can interact with your product through Hollow.</span>
+                                </li>
+                                <li>
+                                    <span class="hero-context-dot" aria-hidden="true">+</span>
+                                    <span>Actions happen inside real workflows like email, follow-ups, and scheduling.</span>
+                                </li>
+                                <li>
+                                    <span class="hero-context-dot" aria-hidden="true">+</span>
+                                    <span>Your product becomes part of how users actually get things done.</span>
+                                </li>
+                            </ul>
+                        </article>
 
-                            <div class="device device-phone" aria-hidden="true">
-                                <div class="device-frame">
-                                    <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="device device-laptop" aria-hidden="true">
-                                <div class="device-frame">
-                                    <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
-                                    </div>
-                                </div>
-                                <div class="device-base"></div>
-                            </div>
-
-                            <div class="device device-watch" aria-hidden="true">
-                                <span class="watch-strap watch-strap--top"></span>
-                                <div class="device-frame">
-                                    <div class="device-screen">
-                                        <img class="device-logo" src="favicon.png" alt="" loading="eager" decoding="sync" fetchpriority="high" />
-                                    </div>
-                                </div>
-                                <span class="watch-strap watch-strap--bottom"></span>
-                            </div>
-                        </div>
+                        <article class="hero-context-card">
+                            <h3>How it works</h3>
+                            <p>You expose capabilities. Hollow handles context, timing, and orchestration.</p>
+                            <ol class="hero-context-flow">
+                                <li>
+                                    <span class="hero-step" aria-hidden="true">1</span>
+                                    <span>A user asks Hollow to do something.</span>
+                                </li>
+                                <li>
+                                    <span class="hero-step" aria-hidden="true">2</span>
+                                    <span>Hollow decides what needs to happen.</span>
+                                </li>
+                                <li>
+                                    <span class="hero-step" aria-hidden="true">3</span>
+                                    <span>Your product is called through a connector.</span>
+                                </li>
+                                <li>
+                                    <span class="hero-step" aria-hidden="true">4</span>
+                                    <span>The action is completed inside your system.</span>
+                                </li>
+                            </ol>
+                        </article>
                     </div>
-                    <div class="hero-device-caption">Notice. Bring it back. Help you act.</div>
+                </div>
             </div>
         </section>
 
         <section class="section section-divider why" id="why">
             <div class="container">
                 <div class="why-copy" data-reveal>
-                    <h2>Stay on top of what matters.</h2>
+                    <h2>What this is</h2>
                     <p class="section-sub">
-                        Hollow does one job: notice what matters, bring it back to you, and help you follow through.
+                        Hollow is a personal AI that helps people stay on top of emails, follow-ups, and their schedule. Connectors let your product become part of that workflow.
                     </p>
                 </div>
 
                 <div class="compare-strip" data-reveal>
                     <article class="compare-card">
-                        <h3 class="compare-kicker">1. Something important comes in</h3>
+                        <h3 class="compare-kicker">Through Hollow</h3>
                         <ul class="compare-list">
                             <li>
                                 <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>Email, request, or follow-up. This is where things usually get buried.</span>
+                                <span>Users can interact with your product through a single assistant instead of jumping between tools.</span>
                             </li>
                         </ul>
                     </article>
 
                     <article class="compare-card">
-                        <h3 class="compare-kicker">2. Hollow notices</h3>
+                        <h3 class="compare-kicker">Inside workflows</h3>
                         <ul class="compare-list">
                             <li>
                                 <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>It flags what matters and nudges you before it is too late.</span>
-                            </li>
-                        </ul>
-                    </article>
-
-                    <article class="compare-card">
-                        <h3 class="compare-kicker">3. Hollow helps you act</h3>
-                        <ul class="compare-list">
-                            <li>
-                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>Drafts replies, suggests next steps, or sets up follow-ups.</span>
+                                <span>Actions happen inside real work like email, calendar, reminders, and follow-ups.</span>
                             </li>
                         </ul>
                     </article>
 
                     <article class="compare-card compare-card--featured">
-                        <h3 class="compare-kicker">4. You stay on top of it</h3>
+                        <h3 class="compare-kicker">Part of the flow</h3>
                         <ul class="compare-list">
                             <li>
                                 <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
-                                <span>Less mental load. Fewer missed things. Nothing lingering in the background.</span>
+                                <span>Your product becomes part of how users get things done, not something they have to remember to open.</span>
                             </li>
                         </ul>
                     </article>
@@ -2897,27 +2994,108 @@
 
         <section class="section section-divider statement" id="platform">
             <div class="container statement-shell" data-reveal>
-                <h2>Start with the things you forget. Grow into everything else.</h2>
+                <h2>Why connect to Hollow</h2>
                 <p class="statement-sub">
-                    Hollow starts with the core things people actually drop: emails, follow-ups, scheduling, reminders, and actions. Connected tools and accounts make it stronger later, without being the whole pitch.
+                    You do not fight for app opens. You integrate once, and your product can show up where users are already trying to get something done.
                 </p>
+                <div class="compare-strip">
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">Part of the flow</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Your product can show up at the moment a user is already making a decision or taking action.</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">Real-time usage</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Your capabilities get used inside actual workflows, not as an isolated utility.</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="compare-card">
+                        <h3 class="compare-kicker">Across surfaces</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Integrate once and let Hollow carry that interaction across devices and surfaces.</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="compare-card compare-card--featured">
+                        <h3 class="compare-kicker">AI-native workflows</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>Extend your product into assistant-driven workflows without becoming a chatbot platform yourself.</span>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="section section-divider statement" id="positioning">
+            <div class="container statement-shell" data-reveal>
+                <h2>This isn&apos;t another integration layer</h2>
+                <p class="statement-sub">
+                    Hollow is not Zapier, a plugin marketplace, or a chatbot extension system. It is a way for users to act on your product through a personal AI.
+                </p>
+                <div class="compare-strip">
+                    <article class="compare-card compare-card--negative">
+                        <h3 class="compare-kicker">Hollow is not</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
+                                <span>Zapier</span>
+                            </li>
+                            <li>
+                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
+                                <span>A plugin marketplace</span>
+                            </li>
+                            <li>
+                                <span class="compare-icon compare-icon--negative" aria-hidden="true">×</span>
+                                <span>A chatbot extension system</span>
+                            </li>
+                        </ul>
+                    </article>
+
+                    <article class="compare-card compare-card--featured">
+                        <h3 class="compare-kicker">Hollow is</h3>
+                        <ul class="compare-list">
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>A way for users to act on your product through a personal AI assistant.</span>
+                            </li>
+                            <li>
+                                <span class="compare-icon compare-icon--positive" aria-hidden="true">✓</span>
+                                <span>A system that handles context, timing, and orchestration around the capabilities you expose.</span>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
             </div>
         </section>
 
         <section class="section section-divider cta" id="contact">
             <div class="container cta-shell" data-reveal>
-                <h2>Stay on top of what matters.</h2>
+                <h2>Developer access is live</h2>
                 <p class="section-sub">
-                    Join the list for early access to Hollow as it grows into a fuller personal assistant that helps you stay on top of what matters.
+                    Approved developers can sign in now, open the dashboard, and use the docs to build connectors for Hollow.
                 </p>
 
                 <div class="cta-form-wrap">
-                    <form id="newsletter-form" class="newsletter-form" data-newsletter-form novalidate>
-                        <label for="email" class="sr-only">Email</label>
-                        <input id="email" type="email" placeholder="Email for updates" required />
-                        <button type="submit" class="button-primary">Join The List</button>
-                    </form>
-                    <div id="form-status" class="form-status" data-form-status aria-live="polite"></div>
+                    <div class="newsletter-form" role="group" aria-label="Developer links">
+                        <a href="/developer/login/" class="button-primary">Private Sign In</a>
+                        <a href="/developer/documentation/" class="button-secondary">Open Documentation</a>
+                    </div>
                 </div>
             </div>
         </section>
