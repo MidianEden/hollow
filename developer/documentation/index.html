@@ -1,0 +1,792 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hollow Connector Documentation</title>
+    <meta
+      name="description"
+      content="Reference documentation for building Hollow connectors, including auth modes, required fields, examples, and lifecycle details."
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://gethollow.com/developer/documentation/"
+    />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg: #050505;
+        --panel: #0e1015;
+        --panel-soft: #12151d;
+        --border: rgba(255, 255, 255, 0.1);
+        --ink: #f5f7fb;
+        --muted: rgba(226, 232, 240, 0.76);
+        --soft: rgba(226, 232, 240, 0.54);
+        --accent: #ef4444;
+        --accent-soft: rgba(239, 68, 68, 0.14);
+        --code: #0a0d14;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Geist", sans-serif;
+        color: var(--ink);
+        background:
+          radial-gradient(48rem 24rem at 50% 0%, rgba(239, 68, 68, 0.08), transparent 55%),
+          linear-gradient(180deg, #050505 0%, #07080c 100%);
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      a {
+        color: #f87171;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      code,
+      pre {
+        font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas,
+          monospace;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        border-bottom: 1px solid var(--border);
+        background: rgba(5, 5, 5, 0.9);
+        backdrop-filter: blur(10px);
+      }
+
+      .topbar-inner {
+        width: min(1320px, calc(100vw - 32px));
+        margin: 0 auto;
+        min-height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      .brand img {
+        width: 18px;
+        height: 18px;
+      }
+
+      .topnav {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        font-size: 14px;
+      }
+
+      .topnav a {
+        color: var(--muted);
+      }
+
+      .layout {
+        width: min(1320px, calc(100vw - 32px));
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 260px minmax(0, 1fr);
+        gap: 40px;
+      }
+
+      .sidebar {
+        position: sticky;
+        top: 84px;
+        align-self: start;
+        max-height: calc(100vh - 100px);
+        overflow: auto;
+        padding: 28px 0 48px;
+      }
+
+      .sidebar h2 {
+        margin: 0 0 12px;
+        font-size: 12px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--soft);
+      }
+
+      .sidebar ul {
+        list-style: none;
+        margin: 0 0 28px;
+        padding: 0;
+      }
+
+      .sidebar li + li {
+        margin-top: 8px;
+      }
+
+      .sidebar a {
+        display: block;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      .content {
+        padding: 40px 0 72px;
+      }
+
+      .content h1 {
+        margin: 0 0 14px;
+        font-size: clamp(2.3rem, 5vw, 3.6rem);
+        line-height: 1;
+        letter-spacing: -0.05em;
+      }
+
+      .lede {
+        max-width: 56rem;
+        margin: 0 0 28px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .note,
+      .callout {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--panel);
+        padding: 16px 18px;
+      }
+
+      .callout {
+        background: var(--accent-soft);
+        border-color: rgba(239, 68, 68, 0.22);
+      }
+
+      .callout strong,
+      .note strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+
+      .content section {
+        padding-top: 28px;
+        margin-top: 28px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .content h2 {
+        margin: 0 0 14px;
+        font-size: 28px;
+        line-height: 1.1;
+        letter-spacing: -0.04em;
+      }
+
+      .content h3 {
+        margin: 24px 0 12px;
+        font-size: 20px;
+        line-height: 1.2;
+      }
+
+      .content p {
+        margin: 0 0 16px;
+        color: var(--muted);
+        font-size: 16px;
+        line-height: 1.8;
+      }
+
+      .content ul,
+      .content ol {
+        margin: 0 0 16px 18px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      .content li + li {
+        margin-top: 8px;
+      }
+
+      .content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 16px 0 20px;
+        font-size: 14px;
+      }
+
+      .content th,
+      .content td {
+        border: 1px solid var(--border);
+        padding: 12px;
+        text-align: left;
+        vertical-align: top;
+      }
+
+      .content th {
+        background: var(--panel-soft);
+        color: var(--ink);
+        font-weight: 700;
+      }
+
+      pre {
+        margin: 0 0 20px;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        background: var(--code);
+        overflow: auto;
+        font-size: 13px;
+        line-height: 1.7;
+        color: #f8fafc;
+      }
+
+      .two-col {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      @media (max-width: 980px) {
+        .layout {
+          grid-template-columns: 1fr;
+        }
+
+        .sidebar {
+          position: static;
+          max-height: none;
+          padding-bottom: 0;
+        }
+
+        .two-col {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 720px) {
+        .topbar-inner {
+          flex-direction: column;
+          align-items: flex-start;
+          padding: 12px 0;
+        }
+
+        .topnav {
+          flex-wrap: wrap;
+        }
+
+        .content {
+          padding-top: 28px;
+        }
+
+        .lede {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-inner">
+        <a class="brand" href="/developer/">
+          <img src="/favicon.png" alt="" />
+          <span>Hollow Developer Documentation</span>
+        </a>
+        <nav class="topnav" aria-label="Top navigation">
+          <a href="/developer/">Developer Home</a>
+          <a href="/developer/login/">Dashboard Login</a>
+          <a href="/developer/dashboard/">Dashboard</a>
+        </nav>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <h2>Getting Started</h2>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#connector-model">Connector model</a></li>
+          <li><a href="#what-hollow-hosts">What Hollow hosts</a></li>
+          <li><a href="#what-developers-host">What developers host</a></li>
+        </ul>
+
+        <h2>Connector Design</h2>
+        <ul>
+          <li><a href="#required-fields">Required fields</a></li>
+          <li><a href="#identifiers">Identifiers</a></li>
+          <li><a href="#actions">Actions</a></li>
+          <li><a href="#auth-types">Auth types</a></li>
+          <li><a href="#setup-modes">Setup modes</a></li>
+        </ul>
+
+        <h2>Lifecycle</h2>
+        <ul>
+          <li><a href="#install-flow">Install flow</a></li>
+          <li><a href="#oauth-flow">OAuth flow</a></li>
+          <li><a href="#invoke-flow">Action invocation</a></li>
+          <li><a href="#publishing">Publishing</a></li>
+        </ul>
+
+        <h2>Reference</h2>
+        <ul>
+          <li><a href="#example-payload">Example payload</a></li>
+          <li><a href="#oauth-callback">OAuth callback</a></li>
+          <li><a href="#dashboard">Dashboard usage</a></li>
+          <li><a href="#testing">Testing checklist</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+        </ul>
+      </aside>
+
+      <main class="content">
+        <h1>Hollow connector documentation</h1>
+        <p class="lede">
+          Hollow connectors let developers expose external APIs and services as
+          installable capabilities inside Hollow. This documentation describes
+          the connector model, how user-owned connections work, the data Hollow
+          expects, and how a connector moves from draft to installable runtime.
+        </p>
+
+        <div class="callout">
+          <strong>Current status</strong>
+          Developer dashboard access is currently private. The public
+          documentation here is intended to be complete enough that a developer
+          can understand the connector model before getting dashboard access.
+        </div>
+
+        <section id="overview">
+          <h2>Overview</h2>
+          <p>
+            A Hollow connector is a manifest-driven integration definition. It
+            describes what the connector does, how it authenticates, what setup
+            data it needs, which actions it exposes, and how Hollow should
+            represent it in the product.
+          </p>
+          <p>
+            Connectors are meant to be installable by end users. A user can
+            browse a connector, understand what it touches, authenticate their
+            own account, and then let Hollow call the connector’s declared
+            actions.
+          </p>
+        </section>
+
+        <section id="connector-model">
+          <h2>Connector model</h2>
+          <p>A connector has four core parts:</p>
+          <ol>
+            <li>Listing metadata: name, slug, description, category, install copy.</li>
+            <li>Connection model: auth type, auth schema, setup mode, scopes.</li>
+            <li>Action model: one or more actions with input/output schemas.</li>
+            <li>Manifest details: additional structured data Hollow can store and use.</li>
+          </ol>
+          <p>
+            Hollow stores the connector definition, publishes it in the app,
+            records user installs, and executes actions through the connector
+            runtime. Developers do not need direct database or infrastructure
+            access.
+          </p>
+        </section>
+
+        <section id="what-hollow-hosts">
+          <h2>What Hollow hosts</h2>
+          <div class="two-col">
+            <div class="note">
+              <strong>Hosted by Hollow</strong>
+              <ul>
+                <li>Connector listings and install metadata</li>
+                <li>User install records</li>
+                <li>User connection state</li>
+                <li>Generic OAuth callback endpoint</li>
+                <li>Manifest-driven action runtime</li>
+              </ul>
+            </div>
+            <div class="note">
+              <strong>Not hosted by Hollow</strong>
+              <ul>
+                <li>Your provider app credentials</li>
+                <li>Your provider-specific OAuth registration</li>
+                <li>Your custom webhook or backend logic</li>
+                <li>Your external API or SaaS product</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="what-developers-host">
+          <h2>What developers host</h2>
+          <p>
+            In the common case, developers do not need to host anything beyond
+            their own product or API. If a connector requires inbound webhooks,
+            signature validation, provider-specific orchestration, or custom
+            runtime logic, the developer should host that logic themselves and
+            let Hollow call it over HTTPS.
+          </p>
+          <p>
+            Developers do not receive shell, server, or database access to the
+            Hollow backend. The contract is declarative: you provide connector
+            metadata and connection details through the dashboard, and Hollow
+            handles the app-side install and user connection lifecycle.
+          </p>
+        </section>
+
+        <section id="required-fields">
+          <h2>Required fields</h2>
+          <p>
+            A draft connector can be incomplete, but a published connector must
+            be coherent enough for users and Hollow to work with it safely.
+          </p>
+          <table>
+            <thead>
+              <tr>
+                <th>Field</th>
+                <th>Purpose</th>
+                <th>Publishing expectation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>name</code></td>
+                <td>Human-readable connector name.</td>
+                <td>Required.</td>
+              </tr>
+              <tr>
+                <td><code>slug</code></td>
+                <td>Stable programmatic identifier.</td>
+                <td>Required and unique.</td>
+              </tr>
+              <tr>
+                <td><code>tagline</code> / <code>description</code></td>
+                <td>Plain-English explanation for users.</td>
+                <td>Required.</td>
+              </tr>
+              <tr>
+                <td><code>auth_type</code></td>
+                <td>Defines how the user connects.</td>
+                <td>Required.</td>
+              </tr>
+              <tr>
+                <td><code>setup_mode</code></td>
+                <td>Defines how the user completes setup.</td>
+                <td>Required.</td>
+              </tr>
+              <tr>
+                <td><code>actions</code></td>
+                <td>Executable capabilities the connector exposes.</td>
+                <td>At least one action required for published connectors.</td>
+              </tr>
+              <tr>
+                <td><code>identifiers</code></td>
+                <td>Keywords Hollow can later use for routing relevance.</td>
+                <td>At least 5 identifiers required for published connectors.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="identifiers">
+          <h2>Identifiers</h2>
+          <p>
+            Identifiers are short keywords or phrases that tell Hollow when a
+            connector should be considered. They are not user-facing marketing
+            copy. They are routing hints.
+          </p>
+          <p>Good identifier examples for a GitHub issue connector:</p>
+          <ul>
+            <li><code>github issues</code></li>
+            <li><code>repo issue</code></li>
+            <li><code>bug ticket</code></li>
+            <li><code>open issue</code></li>
+            <li><code>assign issue</code></li>
+          </ul>
+          <p>
+            Published connectors currently require at least five identifiers so
+            Hollow has enough metadata to reason about connector relevance.
+          </p>
+        </section>
+
+        <section id="actions">
+          <h2>Actions</h2>
+          <p>
+            Actions are the executable units of a connector. Each action should
+            have a stable key, a plain-English description, and an input shape
+            that Hollow can reliably fill.
+          </p>
+          <p>Strong action definitions usually include:</p>
+          <ul>
+            <li>A clear <code>key</code> such as <code>create_issue</code></li>
+            <li>A concise description of what the action does</li>
+            <li>An input schema with named fields</li>
+            <li>Output structure if the action returns meaningful data</li>
+            <li>A scope that matches the actual upstream permission boundary</li>
+          </ul>
+        </section>
+
+        <section id="auth-types">
+          <h2>Auth types</h2>
+          <p>Hollow supports multiple connector auth types.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>Auth type</th>
+                <th>Use case</th>
+                <th>Notes</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>none</code></td>
+                <td>Public or unauthenticated APIs.</td>
+                <td>No user connection step required.</td>
+              </tr>
+              <tr>
+                <td><code>oauth</code></td>
+                <td>User signs into the provider’s product.</td>
+                <td>Best default for user-owned account access.</td>
+              </tr>
+              <tr>
+                <td><code>api_key</code></td>
+                <td>User pastes a provider-issued API key.</td>
+                <td>Good for developer tools and BYO-key flows.</td>
+              </tr>
+              <tr>
+                <td><code>bearer</code></td>
+                <td>User supplies an existing bearer token.</td>
+                <td>Use only when the upstream system already issues tokens directly.</td>
+              </tr>
+              <tr>
+                <td><code>basic</code></td>
+                <td>Username/password style auth.</td>
+                <td>Use sparingly; prefer OAuth when possible.</td>
+              </tr>
+              <tr>
+                <td><code>manual</code></td>
+                <td>Custom connection details or guided setup.</td>
+                <td>Good for internal tools and unusual provider requirements.</td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="setup-modes">
+          <h2>Setup modes</h2>
+          <p>
+            Setup mode describes the user experience Hollow should show after
+            installation.
+          </p>
+          <ul>
+            <li><code>guided</code>: Hollow walks the user through the connection flow.</li>
+            <li><code>manual</code>: The user provides API keys or settings manually.</li>
+            <li><code>external</code>: The user must complete part of setup on the provider side.</li>
+          </ul>
+          <p>
+            In practice, a connector can combine a setup mode with an auth type.
+            For example, <code>oauth</code> plus <code>guided</code> is a common
+            pairing.
+          </p>
+        </section>
+
+        <section id="install-flow">
+          <h2>Install flow</h2>
+          <p>A typical install flow looks like this:</p>
+          <ol>
+            <li>User browses the connector listing in Hollow.</li>
+            <li>User installs the connector.</li>
+            <li>Hollow checks the auth type and setup mode.</li>
+            <li>If needed, Hollow begins a connection flow.</li>
+            <li>Connection state is saved against that specific user install.</li>
+            <li>The connector becomes available for runtime use.</li>
+          </ol>
+        </section>
+
+        <section id="oauth-flow">
+          <h2>OAuth flow</h2>
+          <p>
+            For OAuth connectors, the user authenticates against the developer’s
+            own product or provider account. Hollow hosts the generic callback
+            endpoint and stores the resulting user connection state.
+          </p>
+          <div class="callout">
+            <strong>OAuth callback endpoint</strong>
+            Register this callback with your provider when you build an OAuth
+            connector:
+            <pre>https://hollow-backend.fly.dev/v1/connectors/oauth/callback</pre>
+          </div>
+          <p>High-level OAuth flow:</p>
+          <ol>
+            <li>User installs the connector in Hollow.</li>
+            <li>Hollow starts the connection flow.</li>
+            <li>Hollow redirects the user to the provider authorize URL.</li>
+            <li>The provider redirects back to Hollow’s OAuth callback.</li>
+            <li>Hollow completes the connection and stores the result for that user.</li>
+          </ol>
+        </section>
+
+        <section id="invoke-flow">
+          <h2>Action invocation</h2>
+          <p>
+            At runtime, Hollow chooses a connector action and invokes it with a
+            normalized input payload. For connectors this generally means:
+          </p>
+          <ol>
+            <li>Resolve the installed connector and action key.</li>
+            <li>Verify the user has a valid connection.</li>
+            <li>Build request input from the action parameters.</li>
+            <li>Call the runtime target described by the connector definition.</li>
+            <li>Return output or error state to Hollow.</li>
+          </ol>
+        </section>
+
+        <section id="publishing">
+          <h2>Publishing</h2>
+          <p>
+            Draft connectors can be incomplete. Published connectors should be
+            ready for real installs. Before publishing, check:
+          </p>
+          <ul>
+            <li>The listing copy is understandable to non-developers.</li>
+            <li>At least one real action exists.</li>
+            <li>At least five identifiers exist.</li>
+            <li>The auth model matches the real provider flow.</li>
+            <li>Scopes and install copy accurately describe access.</li>
+            <li>The connector has been tested with a real user account.</li>
+          </ul>
+        </section>
+
+        <section id="example-payload">
+          <h2>Example connector payload</h2>
+          <p>
+            The dashboard is the normal way to manage connectors, but it helps
+            to understand the shape Hollow expects.
+          </p>
+          <pre>{
+  "name": "Linear Incident Runner",
+  "slug": "linear-incident-runner",
+  "tagline": "Create and triage Linear incidents from Hollow.",
+  "description": "Connect Linear and let Hollow create incidents, search issues, and update triage state.",
+  "category": "productivity",
+  "auth_type": "oauth",
+  "setup_mode": "guided",
+  "visibility": "private",
+  "status": "draft",
+  "install_copy": "Connect your Linear account so Hollow can search and update incidents.",
+  "identifiers": [
+    "linear incidents",
+    "incident triage",
+    "product issue",
+    "bug ticket",
+    "engineering issue"
+  ],
+  "scopes": ["read", "write"],
+  "auth_schema": {
+    "flow": "oauth",
+    "authorize_url": "https://provider.example.com/oauth/authorize",
+    "token_url": "https://provider.example.com/oauth/token",
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET"
+  },
+  "actions": [
+    {
+      "key": "search_incidents",
+      "name": "Search incidents",
+      "description": "Search existing incidents in Linear.",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" }
+        }
+      }
+    }
+  ],
+  "manifest": {
+    "version": "1.0"
+  }
+}</pre>
+        </section>
+
+        <section id="oauth-callback">
+          <h2>OAuth callback reference</h2>
+          <p>
+            Hollow hosts the callback URL. The developer is still responsible
+            for registering that URL with the upstream OAuth provider.
+          </p>
+          <pre>https://hollow-backend.fly.dev/v1/connectors/oauth/callback</pre>
+          <p>
+            If your provider requires a single exact callback value, use that
+            exact URL. If your provider requires app-side deep linking, Hollow
+            handles the app redirect after the callback completes.
+          </p>
+        </section>
+
+        <section id="dashboard">
+          <h2>Dashboard usage</h2>
+          <p>
+            The dashboard is where connector drafts are created, updated, and
+            published. It is also where auth schema, settings schema, scopes,
+            actions, manifest fields, and identifiers are entered.
+          </p>
+          <p>Relevant pages:</p>
+          <ul>
+            <li><a href="/developer/login/">Dashboard login</a></li>
+            <li><a href="/developer/dashboard/">Private dashboard</a></li>
+          </ul>
+        </section>
+
+        <section id="testing">
+          <h2>Testing checklist</h2>
+          <ul>
+            <li>Install the connector with a fresh user account.</li>
+            <li>Complete the auth flow for the configured auth type.</li>
+            <li>Confirm the connector shows as connected.</li>
+            <li>Invoke every published action with at least one real payload.</li>
+            <li>Verify error handling for missing credentials or expired tokens.</li>
+            <li>Verify the listing copy still matches the actual permissions used.</li>
+          </ul>
+        </section>
+
+        <section id="troubleshooting">
+          <h2>Troubleshooting</h2>
+          <h3>OAuth redirect mismatch</h3>
+          <p>
+            Make sure the provider has this callback registered exactly:
+            <code>https://hollow-backend.fly.dev/v1/connectors/oauth/callback</code>
+          </p>
+
+          <h3>Connector installs but cannot connect</h3>
+          <p>
+            Check the configured <code>auth_type</code>, <code>setup_mode</code>,
+            authorize URL, token URL, client ID, and client secret.
+          </p>
+
+          <h3>Connector publishes but Hollow never chooses it</h3>
+          <p>
+            Check identifiers first. Published connectors should have at least
+            five high-signal identifiers that reflect the actual user requests
+            the connector is meant to handle.
+          </p>
+
+          <h3>Connector needs custom webhooks or custom server logic</h3>
+          <p>
+            Host that logic yourself and expose a stable HTTPS endpoint. Hollow
+            does not host arbitrary developer code.
+          </p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>
